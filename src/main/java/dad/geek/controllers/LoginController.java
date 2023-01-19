@@ -11,10 +11,12 @@ import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 
+import dad.geek.App;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
@@ -71,7 +73,7 @@ public class LoginController implements Initializable {
 	
 	@FXML
 	void onNoAccountAction(ActionEvent event) {
-		
+		App.primaryStage.setScene(new Scene(new SigninController().getView()));
 	}
 	
 	@FXML
