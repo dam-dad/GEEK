@@ -23,7 +23,7 @@ import javafx.scene.layout.BorderPane;
 public class Controller implements Initializable {
 
 	@FXML
-    private Hyperlink forgotLink;
+    private Hyperlink noAccountLink;
 
     @FXML
     private JFXButton loginButton;
@@ -44,13 +44,13 @@ public class Controller implements Initializable {
     private JFXTextField usernameText;
 
     @FXML
-    private BorderPane view;
-
-    @FXML
     private ImageView welcomeImage;
 
     @FXML
     private Label welcomeLabel;
+    
+    @FXML
+    private BorderPane view;
 	
 	public Controller() {
 		
@@ -70,7 +70,7 @@ public class Controller implements Initializable {
 	}
 	
 	@FXML
-	void onForgotAction(ActionEvent event) {
+	void onNoAccountAction(ActionEvent event) {
 		
 	}
 	
