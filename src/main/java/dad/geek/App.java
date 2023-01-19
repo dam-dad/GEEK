@@ -1,12 +1,13 @@
 package dad.geek;
 
+import dad.geek.controllers.LoginController;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class App extends Application {
 
-	private Controller controller = new Controller();
+	private LoginController controller = new LoginController();
 	
 	@Override
 	public void start(Stage primaryStage) throws Exception {

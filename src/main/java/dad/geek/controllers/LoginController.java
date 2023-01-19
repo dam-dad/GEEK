@@ -1,4 +1,4 @@
-package dad.geek;
+package dad.geek.controllers;
 
 import java.io.IOException;
 import java.net.URL;
@@ -20,7 +20,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 
-public class Controller implements Initializable {
+public class LoginController implements Initializable {
 
 	@FXML
     private Hyperlink noAccountLink;
@@ -52,7 +52,7 @@ public class Controller implements Initializable {
     @FXML
     private BorderPane view;
 	
-	public Controller() {
+	public LoginController() {
 		
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Login.fxml"));
