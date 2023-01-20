@@ -75,7 +75,7 @@ public class SigninController implements Initializable {
 	public SigninController() {
 
 		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Signin.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/SigninView.fxml"));
 			loader.setController(this);
 			loader.load();
 		} catch (IOException e) {
