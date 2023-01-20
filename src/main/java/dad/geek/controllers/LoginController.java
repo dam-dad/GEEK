@@ -33,36 +33,32 @@ public class LoginController implements Initializable {
 	
 	// view
 
+    @FXML
+    private ImageView welcomeImage;
+    @FXML
+    private Label welcomeLabel;
+    
+    @FXML
+    private FontIcon usernameIcon;
+    @FXML
+    private JFXTextField usernameText;
+    
+    @FXML
+    private FontIcon passwordImage;
+    @FXML
+    private JFXTextField passwordText;
+    @FXML
+    private JFXPasswordField passwordPassText;
+
+    @FXML
+    private JFXCheckBox showPasswordCheck;
+    
 	@FXML
     private Hyperlink noAccountLink;
 
     @FXML
     private JFXButton loginButton;
 
-    @FXML
-    private FontIcon passwordImage;
-
-    @FXML
-    private JFXTextField passwordText;
-
-    @FXML
-    private JFXPasswordField passwordPassText;
-
-    @FXML
-    private JFXCheckBox showPasswordCheck;
-
-    @FXML
-    private FontIcon usernameIcon;
-
-    @FXML
-    private JFXTextField usernameText;
-
-    @FXML
-    private ImageView welcomeImage;
-
-    @FXML
-    private Label welcomeLabel;
-    
     @FXML
     private BorderPane view;
 	
