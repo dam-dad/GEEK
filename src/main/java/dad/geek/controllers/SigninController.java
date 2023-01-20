@@ -32,42 +32,37 @@ public class SigninController implements Initializable {
 	private StringProperty password = new SimpleStringProperty();
 
 	// view
-
+	
 	@FXML
-	private Hyperlink hasAccountLink;
-
+	private ImageView welcomeImage;
 	@FXML
-	private FontIcon mailIcon;
-
-	@FXML
-	private JFXPasswordField mailText;
-
-	@FXML
-	private FontIcon passwordImage;
-
-	@FXML
-	private JFXPasswordField passwordPassText;
-
-	@FXML
-	private JFXTextField passwordText;
-
-	@FXML
-	private JFXButton registerButton;
-
-	@FXML
-	private JFXCheckBox showPasswordCheck;
+	private Label welcomeLabel;
 
 	@FXML
 	private FontIcon usernameIcon;
-
 	@FXML
 	private JFXTextField usernameText;
 
 	@FXML
-	private ImageView welcomeImage;
+	private FontIcon mailIcon;
+	@FXML
+	private JFXTextField mailText;
 
 	@FXML
-	private Label welcomeLabel;
+	private FontIcon passwordImage;
+	@FXML
+	private JFXTextField passwordText;
+	@FXML
+	private JFXPasswordField passwordPassText;
+
+	@FXML
+	private JFXCheckBox showPasswordCheck;
+	
+	@FXML
+	private Hyperlink hasAccountLink;
+	
+	@FXML
+	private JFXButton registerButton;
 
 	@FXML
 	private BorderPane view;
@@ -101,7 +96,7 @@ public class SigninController implements Initializable {
 		// listeners
 
 		showPasswordCheck.selectedProperty().addListener(this::onShowPasswordChanged);
-
+		
 	}
 	
 	private void onShowPasswordChanged(ObservableValue<? extends Boolean> o, Boolean ov, Boolean nv) {

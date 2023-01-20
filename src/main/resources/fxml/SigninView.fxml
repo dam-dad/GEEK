@@ -54,11 +54,11 @@
             <HBox alignment="CENTER" spacing="10.0">
                <children>
                   <FontIcon fx:id="mailIcon" iconLiteral="mdi2e-email" iconSize="32" />
-                  <JFXPasswordField fx:id="mailText" focusColor="BLACK" labelFloat="true" promptText="Correo electrónico">
+                  <JFXTextField fx:id="mailText" focusColor="BLACK" labelFloat="true" promptText="Correo electrónico">
                      <font>
                         <Font size="15.0" />
                      </font>
-                  </JFXPasswordField>
+                  </JFXTextField>
                </children>
                <padding>
                   <Insets bottom="10.0" />
@@ -70,7 +70,7 @@
             <HBox alignment="CENTER" spacing="10.0">
                <children>
                   <FontIcon fx:id="passwordImage" iconLiteral="fas-lock" iconSize="32" />
-                  <JFXTextField fx:id="passwordText" promptText="Contraseña">
+                  <JFXTextField fx:id="passwordText" focusColor="BLACK" promptText="Contraseña">
                      <font>
                         <Font size="15.0" />
                      </font>
