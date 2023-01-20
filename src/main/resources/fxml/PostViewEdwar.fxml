@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXTextArea?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<HBox fx:id="view" alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" spacing="10.0">
+         <children>
+            <HBox alignment="CENTER_LEFT" prefWidth="200.0" spacing="5.0">
+               <children>
+                  <ImageView fx:id="profileImage" fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/user.png" />
+                     </image>
+                  </ImageView>
+                  <VBox>
+                     <children>
+                        <Label fx:id="usernameLabel" text="Nombre de Usuario">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="usercodeLabel" text="Código de Ususario" />
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+            <FlowPane fx:id="filterFlow" hgap="5.0" prefHeight="50.0" prefWidth="580.0" vgap="5.0">
+               <children>
+                  <Label text="Label" />
+                  <Label text="Label" />
+                  <Label text="Label" />
+                  <Label text="Label" />
+                  <Label text="Label" />
+                  <Label text="Label" />
+                  <Label text="Label" />
+                  <Label text="Label" />
+                  <Label text="Label" />
+                  <Label text="Label" />
+                  <Label text="Label" />
+                  <Label text="Label" />
+                  <Label text="Label" />
+                  <Label text="Label" />
+                  <Label text="Label" />
+                  <Label text="Label" />
+                  <Label text="Label" />
+                  <Label text="Label" />
+                  <Label text="Label" />
+                  <Label text="Label" />
+               </children>
+            </FlowPane>
+            <JFXTextArea fx:id="contentTextArea" editable="false" text="Texto de ejemplo. &#10;" />
+         </children>
+      </VBox>
+      <ImageView fx:id="postImage" fitHeight="225.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/ejemplo.png" />
+         </image>
+      </ImageView>
+   </children>
+   <padding>
+      <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+   </padding>
+</HBox>

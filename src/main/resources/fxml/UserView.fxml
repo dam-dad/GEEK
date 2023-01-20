@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox fx:id="view" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <HBox alignment="CENTER_RIGHT" prefHeight="35.0" prefWidth="300.0" spacing="5.0">
+         <children>
+            <Label text="Editar" />
+            <JFXButton fx:id="editButton" contentDisplay="GRAPHIC_ONLY">
+               <graphic>
+                  <FontAwesomeIconView glyphName="PENCIL" selectionEnd="0" size="15.0" />
+               </graphic>
+            </JFXButton>
+         </children>
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
+      </HBox>
+      <HBox prefHeight="80.0" prefWidth="300.0">
+         <children>
+            <ImageView fx:id="profileImage" fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/user.png" />
+               </image></ImageView>
+            <VBox alignment="CENTER_LEFT" prefHeight="80.0" prefWidth="220.0" spacing="15.0">
+               <children>
+                  <Label fx:id="usernameLabel" text="Nombre de Usuario">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="usercodeLabel" text="Código de Usuario">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </VBox>
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" prefHeight="35.0" prefWidth="300.0" spacing="5.0">
+         <children>
+            <Label text="Filtros seguidos:" />
+            <Label fx:id="filterNumberLabel" text="0" />
+            <JFXButton fx:id="verMasButton" text="Ver más" />
+         </children>
+      </HBox>
+   </children>
+</VBox>
