@@ -12,6 +12,9 @@ import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 
 import dad.geek.App;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -24,44 +27,53 @@ import javafx.scene.layout.BorderPane;
 
 public class SigninController implements Initializable {
 
+	// model
+
+	private StringProperty password = new SimpleStringProperty();
+
+	// view
+
 	@FXML
-    private Hyperlink hasAccountLink;
+	private Hyperlink hasAccountLink;
 
-    @FXML
-    private FontIcon mailIcon;
+	@FXML
+	private FontIcon mailIcon;
 
-    @FXML
-    private JFXPasswordField mailText;
+	@FXML
+	private JFXPasswordField mailText;
 
-    @FXML
-    private FontIcon passwordImage;
+	@FXML
+	private FontIcon passwordImage;
 
-    @FXML
-    private JFXPasswordField passwordText;
+	@FXML
+	private JFXPasswordField passwordPassText;
 
-    @FXML
-    private JFXButton registerButton;
+	@FXML
+	private JFXTextField passwordText;
 
-    @FXML
-    private JFXCheckBox showPasswordCheck;
+	@FXML
+	private JFXButton registerButton;
 
-    @FXML
-    private FontIcon usernameIcon;
+	@FXML
+	private JFXCheckBox showPasswordCheck;
 
-    @FXML
-    private JFXTextField usernameText;
+	@FXML
+	private FontIcon usernameIcon;
 
-    @FXML
-    private ImageView welcomeImage;
+	@FXML
+	private JFXTextField usernameText;
 
-    @FXML
-    private Label welcomeLabel;
-    
-    @FXML
-    private BorderPane view;
+	@FXML
+	private ImageView welcomeImage;
+
+	@FXML
+	private Label welcomeLabel;
+
+	@FXML
+	private BorderPane view;
 
 	public SigninController() {
-		
+
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Signin.fxml"));
 			loader.setController(this);
@@ -69,29 +81,52 @@ public class SigninController implements Initializable {
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
-		
+
 	}
-	
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
+		// bindings
+
+		password.bindBidirectional(passwordText.textProperty());
+		password.bindBidirectional(passwordPassText.textProperty());
+
+		passwordText.managedProperty().bind(showPasswordCheck.selectedProperty());
+		passwordText.visibleProperty().bind(showPasswordCheck.selectedProperty());
+
+		passwordPassText.managedProperty().bind(showPasswordCheck.selectedProperty().not());
+		passwordPassText.visibleProperty().bind(showPasswordCheck.selectedProperty().not());
+
+		// listeners
+
+		showPasswordCheck.selectedProperty().addListener(this::onShowPasswordChanged);
+
 	}
 	
+	private void onShowPasswordChanged(ObservableValue<? extends Boolean> o, Boolean ov, Boolean nv) {
+		
+		if(nv) {
+			passwordText.setLabelFloat(true);
+		}
+		
+	}
+
 	@FXML
-    void onLoginAction(ActionEvent event) {
+	void onLoginAction(ActionEvent event) {
 
-    }
+	}
 
-    @FXML
-    void onHasAccountAction(ActionEvent event) {
-    	App.primaryStage.setScene(new Scene(new LoginController().getView()));
-    }
+	@FXML
+	void onHasAccountAction(ActionEvent event) {
+		App.primaryStage.setScene(new Scene(new LoginController().getView()));
+	}
 
-    @FXML
-    void onShowPassword(ActionEvent event) {
+	@FXML
+	void onShowPassword(ActionEvent event) {
 
-    }
-	
+	}
+
 	public BorderPane getView() {
 		return view;
 	}

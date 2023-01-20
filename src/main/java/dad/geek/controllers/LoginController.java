@@ -12,6 +12,9 @@ import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 
 import dad.geek.App;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -23,6 +26,12 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 
 public class LoginController implements Initializable {
+	
+	// model
+	
+	private StringProperty password = new SimpleStringProperty();
+	
+	// view
 
 	@FXML
     private Hyperlink noAccountLink;
@@ -34,7 +43,10 @@ public class LoginController implements Initializable {
     private FontIcon passwordImage;
 
     @FXML
-    private JFXPasswordField passwordText;
+    private JFXTextField passwordText;
+
+    @FXML
+    private JFXPasswordField passwordPassText;
 
     @FXML
     private JFXCheckBox showPasswordCheck;
@@ -69,8 +81,31 @@ public class LoginController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
+		// bindings
+		
+		password.bindBidirectional(passwordText.textProperty());
+		password.bindBidirectional(passwordPassText.textProperty());
+		
+		passwordText.managedProperty().bind(showPasswordCheck.selectedProperty());
+		passwordText.visibleProperty().bind(showPasswordCheck.selectedProperty());
+		
+		passwordPassText.managedProperty().bind(showPasswordCheck.selectedProperty().not());
+		passwordPassText.visibleProperty().bind(showPasswordCheck.selectedProperty().not());
+		
+		// listeners
+		
+		showPasswordCheck.selectedProperty().addListener(this::onShowPasswordChanged);
+		
 	}
 	
+	private void onShowPasswordChanged(ObservableValue<? extends Boolean> o, Boolean ov, Boolean nv) {
+		
+		if(nv) {
+			passwordText.setLabelFloat(true);
+		}
+		
+	}
+
 	@FXML
 	void onNoAccountAction(ActionEvent event) {
 		App.primaryStage.setScene(new Scene(new SigninController().getView()));

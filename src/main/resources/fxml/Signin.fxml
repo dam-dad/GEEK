@@ -44,28 +44,12 @@
                      </font>
                   </JFXTextField>
                </children>
-               <padding>
-                  <Insets bottom="10.0" />
-               </padding>
                <VBox.margin>
                   <Insets bottom="10.0" />
                </VBox.margin>
-            </HBox>
-            <HBox alignment="CENTER" spacing="10.0">
-               <children>
-                  <FontIcon fx:id="passwordImage" iconLiteral="fas-lock" iconSize="32" />
-                  <JFXPasswordField fx:id="passwordText" focusColor="BLACK" labelFloat="true" promptText="Contraseña">
-                     <font>
-                        <Font size="15.0" />
-                     </font>
-                  </JFXPasswordField>
-               </children>
                <padding>
                   <Insets bottom="10.0" />
                </padding>
-               <VBox.margin>
-                  <Insets bottom="10.0" />
-               </VBox.margin>
             </HBox>
             <HBox alignment="CENTER" spacing="10.0">
                <children>
@@ -79,6 +63,30 @@
                <padding>
                   <Insets bottom="10.0" />
                </padding>
+               <VBox.margin>
+                  <Insets bottom="10.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox alignment="CENTER" spacing="10.0">
+               <children>
+                  <FontIcon fx:id="passwordImage" iconLiteral="fas-lock" iconSize="32" />
+                  <JFXTextField fx:id="passwordText" promptText="Contraseña">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </JFXTextField>
+                  <JFXPasswordField fx:id="passwordPassText" focusColor="BLACK" labelFloat="true" promptText="Contraseña">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </JFXPasswordField>
+               </children>
+               <padding>
+                  <Insets bottom="10.0" />
+               </padding>
+               <VBox.margin>
+                  <Insets bottom="10.0" />
+               </VBox.margin>
             </HBox>
             <JFXCheckBox fx:id="showPasswordCheck" checkedColor="BLACK" onAction="#onShowPassword" text="Mostrar contraseña">
                <font>
