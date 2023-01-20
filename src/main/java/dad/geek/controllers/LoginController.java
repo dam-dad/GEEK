@@ -69,7 +69,7 @@ public class LoginController implements Initializable {
 	public LoginController() {
 		
 		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Login.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/LoginView.fxml"));
 			loader.setController(this);
 			loader.load();
 		} catch (IOException e) {
