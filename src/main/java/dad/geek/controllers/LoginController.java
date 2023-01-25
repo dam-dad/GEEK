@@ -12,6 +12,7 @@ import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 
 import dad.geek.App;
+import dad.geek.utils.Utils;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ObservableValue;
@@ -19,20 +20,26 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 
 public class LoginController implements Initializable {
 	
 	// model
 	
+	private StringProperty username = new SimpleStringProperty();
 	private StringProperty password = new SimpleStringProperty();
 	
 	// view
 
+	private Label noUserFound;
+	
     @FXML
     private ImageView welcomeImage;
     @FXML
@@ -79,6 +86,8 @@ public class LoginController implements Initializable {
 
 		// bindings
 		
+		username.bind(usernameText.textProperty());
+		
 		password.bindBidirectional(passwordText.textProperty());
 		password.bindBidirectional(passwordPassText.textProperty());
 		
@@ -101,6 +110,25 @@ public class LoginController implements Initializable {
 		}
 		
 	}
+	
+	private void hideLabel() {
+		
+		if(noUserFound != null) {
+			noUserFound.setVisible(false);
+			noUserFound.setManaged(false);
+		}
+		
+	}
+	
+	@FXML
+    void onPasswordClicked(MouseEvent event) {
+		hideLabel();
+    }
+
+    @FXML
+    void onUsernameClicked(MouseEvent event) {
+    	hideLabel();
+    }
 
 	@FXML
 	void onNoAccountAction(ActionEvent event) {
@@ -109,6 +137,15 @@ public class LoginController implements Initializable {
 	
 	@FXML
 	void onLoginAction(ActionEvent event) {
+
+		if(Utils.userInDatabase(username.get(), password.get())) {
+			App.primaryStage.setScene(new Scene(new MainController().getView()));
+		} else {
+			noUserFound = new Label("No existe este usuario, inténtelo de nuevo.");
+			noUserFound.setStyle("-fx-text-fill: red;");
+			noUserFound.setPadding(new Insets(0, 0, 10, 0));
+			((VBox) getView().getChildren().get(0)).getChildren().add(4, noUserFound);
+		}
 		
 	}
 	
