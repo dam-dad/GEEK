@@ -45,13 +45,13 @@
                <children>
                   <MenuButton mnemonicParsing="false" text="Usuario">
                      <items>
-                        <MenuItem mnemonicParsing="false" text="Generar Informe">
+                        <MenuItem fx:id="informeItem" mnemonicParsing="false" onAction="#onGenerateInformeAction" text="Generar Informe">
                            <accelerator>
                               <KeyCodeCombination alt="UP" code="P" control="DOWN" meta="UP" shift="DOWN" shortcut="UP" />
                            </accelerator>
                         </MenuItem>
                         <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem mnemonicParsing="false" text="Salir">
+                        <MenuItem fx:id="exitItem" mnemonicParsing="false" onAction="#onExitAction" text="Salir">
                            <accelerator>
                               <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="DOWN" shortcut="UP" />
                            </accelerator>
@@ -60,7 +60,7 @@
                   </MenuButton>
                   <MenuButton mnemonicParsing="false" text="Posts">
                      <items>
-                        <MenuItem mnemonicParsing="false" text="Nuevo Post">
+                        <MenuItem fx:id="newPostItem" mnemonicParsing="false" onAction="#onCreatePostAction" text="Nuevo Post">
                            <accelerator>
                               <KeyCodeCombination alt="UP" code="N" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                            </accelerator>
@@ -69,7 +69,7 @@
                   </MenuButton>
                   <MenuButton mnemonicParsing="false" text="Vista">
                      <items>
-                        <MenuItem mnemonicParsing="false" onAction="#darkModeAction" text="Cambiar Claro / Oscuro">
+                        <MenuItem fx:id="darkModeItem" mnemonicParsing="false" onAction="#onDarkModeAction" text="Cambiar Claro / Oscuro">
                            <accelerator>
                               <KeyCodeCombination alt="UP" code="D" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                            </accelerator>
@@ -80,8 +80,8 @@
             </HBox>
             <HBox alignment="CENTER_LEFT" spacing="5.0" GridPane.columnIndex="2">
                <children>
-                  <ToggleSwitch />
-                  <FontIcon iconLiteral="mdi2w-white-balance-sunny" iconSize="24" text="󰖨" />
+                  <ToggleSwitch fx:id="darkModeSwitch" />
+                  <FontIcon fx:id="darkModeIcon" iconLiteral="mdi2w-white-balance-sunny" iconSize="24" text="󰖨" />
                </children>
             </HBox>
          </children>
