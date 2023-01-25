@@ -10,8 +10,8 @@ public class App extends Application {
 
 	public static Stage primaryStage;
 	
-	//private LoginController controller = new LoginController();
-	private MainController controller = new MainController();
+	private LoginController controller = new LoginController();
+//	private MainController controller = new MainController();
 	
 	@Override
 	public void start(Stage primaryStage) throws Exception {

@@ -27,6 +27,7 @@
         </rowConstraints>
          <children>
             <VBox prefHeight="200.0" prefWidth="100.0" />
+            <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2" />
          </children>
       </GridPane>
    </center>
