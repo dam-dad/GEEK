@@ -108,8 +108,11 @@ public class SigninController implements Initializable {
 	}
 
 	@FXML
-	void onLoginAction(ActionEvent event) {
-
+	void onSigninAction(ActionEvent event) {
+		//TODO validar informacion
+		
+		App.primaryStage.setScene(new Scene(new MainController().getView()));
+		
 	}
 
 	@FXML

@@ -101,7 +101,7 @@
                   <Insets bottom="10.0" />
                </VBox.margin>
             </Hyperlink>
-            <JFXButton fx:id="registerButton" defaultButton="true" onAction="#onLoginAction" ripplerFill="WHITE" style="-fx-background-color: #000000;" text="Registrarse" textFill="WHITE">
+            <JFXButton fx:id="registerButton" defaultButton="true" onAction="#onSigninAction" ripplerFill="WHITE" style="-fx-background-color: #000000;" text="Registrarse" textFill="WHITE">
                <font>
                   <Font size="15.0" />
                </font>

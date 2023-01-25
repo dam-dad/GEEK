@@ -109,6 +109,9 @@ public class LoginController implements Initializable {
 	
 	@FXML
 	void onLoginAction(ActionEvent event) {
+		// TODO hacer que valide el usuario
+		
+		App.primaryStage.setScene(new Scene(new MainController().getView()));
 		
 	}
 	
