@@ -121,13 +121,8 @@ public class LoginController implements Initializable {
 	}
 	
 	@FXML
-    void onPasswordClicked(MouseEvent event) {
+    void onTextClicked(MouseEvent event) {
 		hideLabel();
-    }
-
-    @FXML
-    void onUsernameClicked(MouseEvent event) {
-    	hideLabel();
     }
 
 	@FXML

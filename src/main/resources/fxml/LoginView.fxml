@@ -38,7 +38,7 @@
             <HBox alignment="CENTER" spacing="10.0">
                <children>
                   <FontIcon fx:id="usernameIcon" iconLiteral="fas-user" iconSize="32" />
-                  <JFXTextField fx:id="usernameText" focusColor="BLACK" labelFloat="true" onMouseClicked="#onUsernameClicked" promptText="Nombre de usuario">
+                  <JFXTextField fx:id="usernameText" focusColor="BLACK" labelFloat="true" onMouseClicked="#onTextClicked" promptText="Nombre de usuario">
                      <font>
                         <Font size="15.0" />
                      </font>
@@ -54,12 +54,12 @@
             <HBox alignment="CENTER" spacing="10.0">
                <children>
                   <FontIcon fx:id="passwordImage" iconLiteral="fas-lock" iconSize="32" />
-                  <JFXTextField fx:id="passwordText" onMouseClicked="#onPasswordClicked" promptText="Contraseña">
+                  <JFXTextField fx:id="passwordText" onMouseClicked="#onTextClicked" promptText="Contraseña">
                      <font>
                         <Font size="15.0" />
                      </font>
                   </JFXTextField>
-                  <JFXPasswordField fx:id="passwordPassText" focusColor="BLACK" labelFloat="true" onMouseClicked="#onPasswordClicked" promptText="Contraseña">
+                  <JFXPasswordField fx:id="passwordPassText" focusColor="BLACK" labelFloat="true" onMouseClicked="#onTextClicked" promptText="Contraseña">
                      <font>
                         <Font size="15.0" />
                      </font>
