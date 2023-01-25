@@ -112,11 +112,6 @@ public class LoginController implements Initializable {
 		
 	}
 	
-	@FXML
-	void onShowPassword(ActionEvent event) {
-		
-	}
-	
 	public BorderPane getView() {
 		return view;
 	}

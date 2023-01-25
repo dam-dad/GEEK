@@ -117,11 +117,6 @@ public class SigninController implements Initializable {
 		App.primaryStage.setScene(new Scene(new LoginController().getView()));
 	}
 
-	@FXML
-	void onShowPassword(ActionEvent event) {
-
-	}
-
 	public BorderPane getView() {
 		return view;
 	}

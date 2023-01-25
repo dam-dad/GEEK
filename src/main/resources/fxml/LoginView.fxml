@@ -72,7 +72,7 @@
                   <Insets bottom="10.0" />
                </VBox.margin>
             </HBox>
-            <JFXCheckBox fx:id="showPasswordCheck" checkedColor="BLACK" onAction="#onShowPassword" text="Mostrar contraseña">
+            <JFXCheckBox fx:id="showPasswordCheck" checkedColor="BLACK" text="Mostrar contraseña">
                <font>
                   <Font size="15.0" />
                </font>
