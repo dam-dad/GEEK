@@ -12,9 +12,8 @@ import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 
 import dad.geek.App;
+import dad.geek.model.User;
 import dad.geek.utils.Utils;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -33,9 +32,7 @@ public class SigninController implements Initializable {
 
 	// model
 
-	private StringProperty username = new SimpleStringProperty();
-	private StringProperty password = new SimpleStringProperty();
-	private StringProperty mail = new SimpleStringProperty();
+	private User user = new User();
 	
 	// view
 	
@@ -92,11 +89,11 @@ public class SigninController implements Initializable {
 
 		// bindings
 		
-		username.bind(usernameText.textProperty());
-		mail.bind(mailText.textProperty());
+		user.usernameProperty().bind(usernameText.textProperty());
+		user.mailProperty().bind(mailText.textProperty());
 
-		password.bindBidirectional(passwordText.textProperty());
-		password.bindBidirectional(passwordPassText.textProperty());
+		user.passwordProperty().bindBidirectional(passwordText.textProperty());
+		user.passwordProperty().bindBidirectional(passwordPassText.textProperty());
 
 		passwordText.managedProperty().bind(showPasswordCheck.selectedProperty());
 		passwordText.visibleProperty().bind(showPasswordCheck.selectedProperty());
@@ -136,7 +133,7 @@ public class SigninController implements Initializable {
 	void onSigninAction(ActionEvent event) {
 		//TODO validar informacion
 		
-		if(Utils.userInDatabase(username.get(), password.get())) {
+		if(Utils.userInDatabase(user.getUsername(), user.getUsername())) {
 			noUserFound = new Label("Éste usuario ya está registrado, inténtelo de nuevo.");
 			noUserFound.setStyle("-fx-text-fill: red;");
 			noUserFound.setPadding(new Insets(0, 0, 10, 0));

@@ -12,9 +12,8 @@ import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 
 import dad.geek.App;
+import dad.geek.model.User;
 import dad.geek.utils.Utils;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -33,8 +32,7 @@ public class LoginController implements Initializable {
 	
 	// model
 	
-	private StringProperty username = new SimpleStringProperty();
-	private StringProperty password = new SimpleStringProperty();
+	private User user = new User();
 	
 	// view
 
@@ -86,10 +84,10 @@ public class LoginController implements Initializable {
 
 		// bindings
 		
-		username.bind(usernameText.textProperty());
+		user.usernameProperty().bind(usernameText.textProperty());
 		
-		password.bindBidirectional(passwordText.textProperty());
-		password.bindBidirectional(passwordPassText.textProperty());
+		user.passwordProperty().bindBidirectional(passwordText.textProperty());
+		user.passwordProperty().bindBidirectional(passwordPassText.textProperty());
 		
 		passwordText.managedProperty().bind(showPasswordCheck.selectedProperty());
 		passwordText.visibleProperty().bind(showPasswordCheck.selectedProperty());
@@ -133,7 +131,7 @@ public class LoginController implements Initializable {
 	@FXML
 	void onLoginAction(ActionEvent event) {
 
-		if(Utils.userInDatabase(username.get(), password.get())) {
+		if(Utils.userInDatabase(user.getUsername(), user.getPassword())) {
 			App.primaryStage.setScene(new Scene(new MainController().getView()));
 		} else {
 			noUserFound = new Label("No existe este usuario, inténtelo de nuevo.");
