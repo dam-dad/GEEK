@@ -13,20 +13,17 @@ import com.jfoenix.controls.JFXTextField;
 
 import dad.geek.App;
 import dad.geek.model.User;
-import dad.geek.utils.Utils;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.VBox;
 
 public class SigninController implements Initializable {
 
@@ -132,7 +129,7 @@ public class SigninController implements Initializable {
 	@FXML
 	void onSigninAction(ActionEvent event) {
 		//TODO validar informacion
-//		if(Utils.userInDatabase(user.getUsername(), user.getUsername())) {
+//		if(user.userInDatabase()) {
 //			noUserFound = new Label("Éste usuario ya está registrado, inténtelo de nuevo.");
 //			noUserFound.setStyle("-fx-text-fill: red;");
 //			noUserFound.setPadding(new Insets(0, 0, 10, 0));
