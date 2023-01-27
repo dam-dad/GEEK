@@ -132,15 +132,16 @@ public class SigninController implements Initializable {
 	@FXML
 	void onSigninAction(ActionEvent event) {
 		//TODO validar informacion
+//		if(Utils.userInDatabase(user.getUsername(), user.getUsername())) {
+//			noUserFound = new Label("Éste usuario ya está registrado, inténtelo de nuevo.");
+//			noUserFound.setStyle("-fx-text-fill: red;");
+//			noUserFound.setPadding(new Insets(0, 0, 10, 0));
+//			((VBox) getView().getChildren().get(0)).getChildren().add(5, noUserFound);
+//		} else {
+//			App.primaryStage.setScene(new Scene(new MainController().getView()));
+//		}
 		
-		if(Utils.userInDatabase(user.getUsername(), user.getUsername())) {
-			noUserFound = new Label("Éste usuario ya está registrado, inténtelo de nuevo.");
-			noUserFound.setStyle("-fx-text-fill: red;");
-			noUserFound.setPadding(new Insets(0, 0, 10, 0));
-			((VBox) getView().getChildren().get(0)).getChildren().add(5, noUserFound);
-		} else {
-			App.primaryStage.setScene(new Scene(new MainController().getView()));
-		}
+		App.primaryStage.setScene(new Scene(new MainController().getView()));
 		
 	}
 
