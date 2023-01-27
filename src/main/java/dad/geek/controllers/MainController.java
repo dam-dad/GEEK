@@ -18,9 +18,13 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 
 public class MainController implements Initializable {
 
+	private UserSectionController userSectionController = new UserSectionController();
+	private SearchSectionController searchSectionController = new SearchSectionController();
+	
 	@FXML
 	private FontIcon darkModeIcon;
 
@@ -40,6 +44,12 @@ public class MainController implements Initializable {
 	private MenuItem newPostItem;
 
 	@FXML
+    private VBox searchContainer;
+
+    @FXML
+    private VBox userContainer;
+
+	@FXML
 	private BorderPane view;
 
 	public MainController() {
@@ -54,6 +64,14 @@ public class MainController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		
+		// load data
+		
+		userContainer.getChildren().add(userSectionController.getView());
+		searchContainer.getChildren().add(searchSectionController.getView());
+
+		// listeners
+		
 		darkModeSwitch.selectedProperty().addListener((observable, oldValue, newValue) -> {
 			if (newValue) {
 				darkModeIcon.setIconLiteral("mdi2m-moon-waning-crescent");
@@ -61,6 +79,7 @@ public class MainController implements Initializable {
 				darkModeIcon.setIconLiteral("mdi2w-white-balance-sunny");
 			}
 		});
+		
 
 	}
 
