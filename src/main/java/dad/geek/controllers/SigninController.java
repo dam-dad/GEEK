@@ -139,6 +139,7 @@ public class SigninController implements Initializable {
 //		}
 		
 		App.primaryStage.setScene(new Scene(new MainController().getView()));
+		App.primaryStage.centerOnScreen();
 		
 	}
 
