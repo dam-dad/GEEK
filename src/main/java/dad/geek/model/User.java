@@ -1,19 +1,36 @@
 package dad.geek.model;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 public class User {
 	
+	private IntegerProperty userID = new SimpleIntegerProperty();
+	private StringProperty nickname = new SimpleStringProperty();
 	private StringProperty username = new SimpleStringProperty();
 	private StringProperty password = new SimpleStringProperty();
 	private StringProperty mail = new SimpleStringProperty(); // TODO lo implementamos con mail al final????????????
+	private ObjectProperty<Image> profileImage = new SimpleObjectProperty<>();
 	
 	public User() {}
 	
 	public User(String username, String password) {
 		setUsername(username);
 		setPassword(password);
+	}
+	
+	public boolean userInDatabase() {
+
+		// TODO implementar
+		return true;
+	}
+	
+	public final Integer getUserID() {
+		return this.userID.get();
 	}
 	
 	public final StringProperty usernameProperty() {
@@ -50,6 +67,30 @@ public class User {
 
 	public final void setMail(final String mail) {
 		this.mailProperty().set(mail);
+	}
+
+	public final StringProperty nicknameProperty() {
+		return this.nickname;
+	}
+	
+	public final String getNickname() {
+		return this.nicknameProperty().get();
+	}
+	
+	public final void setNickname(final String nickname) {
+		this.nicknameProperty().set(nickname);
+	}
+
+	public final ObjectProperty<Image> profileImageProperty() {
+		return this.profileImage;
+	}
+	
+	public final Image getProfileImage() {
+		return this.profileImageProperty().get();
+	}
+
+	public final void setProfileImage(final Image profileImage) {
+		this.profileImageProperty().set(profileImage);
 	}
 	
 }
