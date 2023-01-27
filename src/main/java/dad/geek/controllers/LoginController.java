@@ -13,7 +13,6 @@ import com.jfoenix.controls.JFXTextField;
 
 import dad.geek.App;
 import dad.geek.model.User;
-import dad.geek.utils.Utils;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -131,7 +130,7 @@ public class LoginController implements Initializable {
 	@FXML
 	void onLoginAction(ActionEvent event) {
 
-		if(Utils.userInDatabase(user.getUsername(), user.getPassword())) {
+		if(user.userInDatabase()) {
 			App.primaryStage.setScene(new Scene(new MainController().getView()));
 		} else {
 			noUserFound = new Label("No existe este usuario, inténtelo de nuevo.");
