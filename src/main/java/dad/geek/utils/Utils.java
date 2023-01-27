@@ -7,5 +7,7 @@ public class Utils {
 		
 		return true;
 	}
+	
+	enum Image { LEFT, RIGHT, DOWN, EMPTY }
 
 }

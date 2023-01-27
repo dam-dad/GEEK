@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+
+<<<<<<< Updated upstream
+<BorderPane fx:id="view" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+=======
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+>>>>>>> Stashed changes
+   <top>
+      <Label text="Seleccione el tipo de post que quiere crear" BorderPane.alignment="CENTER" />
+   </top>
+   <center>
+      <GridPane hgap="5.0" vgap="5.0" BorderPane.alignment="CENTER">
+        <columnConstraints>
+          <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints valignment="BOTTOM" vgrow="SOMETIMES" />
+          <RowConstraints valignment="TOP" vgrow="SOMETIMES" />
+            <RowConstraints valignment="BOTTOM" vgrow="SOMETIMES" />
+            <RowConstraints valignment="TOP" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+<<<<<<< Updated upstream
+            <Label text="Imagen a la izquierda" />
+            <Button fx:id="leftButton" mnemonicParsing="false" onAction="#onCreatePostLeft" GridPane.rowIndex="1">
+               <graphic>
+                  <ImageView fx:id="leftImage" pickOnBounds="true" preserveRatio="true" />
+               </graphic>
+            </Button>
+            <Label text="Imagen a la derecha" GridPane.columnIndex="1" />
+            <Button fx:id="rightButton" mnemonicParsing="false" onAction="#onCreatePostRight" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <graphic>
+                  <ImageView fx:id="rightImage" pickOnBounds="true" preserveRatio="true" />
+               </graphic>
+            </Button>
+            <Label text="Imagen Abajo" GridPane.rowIndex="2" />
+            <Button fx:id="downButton" mnemonicParsing="false" onAction="#onCreatePostDown" GridPane.rowIndex="3">
+               <graphic>
+                  <ImageView fx:id="downImage" pickOnBounds="true" preserveRatio="true" />
+               </graphic>
+            </Button>
+            <Label text="Sin imagen" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Button fx:id="emptyButton" mnemonicParsing="false" onAction="#onCreatePostEmpty" GridPane.columnIndex="1" GridPane.rowIndex="3">
+               <graphic>
+                  <ImageView fx:id="emptyImage" pickOnBounds="true" preserveRatio="true" />
+=======
+            <Label text="Imagen a la derecha" GridPane.columnIndex="1" />
+            <Label text="Imagen Abajo" GridPane.rowIndex="2" />
+            <Button mnemonicParsing="false" GridPane.rowIndex="1">
+               <graphic>
+                  <ImageView pickOnBounds="true" preserveRatio="true" />
+               </graphic>
+            </Button>
+            <Button mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <graphic>
+                  <ImageView pickOnBounds="true" preserveRatio="true" />
+               </graphic>
+            </Button>
+            <Label text="Sin imagen" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Button mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="3">
+               <graphic>
+                  <ImageView pickOnBounds="true" preserveRatio="true" />
+               </graphic>
+            </Button>
+            <Label text="Imagen a la izquierda" />
+            <Button mnemonicParsing="false" GridPane.rowIndex="3">
+               <graphic>
+                  <ImageView pickOnBounds="true" preserveRatio="true" />
+>>>>>>> Stashed changes
+               </graphic>
+            </Button>
+         </children>
+         <BorderPane.margin>
+            <Insets top="15.0" />
+         </BorderPane.margin>
+      </GridPane>
+   </center>
+   <padding>
+      <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+   </padding>
+</BorderPane>
