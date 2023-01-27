@@ -8,6 +8,7 @@ import java.util.ResourceBundle;
 import org.controlsfx.control.ToggleSwitch;
 import org.kordamp.ikonli.javafx.FontIcon;
 
+import dad.geek.App;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -89,7 +90,7 @@ public class MainController implements Initializable {
 
 	@FXML
 	void onCreatePostAction(ActionEvent event) {
-
+		
 	}
 
 	@FXML

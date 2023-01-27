@@ -125,6 +125,7 @@ public class LoginController implements Initializable {
 	@FXML
 	void onNoAccountAction(ActionEvent event) {
 		App.primaryStage.setScene(new Scene(new SigninController().getView()));
+		App.primaryStage.centerOnScreen();
 	}
 	
 	@FXML
@@ -138,6 +139,7 @@ public class LoginController implements Initializable {
 			noUserFound.setPadding(new Insets(0, 0, 10, 0));
 			((VBox) getView().getChildren().get(0)).getChildren().add(4, noUserFound);
 		}
+		App.primaryStage.centerOnScreen();
 		
 	}
 	
