@@ -77,7 +77,8 @@ public class MainController implements Initializable {
 		// load data
 		
 		userContainer.getChildren().add(userSectionController.getView());
-		searchContainer.getChildren().add(searchSectionController.getView());
+		containerPane.getItems().add(searchSectionController.getView());
+		containerPane.setDividerPositions(0.75);
 
 		// listeners
 		
@@ -90,7 +91,13 @@ public class MainController implements Initializable {
 		});
 		
 		App.primaryStage.maximizedProperty().addListener((o,ov,nv) -> {
-			containerPane.setDividerPositions(0.80);
+			if(nv != null && nv == true)
+				containerPane.setDividerPositions(0.80);
+			else if(nv != null && nv == false) {
+				containerPane.setDividerPositions(0.75);
+				App.primaryStage.setWidth(800);
+				App.primaryStage.setHeight(500);
+			}
 		});
 
 	}

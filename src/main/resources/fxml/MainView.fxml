@@ -16,25 +16,33 @@
 <?import org.controlsfx.control.ToggleSwitch?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<BorderPane fx:id="view" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane fx:id="view" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
    <center>
-      <SplitPane fx:id="containerPane" dividerPositions="0.75" BorderPane.alignment="CENTER">
+      <SplitPane fx:id="containerPane" maxHeight="1.7976931348623157E308" BorderPane.alignment="CENTER">
          <items>
-            <BorderPane>
+            <BorderPane maxHeight="1.7976931348623157E308" prefHeight="450.0" prefWidth="800.0">
                <left>
-                  <HBox BorderPane.alignment="CENTER">
+                  <HBox alignment="TOP_RIGHT" BorderPane.alignment="CENTER">
                      <children>
                         <VBox fx:id="userContainer" />
                         <Separator orientation="VERTICAL" prefHeight="200.0" />
                      </children>
+                     <BorderPane.margin>
+                        <Insets />
+                     </BorderPane.margin>
                   </HBox>
                </left>
                <center>
-                  <VBox BorderPane.alignment="CENTER" />
+                  <VBox alignment="TOP_CENTER" BorderPane.alignment="CENTER" />
                </center>
+               <padding>
+                  <Insets left="5.0" />
+               </padding>
             </BorderPane>
-            <VBox fx:id="searchContainer" />
          </items>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
       </SplitPane>
    </center>
    <top>

@@ -123,8 +123,13 @@ public class LoginController implements Initializable {
     }
 
 	@FXML
-	void onNoAccountAction(ActionEvent event) {
-		App.primaryStage.setScene(new Scene(new SigninController().getView()));
+	void hasNoAccountAction(ActionEvent event) {
+		
+		App.primaryStage.setScene(
+			App.primaryStage.isMaximized() ?
+			new Scene(new SigninController().getView(), App.primaryStage.getWidth()-15, App.primaryStage.getHeight()-35) :
+			new Scene(new SigninController().getView())
+		);
 		App.primaryStage.centerOnScreen();
 	}
 	
@@ -132,7 +137,13 @@ public class LoginController implements Initializable {
 	void onLoginAction(ActionEvent event) {
 
 		if(user.userInDatabase()) {
-			App.primaryStage.setScene(new Scene(new MainController().getView()));
+			
+			App.primaryStage.setScene(
+				App.primaryStage.isMaximized() ?
+				new Scene(new MainController().getView(), App.primaryStage.getWidth()-15, App.primaryStage.getHeight()-35) :
+				new Scene(new MainController().getView())
+			);
+			
 		} else {
 			noUserFound = new Label("No existe este usuario, inténtelo de nuevo.");
 			noUserFound.setStyle("-fx-text-fill: red;");
@@ -140,7 +151,6 @@ public class LoginController implements Initializable {
 			((VBox) getView().getChildren().get(0)).getChildren().add(4, noUserFound);
 		}
 		App.primaryStage.centerOnScreen();
-		
 	}
 	
 	public BorderPane getView() {

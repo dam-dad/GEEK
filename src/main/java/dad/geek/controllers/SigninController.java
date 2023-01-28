@@ -125,6 +125,17 @@ public class SigninController implements Initializable {
     void onTextClicked(MouseEvent event) {
 		hideLabel();
     }
+	
+	@FXML
+	void onHasAccountAction(ActionEvent event) {
+		
+		App.primaryStage.setScene(
+			App.primaryStage.isMaximized() ?
+				new Scene(new LoginController().getView(), App.primaryStage.getWidth()-15, App.primaryStage.getHeight()-35) :
+				new Scene(new LoginController().getView())
+		);
+		App.primaryStage.centerOnScreen();
+	}
 
 	@FXML
 	void onSigninAction(ActionEvent event) {
@@ -138,14 +149,13 @@ public class SigninController implements Initializable {
 //			App.primaryStage.setScene(new Scene(new MainController().getView()));
 //		}
 		
-		App.primaryStage.setScene(new Scene(new MainController().getView()));
+		App.primaryStage.setScene(
+			App.primaryStage.isMaximized() ?
+			new Scene(new MainController().getView(), App.primaryStage.getWidth()-15, App.primaryStage.getHeight()-35) :
+			new Scene(new MainController().getView())
+		);
 		App.primaryStage.centerOnScreen();
 		
-	}
-
-	@FXML
-	void onHasAccountAction(ActionEvent event) {
-		App.primaryStage.setScene(new Scene(new LoginController().getView()));
 	}
 
 	public BorderPane getView() {

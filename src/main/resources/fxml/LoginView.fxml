@@ -80,7 +80,7 @@
                   <Insets bottom="10.0" />
                </VBox.margin>
             </JFXCheckBox>
-            <Hyperlink fx:id="noAccountLink" onAction="#onNoAccountAction" text="¿No tiene cuenta?, regístrese.">
+            <Hyperlink fx:id="noAccountLink" onAction="#hasNoAccountAction" text="¿No tiene cuenta?, regístrese.">
                <VBox.margin>
                   <Insets bottom="10.0" />
                </VBox.margin>
