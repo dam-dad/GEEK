@@ -3,7 +3,9 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.input.KeyCodeCombination?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -14,19 +16,26 @@
 <?import org.controlsfx.control.ToggleSwitch?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<BorderPane fx:id="view" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane fx:id="view" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <center>
-      <BorderPane BorderPane.alignment="CENTER">
-         <left>
-            <VBox fx:id="userContainer" BorderPane.alignment="CENTER" />
-         </left>
-         <right>
-            <VBox fx:id="searchContainer" BorderPane.alignment="CENTER" />
-         </right>
-         <center>
-            <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER" />
-         </center>
-      </BorderPane>
+      <SplitPane fx:id="containerPane" dividerPositions="0.75" BorderPane.alignment="CENTER">
+         <items>
+            <BorderPane>
+               <left>
+                  <HBox BorderPane.alignment="CENTER">
+                     <children>
+                        <VBox fx:id="userContainer" />
+                        <Separator orientation="VERTICAL" prefHeight="200.0" />
+                     </children>
+                  </HBox>
+               </left>
+               <center>
+                  <VBox BorderPane.alignment="CENTER" />
+               </center>
+            </BorderPane>
+            <VBox fx:id="searchContainer" />
+         </items>
+      </SplitPane>
    </center>
    <top>
       <GridPane maxHeight="-Infinity" BorderPane.alignment="CENTER">

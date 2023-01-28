@@ -18,13 +18,21 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.SplitPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 
 public class MainController implements Initializable {
+	
+	// controllers
 
 	private UserSectionController userSectionController = new UserSectionController();
 	private SearchSectionController searchSectionController = new SearchSectionController();
+	
+	// view
+	
+	@FXML
+    private SplitPane containerPane;
 	
 	@FXML
 	private FontIcon darkModeIcon;
@@ -81,6 +89,9 @@ public class MainController implements Initializable {
 			}
 		});
 		
+		App.primaryStage.maximizedProperty().addListener((o,ov,nv) -> {
+			containerPane.setDividerPositions(0.80);
+		});
 
 	}
 
