@@ -147,6 +147,7 @@ public class SigninController implements Initializable {
 //			((VBox) getView().getChildren().get(0)).getChildren().add(5, noUserFound);
 //		} else {
 //			App.primaryStage.setScene(new Scene(new MainController().getView()));
+//			user.addUsertoDB();
 //		}
 		
 		App.primaryStage.setScene(

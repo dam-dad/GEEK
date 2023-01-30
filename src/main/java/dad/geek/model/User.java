@@ -24,7 +24,11 @@ public class User {
 	}
 	
 	public boolean userInDatabase() {
-
+		// TODO implementar
+		return true;
+	}
+	
+	public boolean addUsertoDB() {
 		// TODO implementar
 		return true;
 	}

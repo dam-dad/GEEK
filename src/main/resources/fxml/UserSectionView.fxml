@@ -55,6 +55,9 @@
             <Label fx:id="filterNumberLabel" text="0" />
             <JFXButton fx:id="verMasButton" text="Ver más" />
          </children>
+         <VBox.margin>
+            <Insets top="10.0" />
+         </VBox.margin>
       </HBox>
    </children>
 </VBox>
