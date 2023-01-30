@@ -10,11 +10,11 @@
 <?import javafx.scene.layout.RowConstraints?>
 
 
-<<<<<<< Updated upstream
+<!-- <<<<<<< Updated upstream -->
 <BorderPane fx:id="view" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
-=======
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
->>>>>>> Stashed changes
+<!-- ======= -->
+<!-- <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"> -->
+<!-- >>>>>>> Stashed changes -->
    <top>
       <Label text="Seleccione el tipo de post que quiere crear" BorderPane.alignment="CENTER" />
    </top>
@@ -31,7 +31,7 @@
             <RowConstraints valignment="TOP" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-<<<<<<< Updated upstream
+<!-- <<<<<<< Updated upstream -->
             <Label text="Imagen a la izquierda" />
             <Button fx:id="leftButton" mnemonicParsing="false" onAction="#onCreatePostLeft" GridPane.rowIndex="1">
                <graphic>
@@ -54,30 +54,30 @@
             <Button fx:id="emptyButton" mnemonicParsing="false" onAction="#onCreatePostEmpty" GridPane.columnIndex="1" GridPane.rowIndex="3">
                <graphic>
                   <ImageView fx:id="emptyImage" pickOnBounds="true" preserveRatio="true" />
-=======
-            <Label text="Imagen a la derecha" GridPane.columnIndex="1" />
-            <Label text="Imagen Abajo" GridPane.rowIndex="2" />
-            <Button mnemonicParsing="false" GridPane.rowIndex="1">
-               <graphic>
-                  <ImageView pickOnBounds="true" preserveRatio="true" />
-               </graphic>
-            </Button>
-            <Button mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="1">
-               <graphic>
-                  <ImageView pickOnBounds="true" preserveRatio="true" />
-               </graphic>
-            </Button>
-            <Label text="Sin imagen" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <Button mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="3">
-               <graphic>
-                  <ImageView pickOnBounds="true" preserveRatio="true" />
-               </graphic>
-            </Button>
-            <Label text="Imagen a la izquierda" />
-            <Button mnemonicParsing="false" GridPane.rowIndex="3">
-               <graphic>
-                  <ImageView pickOnBounds="true" preserveRatio="true" />
->>>>>>> Stashed changes
+<!-- ======= -->
+<!--             <Label text="Imagen a la derecha" GridPane.columnIndex="1" /> -->
+<!--             <Label text="Imagen Abajo" GridPane.rowIndex="2" /> -->
+<!--             <Button mnemonicParsing="false" GridPane.rowIndex="1"> -->
+<!--                <graphic> -->
+<!--                   <ImageView pickOnBounds="true" preserveRatio="true" /> -->
+<!--                </graphic> -->
+<!--             </Button> -->
+<!--             <Button mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="1"> -->
+<!--                <graphic> -->
+<!--                   <ImageView pickOnBounds="true" preserveRatio="true" /> -->
+<!--                </graphic> -->
+<!--             </Button> -->
+<!--             <Label text="Sin imagen" GridPane.columnIndex="1" GridPane.rowIndex="2" /> -->
+<!--             <Button mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="3"> -->
+<!--                <graphic> -->
+<!--                   <ImageView pickOnBounds="true" preserveRatio="true" /> -->
+<!--                </graphic> -->
+<!--             </Button> -->
+<!--             <Label text="Imagen a la izquierda" /> -->
+<!--             <Button mnemonicParsing="false" GridPane.rowIndex="3"> -->
+<!--                <graphic> -->
+<!--                   <ImageView pickOnBounds="true" preserveRatio="true" /> -->
+<!-- >>>>>>> Stashed changes -->
                </graphic>
             </Button>
          </children>
