@@ -56,12 +56,17 @@ public class UserSectionController implements Initializable {
 	}
 	
 	@FXML
+    void onBackAction(ActionEvent event) {
+
+    }
+	
+	@FXML
     void onEditAction(ActionEvent event) {
 
     }
 
     @FXML
-    void onShowMoreButton(ActionEvent event) {
+    void onShowMoreAction(ActionEvent event) {
 
     }
 	

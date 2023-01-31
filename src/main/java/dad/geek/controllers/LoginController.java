@@ -19,7 +19,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
-import javafx.scene.Scene;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
@@ -80,7 +79,7 @@ public class LoginController implements Initializable {
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-
+		
 		// bindings
 		
 		user.usernameProperty().bind(usernameText.textProperty());
@@ -124,13 +123,7 @@ public class LoginController implements Initializable {
 
 	@FXML
 	void hasNoAccountAction(ActionEvent event) {
-		
-		App.primaryStage.setScene(
-			App.primaryStage.isMaximized() ?
-			new Scene(new SigninController().getView(), App.primaryStage.getWidth()-15, App.primaryStage.getHeight()-35) :
-			new Scene(new SigninController().getView())
-		);
-		App.primaryStage.centerOnScreen();
+		App.openScene(new SigninController().getView(), 450, 550);
 	}
 	
 	@FXML
@@ -138,11 +131,7 @@ public class LoginController implements Initializable {
 
 		if(user.userInDatabase()) {
 			
-			App.primaryStage.setScene(
-				App.primaryStage.isMaximized() ?
-				new Scene(new MainController().getView(), App.primaryStage.getWidth()-15, App.primaryStage.getHeight()-35) :
-				new Scene(new MainController().getView())
-			);
+			App.openScene(new MainController().getView(), 850, 550);
 			
 		} else {
 			noUserFound = new Label("No existe este usuario, inténtelo de nuevo.");

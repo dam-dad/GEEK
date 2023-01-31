@@ -5,6 +5,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
@@ -12,18 +13,28 @@
 
 <VBox fx:id="view" maxHeight="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <HBox alignment="CENTER_RIGHT" spacing="5.0" VBox.vgrow="NEVER">
-         <padding>
-            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-         </padding>
-         <children>
-            <JFXButton fx:id="editButton" contentDisplay="RIGHT" text="Editar" HBox.hgrow="NEVER">
+      <BorderPane>
+         <right>
+            <JFXButton fx:id="editButton" alignment="CENTER_RIGHT" contentDisplay="RIGHT" onAction="#onEditAction" text="Editar" BorderPane.alignment="CENTER">
                <graphic>
                   <FontIcon iconLiteral="mdi2l-lead-pencil" iconSize="16" />
                </graphic>
             </JFXButton>
-         </children>
-      </HBox>
+         </right>
+         <left>
+            <JFXButton contentDisplay="GRAPHIC_ONLY" onAction="#onBackAction" text="Button" BorderPane.alignment="CENTER">
+               <graphic>
+                  <FontIcon iconLiteral="mdi2a-arrow-left" iconSize="24" />
+               </graphic>
+               <BorderPane.margin>
+                  <Insets left="5.0" />
+               </BorderPane.margin>
+            </JFXButton>
+         </left>
+         <VBox.margin>
+            <Insets bottom="5.0" right="5.0" top="5.0" />
+         </VBox.margin>
+      </BorderPane>
       <HBox alignment="CENTER" VBox.vgrow="NEVER">
          <children>
             <ImageView fx:id="profileImage" fitHeight="64.0" fitWidth="64.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" HBox.hgrow="ALWAYS">
@@ -54,7 +65,7 @@
          <children>
             <Label text="Filtros seguidos:" />
             <Label fx:id="filterNumberLabel" text="0" />
-            <JFXButton fx:id="verMasButton" text="Ver más" />
+            <JFXButton fx:id="verMasButton" onAction="#onShowMoreAction" text="Ver más" />
          </children>
          <VBox.margin>
             <Insets top="10.0" />

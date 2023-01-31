@@ -83,7 +83,7 @@ public class SigninController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-
+		
 		// bindings
 		
 		user.usernameProperty().bind(usernameText.textProperty());
@@ -128,13 +128,7 @@ public class SigninController implements Initializable {
 	
 	@FXML
 	void onHasAccountAction(ActionEvent event) {
-		
-		App.primaryStage.setScene(
-			App.primaryStage.isMaximized() ?
-				new Scene(new LoginController().getView(), App.primaryStage.getWidth()-15, App.primaryStage.getHeight()-35) :
-				new Scene(new LoginController().getView())
-		);
-		App.primaryStage.centerOnScreen();
+		App.openScene(new LoginController().getView(), 450, 500);
 	}
 
 	@FXML
@@ -149,14 +143,7 @@ public class SigninController implements Initializable {
 //			App.primaryStage.setScene(new Scene(new MainController().getView()));
 //			user.addUsertoDB();
 //		}
-		
-		App.primaryStage.setScene(
-			App.primaryStage.isMaximized() ?
-			new Scene(new MainController().getView(), App.primaryStage.getWidth()-15, App.primaryStage.getHeight()-35) :
-			new Scene(new MainController().getView())
-		);
-		App.primaryStage.centerOnScreen();
-		
+		App.openScene(new MainController().getView(), 850, 550);
 	}
 
 	public BorderPane getView() {
