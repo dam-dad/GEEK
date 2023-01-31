@@ -11,6 +11,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 
@@ -35,7 +36,7 @@ public class PostController_Karim implements Initializable {
     private Label usernameLabel;
     
     @FXML
-    private VBox view;
+    private BorderPane view;
 	
 	public PostController_Karim() {
 		
@@ -54,7 +55,7 @@ public class PostController_Karim implements Initializable {
 	
 	}
 
-	public VBox getView() {
+	public BorderPane getView() {
 		return view;
 	}
 	

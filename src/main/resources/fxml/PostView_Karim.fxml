@@ -10,11 +10,11 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane fx:id="view" minWidth="215.0" prefWidth="215.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
    <center>
-      <VBox fx:id="view" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefWidth="600.0" spacing="15.0">
+      <VBox focusTraversable="true" spacing="15.0" BorderPane.alignment="CENTER">
          <children>
-            <FlowPane fx:id="filterFlow" hgap="5.0" vgap="5.0" VBox.vgrow="NEVER">
+            <FlowPane fx:id="filterFlow" focusTraversable="true" hgap="5.0" vgap="5.0" VBox.vgrow="ALWAYS">
                <children>
                   <Label text="Label" />
                   <Label text="Label" />
@@ -35,7 +35,7 @@
                   <Label text="Label" />
                   <Label text="Label" />
                   <Label text="Label" />
-                  <Label text="Label" />
+                  <Label focusTraversable="false" text="Label" />
                   <Label text="Label" />
                   <Label text="Label" />
                   <Label text="Label" />
@@ -62,7 +62,7 @@
                   <Image url="@../images/user.png" />
                </image>
             </ImageView>
-            <VBox>
+            <VBox minHeight="-Infinity" minWidth="-Infinity">
                <children>
                   <Label fx:id="usernameLabel" text="Nombre de Usuario" />
                   <Label fx:id="arrobaLabel" text="\@Arroba usuario" />

@@ -18,6 +18,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
@@ -33,33 +34,33 @@ public class MainController implements Initializable {
 	
 	@FXML
     private SplitPane containerPane;
-	
-	@FXML
-	private FontIcon darkModeIcon;
 
-	@FXML
-	private MenuItem darkModeItem;
+    @FXML
+    private FontIcon darkModeIcon;
 
-	@FXML
-	private ToggleSwitch darkModeSwitch;
+    @FXML
+    private MenuItem darkModeItem;
 
-	@FXML
-	private MenuItem exitItem;
+    @FXML
+    private ToggleSwitch darkModeSwitch;
 
-	@FXML
-	private MenuItem informeItem;
+    @FXML
+    private MenuItem exitItem;
 
-	@FXML
-	private MenuItem newPostItem;
+    @FXML
+    private MenuItem informeItem;
 
-	@FXML
-    private VBox searchContainer;
+    @FXML
+    private MenuItem newPostItem;
+
+    @FXML
+    private ScrollPane postContainerPane;
 
     @FXML
     private VBox userContainer;
 
-	@FXML
-	private BorderPane view;
+    @FXML
+    private BorderPane view;
 
 	public MainController() {
 		try {
@@ -79,7 +80,11 @@ public class MainController implements Initializable {
 		userContainer.getChildren().add(userSectionController.getView());
 		containerPane.getItems().add(searchSectionController.getView());
 		containerPane.setDividerPositions(0.25, 0.75);
-
+		
+		VBox vbox = new VBox();
+		vbox.getChildren().addAll(new PostController_Karim().getView(), new PostController_Karim().getView(), new PostController_Karim().getView());
+		postContainerPane.setContent(vbox);
+		
 		// listeners
 		
 		darkModeSwitch.selectedProperty().addListener((observable, oldValue, newValue) -> {
@@ -91,12 +96,10 @@ public class MainController implements Initializable {
 		});
 		
 		App.primaryStage.maximizedProperty().addListener((o,ov,nv) -> {
-			if(nv != null && nv == true)
+			if(App.primaryStage.isMaximized())
 				containerPane.setDividerPositions(0.2, 0.80);
-			else if(nv != null && nv == false) {
+			else {
 				containerPane.setDividerPositions(0.25, 0.75);
-				App.primaryStage.setWidth(800);
-				App.primaryStage.setHeight(500);
 			}
 		});
 
