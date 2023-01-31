@@ -9,6 +9,7 @@ import org.controlsfx.control.ToggleSwitch;
 import org.kordamp.ikonli.javafx.FontIcon;
 
 import dad.geek.App;
+import dad.geek.utils.Utils;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -81,6 +82,7 @@ public class MainController implements Initializable {
 		containerPane.getItems().add(searchSectionController.getView());
 		containerPane.setDividerPositions(0.25, 0.75);
 		
+		// TODO provisional
 		VBox vbox = new VBox();
 		vbox.getChildren().addAll(new PostController_Karim().getView(), new PostController_Karim().getView(), new PostController_Karim().getView());
 		postContainerPane.setContent(vbox);
@@ -124,14 +126,7 @@ public class MainController implements Initializable {
 
 	@FXML
 	void onExitAction(ActionEvent event) {
-		Alert alerta = new Alert(AlertType.CONFIRMATION);
-		alerta.setTitle("Exit");
-		alerta.setHeaderText("Va a salir de la aplicación.");
-		alerta.setContentText("¿Seguro que quiere salir?");
-		Optional<ButtonType> action = alerta.showAndWait();
-		if (action.get() == ButtonType.OK) {
-			Platform.exit();
-		}
+		App.salir();
 	}
 
 	@FXML

@@ -1,9 +1,15 @@
 package dad.geek;
 
+import java.util.Optional;
+
 import dad.geek.controllers.LoginController;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 
 public class App extends Application {
@@ -25,6 +31,11 @@ public class App extends Application {
 		App.primaryStage.setMinWidth(450);
 		App.primaryStage.setMinHeight(500);
 		App.primaryStage.centerOnScreen();
+		App.primaryStage.setOnCloseRequest(e -> {
+			e.consume();
+			App.salir();
+		});	
+
 		
 	}
 	
@@ -39,11 +50,22 @@ public class App extends Application {
 		App.primaryStage.close();
 		stage.setMinWidth(width);
 		stage.setMinHeight(height);
-		stage.centerOnScreen();
 		
 		App.primaryStage = stage;
 		App.primaryStage.show();
 		
+	}
+	
+	public static void salir() {
+		Alert alerta = new Alert(AlertType.CONFIRMATION);
+		alerta.setTitle("Exit");
+		alerta.initOwner(App.primaryStage);
+		alerta.setHeaderText("Va a salir de la aplicación.");
+		alerta.setContentText("¿Seguro que quiere salir?");
+		Optional<ButtonType> action = alerta.showAndWait();
+		if (action.get() == ButtonType.OK) {
+			Platform.exit();
+		}
 	}
 
 }
