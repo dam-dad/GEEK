@@ -4,3 +4,4 @@
 /.settings/
 /bin/
 src/main/resources/properties/conexion_local.properties
+/.vscode/
