@@ -2,8 +2,6 @@ package dad.geek.controllers;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXTextArea;
@@ -69,7 +67,7 @@ public class PostController implements Initializable {
 		
 		// load data
 		
-		user = createUser();
+		user = App.mysql.getUser(post.getUserID());
 		
 		// bindings
 	
@@ -80,29 +78,6 @@ public class PostController implements Initializable {
 		
 	}
 	
-	private User createUser() {
-		
-		try {
-			
-			ResultSet posts = App.mysql.oneUser(post.getUserID());
-			while(posts.next()) {
-				
-				return new User(
-					posts.getInt("ID"),
-					posts.getString("nombre"),
-					posts.getString("nombreUsuario"),
-					posts.getString("password")
-				);
-			
-			}
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
-		return null;
-	}
-
 	public BorderPane getView() {
 		return view;
 	}

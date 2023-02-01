@@ -1,5 +1,8 @@
 package dad.geek.model;
 
+import java.sql.SQLException;
+
+import dad.geek.App;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -25,9 +28,8 @@ public class User {
 		setPassword(password);
 	}
 	
-	public boolean userInDatabase() {
-		// TODO implementar
-		return true;
+	public boolean userInDatabase() throws SQLException {
+		return App.mysql.oneUser(getUsername(), getPassword()).next();
 	}
 	
 	public boolean addUsertoDB() {

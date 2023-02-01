@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
 
+import dad.geek.App;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -31,7 +32,7 @@ public class UserSectionController implements Initializable {
     private JFXButton showMoreButton;
 
     @FXML
-    private Label usercodeLabel;
+    private Label nameLabel;
 
     @FXML
     private Label usernameLabel;
@@ -52,6 +53,11 @@ public class UserSectionController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		
+		// bindings
+		
+		nameLabel.textProperty().bind(App.user.nicknameProperty());
+		usernameLabel.textProperty().bind(App.user.usernameProperty());
 		
 	}
 	

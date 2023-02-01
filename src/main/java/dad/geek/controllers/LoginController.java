@@ -2,6 +2,7 @@ package dad.geek.controllers;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 import org.kordamp.ikonli.javafx.FontIcon;
@@ -127,10 +128,12 @@ public class LoginController implements Initializable {
 	}
 	
 	@FXML
-	void onLoginAction(ActionEvent event) {
-
+	void onLoginAction(ActionEvent event) throws SQLException {
+		
+		hideLabel();
 		if(user.userInDatabase()) {
 			
+			App.user = App.mysql.getUser(this.user.getUsername(), this.user.getPassword());
 			App.openScene(new MainController().getView(), 850, 550);
 			
 		} else {

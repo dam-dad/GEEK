@@ -10,7 +10,6 @@ import org.controlsfx.control.ToggleSwitch;
 import org.kordamp.ikonli.javafx.FontIcon;
 
 import dad.geek.App;
-import dad.geek.db.ConexionMySQL;
 import dad.geek.model.Post;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -80,13 +79,13 @@ public class MainController implements Initializable {
 		containerPane.getItems().add(searchSectionController.getView());
 		containerPane.setDividerPositions(0.25, 0.75);
 		
-		VBox vbox = new VBox();
+		VBox postsContainer = new VBox();
 		try {
 			
 			ResultSet posts = App.mysql.allPosts();
 			while(posts.next()) {
 				
-				vbox.getChildren().add(
+				postsContainer.getChildren().add(
 					new PostController(new Post(
 						posts.getInt("ID"),
 						posts.getInt("ID_Usuario"),
@@ -101,7 +100,7 @@ public class MainController implements Initializable {
 			e.printStackTrace();
 		}
 		
-		postContainerPane.setContent(vbox);
+		postContainerPane.setContent(postsContainer);
 		
 		// listeners
 		
