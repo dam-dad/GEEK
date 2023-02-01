@@ -32,9 +32,8 @@ public class User {
 		return App.mysql.oneUser(getUsername(), getPassword()).next();
 	}
 	
-	public boolean addUsertoDB() {
-		// TODO implementar
-		return true;
+	public void addUsertoDB() {
+		App.mysql.createUser(getUsername(), getPassword());
 	}
 	
 	public final IntegerProperty userIDProperty() {

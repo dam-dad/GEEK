@@ -5,7 +5,6 @@ import java.util.Optional;
 import dad.geek.controllers.LoginController;
 import dad.geek.db.ConexionMySQL;
 import dad.geek.model.User;
-import dad.geek.db.DBManager;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Parent;
@@ -24,12 +23,12 @@ public class App extends Application {
 //	private MainController controller = new MainController();
 	private LoginController controller = new LoginController();
 	
-	@Override
-	public void init() throws Exception {
-		super.init();
-
-		DBManager.conectarDB();
-	}
+//	@Override
+//	public void init() throws Exception {
+//		super.init();
+//
+//		DBManager.conectarDB();
+//	}
 	
 	@Override
 	public void start(Stage primaryStage) throws Exception {

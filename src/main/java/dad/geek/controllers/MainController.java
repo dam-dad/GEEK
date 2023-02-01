@@ -1,6 +1,5 @@
 package dad.geek.controllers;
 
-import java.awt.Dialog;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
@@ -126,19 +125,11 @@ public class MainController implements Initializable {
 
 	}
 
-	public BorderPane getView() {
-		return view;
-	}
-
 	@FXML
 	void onCreatePostAction(ActionEvent event) {
 		Stage window = new Stage();
 		window.setTitle("Nuevo Post");
-		window.setScene(
-				App.primaryStage.isMaximized() ?
-				new Scene(new NewPostDialog().getView(), App.primaryStage.getWidth()-15, App.primaryStage.getHeight()-35) :
-				new Scene(new NewPostDialog().getView())
-			);
+		window.setScene(new Scene(new NewPostDialog().getView()));
 		window.setMinHeight(300);
 		window.setMinWidth(300);
 		window.initOwner(App.primaryStage);
@@ -162,6 +153,10 @@ public class MainController implements Initializable {
 	@FXML
 	void onGenerateInformeAction(ActionEvent event) {
 
+	}
+	
+	public BorderPane getView() {
+		return view;
 	}
 
 }

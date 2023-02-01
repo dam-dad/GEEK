@@ -16,26 +16,27 @@ public class ConexionMySQL {
 
 	private static Connection connMySQL;
 	private Statement stmtMySQL;
-	private PreparedStatement allPosts, userId, userNamePass;
+	private PreparedStatement allPosts, userId, userNamePass, createUser;
 	private ResultSet resultPosts, resultUser;
 	
 	public ConexionMySQL() {
 		
 		try {
 			Properties prop = new Properties();
-			prop.load(getClass().getResourceAsStream("/properties/conexiones.properties"));
-			String url = prop.getProperty("SQLHost");
-			String username = prop.getProperty("SQLUsername", "root");
-			String password = prop.getProperty("SQLPassword", "");
-//			String url = prop.getProperty("mysqlurl");
-//			String username = prop.getProperty("mysqlusername", "root");
-//			String password = prop.getProperty("mysqlpassword", "");
+			prop.load(getClass().getResourceAsStream("/properties/conexiones_local.properties"));
+//			String url = prop.getProperty("SQLHost");
+//			String username = prop.getProperty("SQLUsername", "root");
+//			String password = prop.getProperty("SQLPassword", "");
+			String url = prop.getProperty("mysqlurl");
+			String username = prop.getProperty("mysqlusername", "root");
+			String password = prop.getProperty("mysqlpassword", "");
 			
 			connMySQL = DriverManager.getConnection(url, username, password);
 			
 			allPosts = connMySQL.prepareStatement("select * from posts");
 			userId = connMySQL.prepareStatement("select * from usuarios where id = ?");
 			userNamePass = connMySQL.prepareStatement("select * from usuarios where nombreUsuario = ? and password = ?");
+			createUser = connMySQL.prepareStatement("insert into usuarios (nombreUsuario, password) values (?, ?)");
 			
 		} catch (SQLException | IOException e) {
 			e.printStackTrace();
@@ -112,6 +113,18 @@ public class ConexionMySQL {
 		}
 		
 		return null;
+	}
+	
+	public void createUser(String username, String password) {
+		
+		try {
+			createUser.setString(1, username);
+			createUser.setString(2, password);
+			createUser.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
 	}
 	
 	public void close() {
