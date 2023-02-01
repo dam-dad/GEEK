@@ -14,39 +14,7 @@
    <center>
       <VBox focusTraversable="true" spacing="15.0" BorderPane.alignment="CENTER">
          <children>
-            <FlowPane fx:id="filterFlow" focusTraversable="true" hgap="5.0" vgap="5.0" VBox.vgrow="ALWAYS">
-               <children>
-                  <Label text="Label" />
-                  <Label text="Label" />
-                  <Label text="Label" />
-                  <Label text="Label" />
-                  <Label text="Label" />
-                  <Label text="Label" />
-                  <Label text="Label" />
-                  <Label text="Label" />
-                  <Label text="Label" />
-                  <Label text="Label" />
-                  <Label text="Label" />
-                  <Label text="Label" />
-                  <Label text="Label" />
-                  <Label text="Label" />
-                  <Label text="Label" />
-                  <Label text="Label" />
-                  <Label text="Label" />
-                  <Label text="Label" />
-                  <Label text="Label" />
-                  <Label focusTraversable="false" text="Label" />
-                  <Label text="Label" />
-                  <Label text="Label" />
-                  <Label text="Label" />
-                  <Label text="Label" />
-                  <Label text="Label" />
-                  <Label text="Label" />
-                  <Label text="Label" />
-                  <Label text="Label" />
-                  <Label text="Label" />
-               </children>
-            </FlowPane>
+            <FlowPane fx:id="filterFlow" focusTraversable="true" hgap="5.0" vgap="5.0" VBox.vgrow="ALWAYS" />
             <JFXTextArea fx:id="contentTextArea" editable="false" promptText="Texto de ejemplo." />
          </children>
          <padding>

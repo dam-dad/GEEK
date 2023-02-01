@@ -2,22 +2,20 @@ package dad.geek.controllers;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Optional;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 import org.controlsfx.control.ToggleSwitch;
 import org.kordamp.ikonli.javafx.FontIcon;
 
 import dad.geek.App;
-import dad.geek.utils.Utils;
-import javafx.application.Platform;
+import dad.geek.db.ConexionMySQL;
+import dad.geek.model.Post;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitPane;
@@ -82,9 +80,27 @@ public class MainController implements Initializable {
 		containerPane.getItems().add(searchSectionController.getView());
 		containerPane.setDividerPositions(0.25, 0.75);
 		
-		// TODO provisional
 		VBox vbox = new VBox();
-		vbox.getChildren().addAll(new PostController_Karim().getView(), new PostController_Karim().getView(), new PostController_Karim().getView());
+		try {
+			
+			ResultSet posts = App.mysql.allPosts();
+			while(posts.next()) {
+				
+				vbox.getChildren().add(
+					new PostController(new Post(
+						posts.getInt("ID"),
+						posts.getInt("ID_Usuario"),
+						posts.getString("titulo"),
+						posts.getString("contenido")
+					)).getView()
+				);
+			
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
 		postContainerPane.setContent(vbox);
 		
 		// listeners

@@ -15,6 +15,23 @@ public class Post {
 	private StringProperty postContent = new SimpleStringProperty();
 	private ObjectProperty<Image> postImage = new SimpleObjectProperty<>();
 	
+	public Post() {	}
+	
+	public Post(int postID, int userID, String postTitle, String postContent) {
+		setPostID(postID);
+		setUserID(userID);
+		setPostTitle(postTitle);
+		setPostContent(postContent);
+	}
+	
+	public final IntegerProperty postIDProperty() {
+		return this.postID;
+	}
+	
+	public final void setPostID(final int postID) {
+		this.postIDProperty().set(postID);
+	}
+	
 	public final int getPostID() {
 		return this.postID.get();
 	}

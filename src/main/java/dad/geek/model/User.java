@@ -18,7 +18,9 @@ public class User {
 	
 	public User() {}
 	
-	public User(String username, String password) {
+	public User(int userID, String nickname, String username, String password) {
+		setUserID(userID);
+		setNickname(nickname);
 		setUsername(username);
 		setPassword(password);
 	}
@@ -33,8 +35,16 @@ public class User {
 		return true;
 	}
 	
+	public final IntegerProperty userIDProperty() {
+		return this.userID;
+	}
+	
 	public final Integer getUserID() {
 		return this.userID.get();
+	}
+	
+	public final void setUserID(final int userID) {
+		this.userIDProperty().set(userID);
 	}
 	
 	public final StringProperty usernameProperty() {
