@@ -3,12 +3,15 @@ package dad.geek.controllers;
 import java.awt.Dialog;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 import org.controlsfx.control.ToggleSwitch;
 import org.kordamp.ikonli.javafx.FontIcon;
 
 import dad.geek.App;
+import dad.geek.model.Post;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -80,10 +83,28 @@ public class MainController implements Initializable {
 		containerPane.getItems().add(searchSectionController.getView());
 		containerPane.setDividerPositions(0.25, 0.75);
 		
-		// TODO provisional
-		VBox vbox = new VBox();
-		vbox.getChildren().addAll(new PostController_Karim().getView(), new PostController_Karim().getView(), new PostController_Karim().getView());
-		postContainerPane.setContent(vbox);
+		VBox postsContainer = new VBox();
+		try {
+			
+			ResultSet posts = App.mysql.allPosts();
+			while(posts.next()) {
+				
+				postsContainer.getChildren().add(
+					new PostController(new Post(
+						posts.getInt("ID"),
+						posts.getInt("ID_Usuario"),
+						posts.getString("titulo"),
+						posts.getString("contenido")
+					)).getView()
+				);
+			
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		postContainerPane.setContent(postsContainer);
 		
 		// listeners
 		

@@ -1,5 +1,7 @@
 package dad.geek.model;
 
+import java.time.LocalDateTime;
+
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -14,6 +16,24 @@ public class Post {
 	private StringProperty postTitle = new SimpleStringProperty();
 	private StringProperty postContent = new SimpleStringProperty();
 	private ObjectProperty<Image> postImage = new SimpleObjectProperty<>();
+	private ObjectProperty<LocalDateTime> postDate = new SimpleObjectProperty<>();
+	
+	public Post() {	}
+	
+	public Post(int postID, int userID, String postTitle, String postContent) {
+		setPostID(postID);
+		setUserID(userID);
+		setPostTitle(postTitle);
+		setPostContent(postContent);
+	}
+	
+	public final IntegerProperty postIDProperty() {
+		return this.postID;
+	}
+	
+	public final void setPostID(final int postID) {
+		this.postIDProperty().set(postID);
+	}
 	
 	public final int getPostID() {
 		return this.postID.get();
@@ -65,6 +85,18 @@ public class Post {
 	
 	public final void setPostImage(final Image postImage) {
 		this.postImageProperty().set(postImage);
+	}
+
+	public final ObjectProperty<LocalDateTime> postDateProperty() {
+		return this.postDate;
+	}
+
+	public final LocalDateTime getPostDate() {
+		return this.postDateProperty().get();
+	}
+
+	public final void setPostDate(final LocalDateTime postDate) {
+		this.postDateProperty().set(postDate);
 	}
 	
 }

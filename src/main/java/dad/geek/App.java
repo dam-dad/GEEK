@@ -3,6 +3,8 @@ package dad.geek;
 import java.util.Optional;
 
 import dad.geek.controllers.LoginController;
+import dad.geek.db.ConexionMySQL;
+import dad.geek.model.User;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Parent;
@@ -15,6 +17,8 @@ import javafx.stage.Stage;
 public class App extends Application {
 
 	public static Stage primaryStage;
+	public static ConexionMySQL mysql = new ConexionMySQL();
+	public static User user = new User();
 	
 //	private MainController controller = new MainController();
 	private LoginController controller = new LoginController();
