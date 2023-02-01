@@ -1,28 +1,26 @@
 package dad.geek.controllers;
 
+import java.awt.Dialog;
 import java.io.IOException;
 import java.net.URL;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 import org.controlsfx.control.ToggleSwitch;
 import org.kordamp.ikonli.javafx.FontIcon;
 
 import dad.geek.App;
-import dad.geek.utils.Utils;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.ButtonType;
+import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 public class MainController implements Initializable {
 	
@@ -113,7 +111,18 @@ public class MainController implements Initializable {
 
 	@FXML
 	void onCreatePostAction(ActionEvent event) {
-		
+		Stage window = new Stage();
+		window.setTitle("Nuevo Post");
+		window.setScene(
+				App.primaryStage.isMaximized() ?
+				new Scene(new NewPostDialog().getView(), App.primaryStage.getWidth()-15, App.primaryStage.getHeight()-35) :
+				new Scene(new NewPostDialog().getView())
+			);
+		window.setMinHeight(300);
+		window.setMinWidth(300);
+		window.initOwner(App.primaryStage);
+		window.initModality(Modality.APPLICATION_MODAL);
+		window.show();
 	}
 
 	@FXML

@@ -42,7 +42,7 @@ public class NewPostDialog implements Initializable {
 	    
 	    public NewPostDialog() {
 	    	try {
-				FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/LoginView.fxml"));
+				FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/NewPostDialog.fxml"));
 				loader.setController(this);
 				loader.load();
 			} catch (IOException e) {
