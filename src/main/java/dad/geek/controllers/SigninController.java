@@ -41,16 +41,21 @@ public class SigninController implements Initializable {
 	private ImageView welcomeImage;
 	@FXML
 	private Label welcomeLabel;
+	
+	@FXML
+    private FontIcon nicknameIcon;
+    @FXML
+    private JFXTextField nicknameText;
 
 	@FXML
 	private FontIcon usernameIcon;
 	@FXML
 	private JFXTextField usernameText;
 
-	@FXML
-	private FontIcon mailIcon;
-	@FXML
-	private JFXTextField mailText;
+//	@FXML
+//	private FontIcon mailIcon;
+//	@FXML
+//	private JFXTextField mailText;
 
 	@FXML
 	private FontIcon passwordImage;
@@ -89,7 +94,8 @@ public class SigninController implements Initializable {
 		// bindings
 		
 		user.usernameProperty().bind(usernameText.textProperty());
-		user.mailProperty().bind(mailText.textProperty());
+		user.nicknameProperty().bind(nicknameText.textProperty());
+//		user.mailProperty().bind(mailText.textProperty());
 
 		user.passwordProperty().bindBidirectional(passwordText.textProperty());
 		user.passwordProperty().bindBidirectional(passwordPassText.textProperty());

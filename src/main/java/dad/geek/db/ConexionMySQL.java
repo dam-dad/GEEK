@@ -36,7 +36,7 @@ public class ConexionMySQL {
 			allPosts = connMySQL.prepareStatement("select * from posts");
 			userId = connMySQL.prepareStatement("select * from usuarios where id = ?");
 			userNamePass = connMySQL.prepareStatement("select * from usuarios where nombreUsuario = ? and password = ?");
-			createUser = connMySQL.prepareStatement("insert into usuarios (nombreUsuario, password) values (?, ?)");
+			createUser = connMySQL.prepareStatement("insert into usuarios (nombre, nombreUsuario, password) values (?, ?, ?)");
 			
 		} catch (SQLException | IOException e) {
 			e.printStackTrace();
@@ -115,11 +115,12 @@ public class ConexionMySQL {
 		return null;
 	}
 	
-	public void createUser(String username, String password) {
+	public void createUser(String nickname, String username, String password) {
 		
 		try {
-			createUser.setString(1, username);
-			createUser.setString(2, password);
+			createUser.setString(1, nickname);
+			createUser.setString(2, username);
+			createUser.setString(3, password);
 			createUser.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();

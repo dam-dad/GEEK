@@ -33,7 +33,7 @@ public class User {
 	}
 	
 	public void addUsertoDB() {
-		App.mysql.createUser(getUsername(), getPassword());
+		App.mysql.createUser(getNickname(), getUsername(), getPassword());
 	}
 	
 	public final IntegerProperty userIDProperty() {
