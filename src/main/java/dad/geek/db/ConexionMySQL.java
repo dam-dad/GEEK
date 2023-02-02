@@ -16,7 +16,7 @@ public class ConexionMySQL {
 
 	private static Connection connMySQL;
 	private Statement stmtMySQL;
-	private PreparedStatement allPosts, userId, userNamePass, createUser;
+	private PreparedStatement allPosts, userFromId, userFromNamePass, createUser;
 	private ResultSet resultPosts, resultUser;
 	
 	public ConexionMySQL() {
@@ -24,9 +24,6 @@ public class ConexionMySQL {
 		try {
 			Properties prop = new Properties();
 			prop.load(getClass().getResourceAsStream("/properties/conexiones_local.properties"));
-//			String url = prop.getProperty("SQLHost");
-//			String username = prop.getProperty("SQLUsername", "root");
-//			String password = prop.getProperty("SQLPassword", "");
 			String url = prop.getProperty("mysqlurl");
 			String username = prop.getProperty("mysqlusername", "root");
 			String password = prop.getProperty("mysqlpassword", "");
@@ -34,8 +31,8 @@ public class ConexionMySQL {
 			connMySQL = DriverManager.getConnection(url, username, password);
 			
 			allPosts = connMySQL.prepareStatement("select * from posts");
-			userId = connMySQL.prepareStatement("select * from usuarios where id = ?");
-			userNamePass = connMySQL.prepareStatement("select * from usuarios where nombreUsuario = ? and password = ?");
+			userFromId = connMySQL.prepareStatement("select * from usuarios where id = ?");
+			userFromNamePass = connMySQL.prepareStatement("select * from usuarios where nombreUsuario = ? and password = ?");
 			createUser = connMySQL.prepareStatement("insert into usuarios (nombre, nombreUsuario, password) values (?, ?, ?)");
 			
 		} catch (SQLException | IOException e) {
@@ -54,8 +51,8 @@ public class ConexionMySQL {
 	
 	public ResultSet getUserFromDB(int id) {
 		try {
-			userId.setInt(1, id);
-			resultUser = userId.executeQuery();
+			userFromId.setInt(1, id);
+			resultUser = userFromId.executeQuery();
 		} catch (SQLException e) {
 			System.err.println("error en oneuser id");
 		}
@@ -64,9 +61,9 @@ public class ConexionMySQL {
 	
 	public ResultSet getUserFromDB(String username, String password) {
 		try {
-			userNamePass.setString(1, username);
-			userNamePass.setString(2, password);
-			resultUser = userNamePass.executeQuery();
+			userFromNamePass.setString(1, username);
+			userFromNamePass.setString(2, password);
+			resultUser = userFromNamePass.executeQuery();
 		} catch (SQLException e) {
 			System.err.println("error en oneuser login " + username + ":" + password + "\n");
 		}
