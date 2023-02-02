@@ -25,14 +25,14 @@
             </VBox>
          </center>
          <top>
-            <HBox alignment="CENTER_LEFT" spacing="10.0" BorderPane.alignment="CENTER">
+            <HBox alignment="CENTER_LEFT" maxWidth="1.7976931348623157E308" spacing="10.0" BorderPane.alignment="CENTER">
                <children>
                   <ImageView fx:id="profileImage" fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../images/user.png" />
                      </image>
                   </ImageView>
-                  <FlowPane fx:id="filterFlow" focusTraversable="true" hgap="5.0" vgap="5.0" />
+                  <FlowPane fx:id="filterFlow" focusTraversable="true" hgap="5.0" maxWidth="1.7976931348623157E308" prefWrapLength="0.0" vgap="5.0" HBox.hgrow="ALWAYS" />
                   <JFXButton fx:id="addFilterButton" contentDisplay="GRAPHIC_ONLY" onAction="#onAddFilterAction">
                      <graphic>
                         <FontIcon iconLiteral="fas-plus-circle" iconSize="16" />
