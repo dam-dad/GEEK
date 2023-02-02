@@ -29,7 +29,7 @@ public class User {
 	}
 	
 	public boolean userInDatabase() throws SQLException {
-		return App.mysql.oneUser(getUsername(), getPassword()).next();
+		return App.mysql.getUserFromDB(getUsername(), getPassword()).next();
 	}
 	
 	public void addUsertoDB() {

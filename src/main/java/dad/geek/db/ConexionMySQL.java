@@ -52,7 +52,7 @@ public class ConexionMySQL {
 		return resultPosts;
 	}
 	
-	public ResultSet oneUser(int id) {
+	public ResultSet getUserFromDB(int id) {
 		try {
 			userId.setInt(1, id);
 			resultUser = userId.executeQuery();
@@ -62,7 +62,7 @@ public class ConexionMySQL {
 		return resultUser;
 	}
 	
-	public ResultSet oneUser(String username, String password) {
+	public ResultSet getUserFromDB(String username, String password) {
 		try {
 			userNamePass.setString(1, username);
 			userNamePass.setString(2, password);
@@ -73,11 +73,10 @@ public class ConexionMySQL {
 		return resultUser;
 	}
 	
-	public User getUser(int userId) {
+	public User getUserObject(int userId) {
 		
 		try {
-			
-			ResultSet posts = App.mysql.oneUser(userId);
+			ResultSet posts = App.mysql.getUserFromDB(userId);
 			while(posts.next()) {
 				return new User(
 					posts.getInt("ID"),
@@ -86,7 +85,6 @@ public class ConexionMySQL {
 					posts.getString("password")
 				);
 			}
-			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -94,11 +92,10 @@ public class ConexionMySQL {
 		return null;
 	}
 	
-	public User getUser(String username, String password) {
+	public User getUserObject(String username, String password) {
 		
 		try {
-			
-			ResultSet posts = App.mysql.oneUser(username, password);
+			ResultSet posts = App.mysql.getUserFromDB(username, password);
 			while(posts.next()) {
 				return new User(
 					posts.getInt("ID"),
@@ -107,7 +104,6 @@ public class ConexionMySQL {
 					posts.getString("password")
 				);
 			}
-			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
