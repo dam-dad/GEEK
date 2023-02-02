@@ -7,9 +7,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 import dad.geek.App;
+import dad.geek.model.Post;
 import dad.geek.model.User;
 
 public class ConexionMySQL {
@@ -40,7 +43,7 @@ public class ConexionMySQL {
 		}
 	}
 	
-	public ResultSet allPosts() {
+	public ResultSet allPostsFromDB() {
 		try {
 			resultPosts = allPosts.executeQuery();
 		} catch (SQLException e) {
@@ -68,6 +71,29 @@ public class ConexionMySQL {
 			System.err.println("error en oneuser login " + username + ":" + password + "\n");
 		}
 		return resultUser;
+	}
+	
+	public List<Post> getAllPosts() {
+		
+		List<Post> result = new ArrayList<>();
+		ResultSet posts = App.mysql.allPostsFromDB();
+		
+		try {
+			while(posts.next()) {
+				
+				result.add(new Post(
+					posts.getInt("ID"),
+					posts.getInt("ID_Usuario"),
+					posts.getString("titulo"),
+					posts.getString("contenido")
+				));
+				
+			}
+		} catch (SQLException e) {
+			System.err.println("error en getAllPosts");
+		}
+		
+		return result;
 	}
 	
 	public User getUserObject(int userId) {

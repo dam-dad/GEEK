@@ -8,6 +8,8 @@ import com.jfoenix.controls.JFXButton;
 
 import dad.geek.App;
 import javafx.beans.binding.Bindings;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,8 +19,15 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 
 public class UserSectionController implements Initializable {
+	
+	// model
+	
+	private BooleanProperty goback = new SimpleBooleanProperty(true);
 
 	// view
+	
+	@FXML
+    private JFXButton backButton;
 	
 	@FXML
     private JFXButton editButton;
@@ -59,6 +68,7 @@ public class UserSectionController implements Initializable {
 		
 		nameLabel.textProperty().bind(App.user.nicknameProperty());
 		usernameLabel.textProperty().bind(Bindings.concat("@").concat(App.user.usernameProperty()));
+		backButton.disableProperty().bind(goback);
 		
 	}
 	

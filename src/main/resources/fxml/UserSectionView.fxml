@@ -22,7 +22,7 @@
             </JFXButton>
          </right>
          <left>
-            <JFXButton contentDisplay="GRAPHIC_ONLY" onAction="#onBackAction" text="Button" BorderPane.alignment="CENTER">
+            <JFXButton fx:id="backButton" contentDisplay="GRAPHIC_ONLY" onAction="#onBackAction" text="Button" BorderPane.alignment="CENTER">
                <graphic>
                   <FontIcon iconLiteral="mdi2a-arrow-left" iconSize="24" />
                </graphic>

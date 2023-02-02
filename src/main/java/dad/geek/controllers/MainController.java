@@ -2,8 +2,6 @@ package dad.geek.controllers;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 import org.controlsfx.control.ToggleSwitch;
@@ -82,28 +80,7 @@ public class MainController implements Initializable {
 		containerPane.getItems().add(searchSectionController.getView());
 		containerPane.setDividerPositions(0.25, 0.75);
 		
-		VBox postsContainer = new VBox();
-		try {
-			
-			ResultSet posts = App.mysql.allPosts();
-			while(posts.next()) {
-				
-				postsContainer.getChildren().add(
-					new PostController(new Post(
-						posts.getInt("ID"),
-						posts.getInt("ID_Usuario"),
-						posts.getString("titulo"),
-						posts.getString("contenido")
-					)).getView()
-				);
-			
-			}
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
-		postContainerPane.setContent(postsContainer);
+		postContainerPane.setContent(laodPosts());
 		
 		// listeners
 		
@@ -123,6 +100,14 @@ public class MainController implements Initializable {
 			}
 		});
 
+	}
+	
+	private VBox laodPosts() {
+		VBox postsContainer = new VBox();
+		for(Post p : App.mysql.getAllPosts()) {
+			postsContainer.getChildren().add(new PostController(p).getView());
+		}
+		return postsContainer;
 	}
 
 	@FXML
