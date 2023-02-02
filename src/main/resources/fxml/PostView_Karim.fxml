@@ -10,6 +10,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
+
 <BorderPane fx:id="view" minWidth="180.0" prefWidth="180.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
    <center>
       <VBox focusTraversable="true" spacing="15.0" BorderPane.alignment="CENTER">
@@ -42,4 +43,13 @@
          </padding>
       </HBox>
    </top>
+   <left>
+      <ImageView fx:id="imageLeft" pickOnBounds="true" preserveRatio="true" visible="false" BorderPane.alignment="CENTER" />
+   </left>
+   <right>
+      <ImageView fx:id="imageRight" pickOnBounds="true" preserveRatio="true" visible="false" BorderPane.alignment="CENTER" />
+   </right>
+   <bottom>
+      <ImageView fx:id="imageBottom" pickOnBounds="true" preserveRatio="true" visible="false" BorderPane.alignment="CENTER" />
+   </bottom>
 </BorderPane>
