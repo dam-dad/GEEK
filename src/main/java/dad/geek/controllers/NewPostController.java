@@ -67,20 +67,20 @@ public class NewPostController implements Initializable {
 		switch (posicionImagen) {
 		case LEFT:
 			leftImage.setImage(new Image("/images/ejemplo.png"));
-			leftImage.setFitWidth(100);
-			leftImage.setFitHeight(100);
+			leftImage.setFitWidth(200);
+			leftImage.setFitHeight(200);
 			leftImage.setVisible(true);
 			break;
 		case RIGHT:
 			rightImage.setImage(new Image("/images/ejemplo.png"));
-			rightImage.setFitWidth(100);
-			rightImage.setFitHeight(100);
+			rightImage.setFitWidth(200);
+			rightImage.setFitHeight(200);
 			rightImage.setVisible(true);
 			break;
 		case DOWN:
 			bottomImage.setImage(new Image("/images/ejemplo.png"));
-			bottomImage.setFitWidth(100);
-			bottomImage.setFitHeight(100);
+			bottomImage.setFitWidth(200);
+			bottomImage.setFitHeight(200);
 			bottomImage.setVisible(true);
 			break;
 		case EMPTY:
