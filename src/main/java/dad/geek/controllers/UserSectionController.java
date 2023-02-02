@@ -7,6 +7,7 @@ import java.util.ResourceBundle;
 import com.jfoenix.controls.JFXButton;
 
 import dad.geek.App;
+import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -57,7 +58,7 @@ public class UserSectionController implements Initializable {
 		// bindings
 		
 		nameLabel.textProperty().bind(App.user.nicknameProperty());
-		usernameLabel.textProperty().bind(App.user.usernameProperty());
+		usernameLabel.textProperty().bind(Bindings.concat("@").concat(App.user.usernameProperty()));
 		
 	}
 	
