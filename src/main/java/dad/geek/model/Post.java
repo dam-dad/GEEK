@@ -3,11 +3,15 @@ package dad.geek.model;
 import java.time.LocalDateTime;
 
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.ListProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 public class Post {
 
@@ -17,6 +21,7 @@ public class Post {
 	private StringProperty postContent = new SimpleStringProperty();
 	private ObjectProperty<Image> postImage = new SimpleObjectProperty<>();
 	private ObjectProperty<LocalDateTime> postDate = new SimpleObjectProperty<>();
+	private ListProperty<Filter> filters = new SimpleListProperty<>(FXCollections.observableArrayList());
 	
 	public Post() {	}
 	
@@ -97,6 +102,18 @@ public class Post {
 
 	public final void setPostDate(final LocalDateTime postDate) {
 		this.postDateProperty().set(postDate);
+	}
+
+	public final ListProperty<Filter> filtersProperty() {
+		return this.filters;
+	}
+
+	public final ObservableList<Filter> getFilters() {
+		return this.filtersProperty().get();
+	}
+
+	public final void setFilters(final ObservableList<Filter> filters) {
+		this.filtersProperty().set(filters);
 	}
 	
 }

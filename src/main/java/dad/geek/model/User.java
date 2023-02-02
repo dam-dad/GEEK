@@ -4,11 +4,15 @@ import java.sql.SQLException;
 
 import dad.geek.App;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.ListProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 public class User {
 	
@@ -18,6 +22,7 @@ public class User {
 	private StringProperty password = new SimpleStringProperty();
 	private StringProperty mail = new SimpleStringProperty(); // TODO lo implementamos con mail al final????????????
 	private ObjectProperty<Image> profileImage = new SimpleObjectProperty<>();
+	private ListProperty<Post> posts = new SimpleListProperty<>(FXCollections.observableArrayList());
 	
 	public User() {}
 	
@@ -106,6 +111,18 @@ public class User {
 
 	public final void setProfileImage(final Image profileImage) {
 		this.profileImageProperty().set(profileImage);
+	}
+
+	public final ListProperty<Post> postsProperty() {
+		return this.posts;
+	}
+	
+	public final ObservableList<Post> getPosts() {
+		return this.postsProperty().get();
+	}
+
+	public final void setPosts(final ObservableList<Post> posts) {
+		this.postsProperty().set(posts);
 	}
 	
 }
