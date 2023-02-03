@@ -7,25 +7,30 @@ import java.util.ResourceBundle;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextArea;
 
-import dad.geek.utils.*;
+import dad.geek.App;
+import dad.geek.model.Post;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
+import javafx.stage.Stage;
 
 public class NewPostController implements Initializable {
-
-	private DirImages posicionImagen;
+	
+	// model
+	
+	private Stage thisStage;
+	private Post post = new Post();
+	
+	// view
 
 	@FXML
 	private JFXButton addFilterButton;
-
-	@FXML
-	private ImageView bottomImage;
 
 	@FXML
 	private JFXTextArea contentTextArea;
@@ -34,23 +39,21 @@ public class NewPostController implements Initializable {
 	private FlowPane filterFlow;
 
 	@FXML
-	private ImageView leftImage;
-
-	@FXML
 	private ImageView profileImage;
 
 	@FXML
-	private ImageView rightImage;
-
-	@FXML
 	private JFXButton sendButton;
+	
+	@FXML
+    private BorderPane contentContainer;
 
 	@FXML
 	private BorderPane view;
 
-	public NewPostController(DirImages image) {
+	public NewPostController(Stage stage) {
 
-		posicionImagen = image;
+		thisStage = stage;
+		thisStage.setMinWidth(450);
 
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/NewPostView.fxml"));
@@ -64,43 +67,58 @@ public class NewPostController implements Initializable {
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		switch (posicionImagen) {
-		case LEFT:
-			leftImage.setImage(new Image("/images/ejemplo.png"));
-			leftImage.setFitWidth(200);
-			leftImage.setFitHeight(200);
-			leftImage.setVisible(true);
-			break;
-		case RIGHT:
-			rightImage.setImage(new Image("/images/ejemplo.png"));
-			rightImage.setFitWidth(200);
-			rightImage.setFitHeight(200);
-			rightImage.setVisible(true);
-			break;
-		case DOWN:
-			bottomImage.setImage(new Image("/images/ejemplo.png"));
-			bottomImage.setFitWidth(200);
-			bottomImage.setFitHeight(200);
-			bottomImage.setVisible(true);
-			break;
-		case EMPTY:
-			break;
-		}
+		
+		// load data
+		
+//		setPosition();
+		post.setUserID(App.user.getUserID());
+		
+		// bindings
+		
+		post.postContentProperty().bind(contentTextArea.textProperty());
 
 	}
 	
-	public BorderPane getView() {
-		return view;
+	public NewPostController setPosition(String posicionImagen) {
+		
+		ImageView image = new ImageView(new Image("/images/ejemplo.png"));
+		image.setFitWidth(200);
+		image.setFitHeight(200);
+		image.setVisible(true);
+
+		switch (posicionImagen) {
+		case "leftButton":
+			contentContainer.setLeft(image);
+			break;
+		case "rightButton":
+			contentContainer.setRight(image);
+			break;
+		case "downButton":
+			contentContainer.setBottom(image);
+			break;
+		case "emptyButton":
+			break;
+		}
+		
+		BorderPane.setAlignment(image, Pos.CENTER);
+		
+		return this;
+		
 	}
 
 	@FXML
 	void onAddFilterAction(ActionEvent event) {
-
+		
 	}
 
 	@FXML
 	void onSendAction(ActionEvent event) {
-
+		App.conexionLocal.sendPost(post);
+		thisStage.close();
+	}
+	
+	public BorderPane getView() {
+		return view;
 	}
 
 }

@@ -63,6 +63,11 @@
                               <KeyCodeCombination alt="UP" code="N" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                            </accelerator>
                         </MenuItem>
+                        <MenuItem fx:id="reloadPostItem" mnemonicParsing="false" onAction="#onReloadPostAction" text="Recargar Posts">
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="F5" control="UP" meta="UP" shift="UP" shortcut="UP" />
+                           </accelerator>
+                        </MenuItem>
                      </items>
                   </MenuButton>
                   <MenuButton mnemonicParsing="false" text="Vista">

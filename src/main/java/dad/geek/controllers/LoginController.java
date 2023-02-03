@@ -133,7 +133,7 @@ public class LoginController implements Initializable {
 		hideLabel();
 		if(user.userInDatabase()) {
 			
-			App.user = App.mysql.getUserObject(this.user.getUsername(), this.user.getPassword());
+			App.user = App.conexionLocal.getUserObject(this.user.getUsername(), this.user.getPassword());
 			App.openScene(new MainController().getView(), 850, 550);
 			
 		} else {

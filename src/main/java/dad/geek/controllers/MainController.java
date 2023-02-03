@@ -13,10 +13,12 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitPane;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
@@ -30,6 +32,8 @@ public class MainController implements Initializable {
 	private SearchSectionController searchSectionController = new SearchSectionController();
 	
 	// view
+	
+	private VBox postsContainer = new VBox();
 	
 	@FXML
     private SplitPane containerPane;
@@ -103,8 +107,8 @@ public class MainController implements Initializable {
 	}
 	
 	private VBox laodPosts() {
-		VBox postsContainer = new VBox();
-		for(Post p : App.mysql.getAllPosts()) {
+		postsContainer.getChildren().clear();
+		for(Post p : App.conexionLocal.getAllPosts()) {
 			postsContainer.getChildren().add(new PostController(p).getView());
 		}
 		return postsContainer;
@@ -119,7 +123,18 @@ public class MainController implements Initializable {
 		window.setMinWidth(300);
 		window.initOwner(App.primaryStage);
 		window.initModality(Modality.APPLICATION_MODAL);
+		window.getScene().setOnKeyPressed(t -> {
+			if(t.getCode() == KeyCode.ESCAPE)
+				window.close();
+		});
 		window.show();
+	}
+	
+	@FXML
+	void onReloadPostAction(ActionEvent event) {
+		App.primaryStage.getScene().setCursor(Cursor.WAIT);
+		postContainerPane.setContent(laodPosts());
+		App.primaryStage.getScene().setCursor(Cursor.DEFAULT);
 	}
 
 	@FXML
