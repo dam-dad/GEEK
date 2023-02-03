@@ -126,7 +126,7 @@ public class MainController implements Initializable {
 	@FXML
 	void onReloadPostAction(ActionEvent event) {
 		App.primaryStage.getScene().setCursor(Cursor.WAIT);
-		// TODO recargar posts
+		postContainerPane.setContent(laodPosts());
 		App.primaryStage.getScene().setCursor(Cursor.DEFAULT);
 	}
 

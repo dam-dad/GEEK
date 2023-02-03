@@ -20,73 +20,54 @@ public class NewPostDialog implements Initializable {
 	private Stage thisStage;
 	
 	 @FXML
-	    private Button downButton;
+    private Button downButton;
 
-	    @FXML
-	    private ImageView downImage;
+    @FXML
+    private ImageView downImage;
 
-	    @FXML
-	    private Button emptyButton;
+    @FXML
+    private Button emptyButton;
 
-	    @FXML
-	    private ImageView emptyImage;
+    @FXML
+    private ImageView emptyImage;
 
-	    @FXML
-	    private Button leftButton;
+    @FXML
+    private Button leftButton;
 
-	    @FXML
-	    private ImageView leftImage;
+    @FXML
+    private ImageView leftImage;
 
-	    @FXML
-	    private Button rightButton;
+    @FXML
+    private Button rightButton;
 
-	    @FXML
-	    private ImageView rightImage;
+    @FXML
+    private ImageView rightImage;
 
-	    @FXML
-	    private BorderPane view;
-	    
-	    public NewPostDialog(Stage stage) {
-	    	thisStage = stage;
-	    	try {
-				FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/NewPostDialog.fxml"));
-				loader.setController(this);
-				loader.load();
-			} catch (IOException e) {
-				throw new RuntimeException(e);
-			}
+    @FXML
+    private BorderPane view;
+    
+    public NewPostDialog(Stage stage) {
+    	thisStage = stage;
+    	try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/NewPostDialog.fxml"));
+			loader.setController(this);
+			loader.load();
+		} catch (IOException e) {
+			throw new RuntimeException(e);
 		}
-	    
-	    @Override
-		public void initialize(URL location, ResourceBundle resources) {
-			
-		}
+	}
+    
+    @Override
+	public void initialize(URL location, ResourceBundle resources) {
+		
+	}
 
-	    @FXML
-	    void onCreatePostDown(ActionEvent event) {
-	    	thisStage.setMinWidth(450);
-	    	thisStage.setScene(new Scene(new NewPostController(DirImages.DOWN).getView()));
-	    }
-
-	    @FXML
-	    void onCreatePostEmpty(ActionEvent event) {
-	    	thisStage.setMinWidth(450);
-	    	thisStage.setScene(new Scene(new NewPostController(DirImages.EMPTY).getView()));
-	    }
-
-	    @FXML
-	    void onCreatePostLeft(ActionEvent event) {
-	    	thisStage.setMinWidth(450);
-	    	thisStage.setScene(new Scene(new NewPostController(DirImages.LEFT).getView()));
-	    }
-
-	    @FXML
-	    void onCreatePostRight(ActionEvent event) {
-	    	thisStage.setMinWidth(450);
-	    	thisStage.setScene(new Scene(new NewPostController(DirImages.RIGHT).getView()));
-	    }
-	    
-	    public BorderPane getView() {
-			return view;
-		}
+    @FXML
+    void onCreatePost(ActionEvent event) {
+    	thisStage.setScene(new Scene(new NewPostController(thisStage).setPosition(((Button) event.getSource()).getId()).getView()));
+    }
+    
+    public BorderPane getView() {
+		return view;
+	}
 }

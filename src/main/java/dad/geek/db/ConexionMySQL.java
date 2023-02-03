@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-import dad.geek.App;
 import dad.geek.model.Post;
 import dad.geek.model.User;
 
@@ -19,7 +18,7 @@ public class ConexionMySQL {
 
 	private static Connection connMySQL;
 	private Statement stmtMySQL;
-	private PreparedStatement allPosts, userFromId, userFromNamePass, createUser;
+	private PreparedStatement allPosts, userFromId, userFromNamePass, createUser, sendPost;
 	private ResultSet resultPosts, resultUser;
 	
 	public ConexionMySQL() {
@@ -37,6 +36,7 @@ public class ConexionMySQL {
 			userFromId = connMySQL.prepareStatement("select * from usuarios where id = ?");
 			userFromNamePass = connMySQL.prepareStatement("select * from usuarios where nombreUsuario = ? and password = ?");
 			createUser = connMySQL.prepareStatement("insert into usuarios (nombre, nombreUsuario, password) values (?, ?, ?)");
+			sendPost = connMySQL.prepareStatement("insert into posts (ID_Usuario, contenido) values (?, ?)");
 			
 		} catch (SQLException | IOException e) {
 			e.printStackTrace();
@@ -132,6 +132,18 @@ public class ConexionMySQL {
 		}
 		
 		return null;
+	}
+	
+	public void sendPost(Post post) {
+		
+		try {
+			sendPost.setInt(1, post.getUserID());
+			sendPost.setString(2, post.getPostContent());
+			sendPost.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
 	}
 	
 	public void createUser(String nickname, String username, String password) {

@@ -7,8 +7,8 @@ import java.util.ResourceBundle;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextArea;
 
+import dad.geek.App;
 import dad.geek.model.Post;
-import dad.geek.utils.DirImages;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,16 +18,16 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
+import javafx.stage.Stage;
 
 public class NewPostController implements Initializable {
 	
 	// model
 	
+	private Stage thisStage;
 	private Post post = new Post();
 	
 	// view
-
-	private DirImages posicionImagen;
 
 	@FXML
 	private JFXButton addFilterButton;
@@ -50,9 +50,10 @@ public class NewPostController implements Initializable {
 	@FXML
 	private BorderPane view;
 
-	public NewPostController(DirImages image) {
+	public NewPostController(Stage stage) {
 
-		posicionImagen = image;
+		thisStage = stage;
+		thisStage.setMinWidth(450);
 
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/NewPostView.fxml"));
@@ -69,7 +70,8 @@ public class NewPostController implements Initializable {
 		
 		// load data
 		
-		setPosition();
+//		setPosition();
+		post.setUserID(App.user.getUserID());
 		
 		// bindings
 		
@@ -77,7 +79,7 @@ public class NewPostController implements Initializable {
 
 	}
 	
-	private void setPosition() {
+	public NewPostController setPosition(String posicionImagen) {
 		
 		ImageView image = new ImageView(new Image("/images/ejemplo.png"));
 		image.setFitWidth(200);
@@ -85,35 +87,38 @@ public class NewPostController implements Initializable {
 		image.setVisible(true);
 
 		switch (posicionImagen) {
-		case LEFT:
+		case "leftButton":
 			contentContainer.setLeft(image);
 			break;
-		case RIGHT:
+		case "rightButton":
 			contentContainer.setRight(image);
 			break;
-		case DOWN:
+		case "downButton":
 			contentContainer.setBottom(image);
 			break;
-		case EMPTY:
+		case "emptyButton":
 			break;
 		}
 		
 		BorderPane.setAlignment(image, Pos.CENTER);
 		
-	}
-
-	public BorderPane getView() {
-		return view;
+		return this;
+		
 	}
 
 	@FXML
 	void onAddFilterAction(ActionEvent event) {
-
+		
 	}
 
 	@FXML
 	void onSendAction(ActionEvent event) {
-		
+		App.conexionLocal.sendPost(post);
+		thisStage.close();
+	}
+	
+	public BorderPane getView() {
+		return view;
 	}
 
 }
