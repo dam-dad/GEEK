@@ -13,6 +13,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
@@ -88,14 +89,16 @@ public class NewPostController implements Initializable {
 			contentContainer.setLeft(image);
 			break;
 		case RIGHT:
-			contentContainer.setLeft(image);
+			contentContainer.setRight(image);
 			break;
 		case DOWN:
-			contentContainer.setLeft(image);
+			contentContainer.setBottom(image);
 			break;
 		case EMPTY:
 			break;
 		}
+		
+		BorderPane.setAlignment(image, Pos.CENTER);
 		
 	}
 
