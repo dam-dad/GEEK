@@ -33,6 +33,8 @@ public class MainController implements Initializable {
 	
 	// view
 	
+	private VBox postsContainer = new VBox();
+	
 	@FXML
     private SplitPane containerPane;
 
@@ -105,7 +107,7 @@ public class MainController implements Initializable {
 	}
 	
 	private VBox laodPosts() {
-		VBox postsContainer = new VBox();
+		postsContainer.getChildren().clear();
 		for(Post p : App.conexionLocal.getAllPosts()) {
 			postsContainer.getChildren().add(new PostController(p).getView());
 		}
