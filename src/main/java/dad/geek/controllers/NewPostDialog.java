@@ -12,6 +12,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
@@ -65,6 +66,10 @@ public class NewPostDialog implements Initializable {
     @FXML
     void onCreatePost(ActionEvent event) {
     	thisStage.setScene(new Scene(new NewPostController(thisStage).setPosition(((Button) event.getSource()).getId()).getView()));
+    	thisStage.getScene().setOnKeyPressed(t -> {
+			if(t.getCode() == KeyCode.ESCAPE)
+				thisStage.close();
+		});
     }
     
     public BorderPane getView() {

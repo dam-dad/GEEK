@@ -18,6 +18,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitPane;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
@@ -120,6 +121,10 @@ public class MainController implements Initializable {
 		window.setMinWidth(300);
 		window.initOwner(App.primaryStage);
 		window.initModality(Modality.APPLICATION_MODAL);
+		window.getScene().setOnKeyPressed(t -> {
+			if(t.getCode() == KeyCode.ESCAPE)
+				window.close();
+		});
 		window.show();
 	}
 	

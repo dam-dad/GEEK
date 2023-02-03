@@ -22,7 +22,7 @@ public class UserSectionController implements Initializable {
 	
 	// model
 	
-	private BooleanProperty goback = new SimpleBooleanProperty(true);
+	private BooleanProperty goback = new SimpleBooleanProperty(false);
 
 	// view
 	
@@ -68,7 +68,9 @@ public class UserSectionController implements Initializable {
 		
 		nameLabel.textProperty().bind(App.user.nicknameProperty());
 		usernameLabel.textProperty().bind(Bindings.concat("@").concat(App.user.usernameProperty()));
-		backButton.disableProperty().bind(goback);
+		
+		backButton.visibleProperty().bind(goback);
+		
 		
 	}
 	
