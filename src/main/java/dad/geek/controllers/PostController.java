@@ -76,7 +76,7 @@ public class PostController implements Initializable {
 		
 		// load data
 		
-		user = App.mysql.getUserObject(post.getUserID());
+		user = App.conexionLocal.getUserObject(post.getUserID());
 		
 		// bindings
 	

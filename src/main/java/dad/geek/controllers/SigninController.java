@@ -148,7 +148,7 @@ public class SigninController implements Initializable {
 			((VBox) getView().getChildren().get(0)).getChildren().add(5, noUserFound);
 		} else {
 			user.addUsertoDB();
-			App.user = App.mysql.getUserObject(this.user.getUsername(), this.user.getPassword());
+			App.user = App.conexionLocal.getUserObject(this.user.getUsername(), this.user.getPassword());
 			App.openScene(new MainController().getView(), 850, 550);
 		}
 	}

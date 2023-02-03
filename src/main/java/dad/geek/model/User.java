@@ -34,11 +34,11 @@ public class User {
 	}
 	
 	public boolean userInDatabase() throws SQLException {
-		return App.mysql.getUserFromDB(getUsername(), getPassword()).next();
+		return App.conexionLocal.getUserFromDB(getUsername(), getPassword()).next();
 	}
 	
 	public void addUsertoDB() {
-		App.mysql.createUser(getNickname(), getUsername(), getPassword());
+		App.conexionLocal.createUser(getNickname(), getUsername(), getPassword());
 	}
 	
 	public final IntegerProperty userIDProperty() {

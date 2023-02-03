@@ -7,7 +7,8 @@ import java.util.ResourceBundle;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextArea;
 
-import dad.geek.utils.*;
+import dad.geek.model.Post;
+import dad.geek.utils.DirImages;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,6 +19,12 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 
 public class NewPostController implements Initializable {
+	
+	// model
+	
+	private Post post = new Post();
+	
+	// view
 
 	private DirImages posicionImagen;
 
@@ -64,6 +71,19 @@ public class NewPostController implements Initializable {
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		
+		// load data
+		
+		setPosition();
+		
+		// bindings
+		
+		post.postContentProperty().bind(contentTextArea.textProperty());
+
+	}
+	
+	private void setPosition() {
+
 		switch (posicionImagen) {
 		case LEFT:
 			leftImage.setImage(new Image("/images/ejemplo.png"));
@@ -86,9 +106,9 @@ public class NewPostController implements Initializable {
 		case EMPTY:
 			break;
 		}
-
+		
 	}
-	
+
 	public BorderPane getView() {
 		return view;
 	}
@@ -100,7 +120,7 @@ public class NewPostController implements Initializable {
 
 	@FXML
 	void onSendAction(ActionEvent event) {
-
+		
 	}
 
 }

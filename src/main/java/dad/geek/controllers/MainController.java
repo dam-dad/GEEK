@@ -13,6 +13,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
@@ -104,7 +105,7 @@ public class MainController implements Initializable {
 	
 	private VBox laodPosts() {
 		VBox postsContainer = new VBox();
-		for(Post p : App.mysql.getAllPosts()) {
+		for(Post p : App.conexionLocal.getAllPosts()) {
 			postsContainer.getChildren().add(new PostController(p).getView());
 		}
 		return postsContainer;
@@ -120,6 +121,13 @@ public class MainController implements Initializable {
 		window.initOwner(App.primaryStage);
 		window.initModality(Modality.APPLICATION_MODAL);
 		window.show();
+	}
+	
+	@FXML
+	void onReloadPostAction(ActionEvent event) {
+		App.primaryStage.getScene().setCursor(Cursor.WAIT);
+		// TODO recargar posts
+		App.primaryStage.getScene().setCursor(Cursor.DEFAULT);
 	}
 
 	@FXML
