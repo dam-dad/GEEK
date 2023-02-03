@@ -32,25 +32,19 @@ public class NewPostController implements Initializable {
 	private JFXButton addFilterButton;
 
 	@FXML
-	private ImageView bottomImage;
-
-	@FXML
 	private JFXTextArea contentTextArea;
 
 	@FXML
 	private FlowPane filterFlow;
 
 	@FXML
-	private ImageView leftImage;
-
-	@FXML
 	private ImageView profileImage;
 
 	@FXML
-	private ImageView rightImage;
-
-	@FXML
 	private JFXButton sendButton;
+	
+	@FXML
+    private BorderPane contentContainer;
 
 	@FXML
 	private BorderPane view;
@@ -83,25 +77,21 @@ public class NewPostController implements Initializable {
 	}
 	
 	private void setPosition() {
+		
+		ImageView image = new ImageView(new Image("/images/ejemplo.png"));
+		image.setFitWidth(200);
+		image.setFitHeight(200);
+		image.setVisible(true);
 
 		switch (posicionImagen) {
 		case LEFT:
-			leftImage.setImage(new Image("/images/ejemplo.png"));
-			leftImage.setFitWidth(200);
-			leftImage.setFitHeight(200);
-			leftImage.setVisible(true);
+			contentContainer.setLeft(image);
 			break;
 		case RIGHT:
-			rightImage.setImage(new Image("/images/ejemplo.png"));
-			rightImage.setFitWidth(200);
-			rightImage.setFitHeight(200);
-			rightImage.setVisible(true);
+			contentContainer.setLeft(image);
 			break;
 		case DOWN:
-			bottomImage.setImage(new Image("/images/ejemplo.png"));
-			bottomImage.setFitWidth(200);
-			bottomImage.setFitHeight(200);
-			bottomImage.setVisible(true);
+			contentContainer.setLeft(image);
 			break;
 		case EMPTY:
 			break;

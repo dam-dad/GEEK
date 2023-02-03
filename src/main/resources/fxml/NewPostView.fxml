@@ -13,7 +13,7 @@
 
 <BorderPane fx:id="view" prefHeight="300.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
    <center>
-      <BorderPane minWidth="180.0" prefWidth="180.0">
+      <BorderPane fx:id="contentContainer" minWidth="180.0" prefWidth="180.0">
          <center>
             <VBox focusTraversable="true" spacing="15.0" BorderPane.alignment="CENTER">
                <children>
@@ -44,15 +44,6 @@
                </padding>
             </HBox>
          </top>
-         <left>
-            <ImageView fx:id="leftImage" pickOnBounds="true" preserveRatio="true" visible="false" BorderPane.alignment="CENTER" />
-         </left>
-         <right>
-            <ImageView fx:id="rightImage" pickOnBounds="true" preserveRatio="true" visible="false" BorderPane.alignment="CENTER" />
-         </right>
-         <bottom>
-            <ImageView fx:id="bottomImage" pickOnBounds="true" preserveRatio="true" visible="false" BorderPane.alignment="CENTER" />
-         </bottom>
       </BorderPane>
    </center>
    <bottom>
