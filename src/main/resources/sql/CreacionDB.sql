@@ -1,33 +1,34 @@
 CREATE TABLE Usuarios (
-	ID INT NOT NULL AUTO_INCREMENT,
+	ID SERIAL,
     nombre VARCHAR(40),
     nombreUsuario VARCHAR(40) NOT NULL,
     password VARCHAR(100) NOT NULL,
-    imagen MEDIUMTEXT,
+    imagen TEXT,
     CONSTRAINT PK_Usuarios PRIMARY KEY (ID)
 );
 
 CREATE TABLE Filtros (
-	ID INT NOT NULL AUTO_INCREMENT,
+	ID SERIAL,
     nombre VARCHAR(50),
     shortname VARCHAR(10),
-    descripcion TINYTEXT,
+    descripcion TEXT,
     CONSTRAINT PK_Filtros PRIMARY KEY (ID)    
 );
 
 CREATE TABLE FiltrosUsuario (
 	ID_Usuario INT NOT NULL,
     ID_Filtro INT NOT NULL,
+    CONSTRAINT PK_FiltrosUsuaio PRIMARY KEY (ID_Usuario, ID_Filtro),
     CONSTRAINT FK_FiltrosUsuarios_Usuarios FOREIGN KEY (ID_Usuario) REFERENCES Usuarios(ID),
     CONSTRAINT FK_FiltrosUsuarios_Filtros FOREIGN KEY (ID_Filtro) REFERENCES Filtros(ID)
 );
 
 CREATE TABLE Posts(
-	ID INT NOT NULL AUTO_INCREMENT,
+	ID SERIAL,
     ID_Usuario INT NOT NULL,
     titulo VARCHAR(50),
-    contenido MEDIUMTEXT,
-    imagen MEDIUMTEXT,
+    contenido TEXT,
+    imagen TEXT,
     CONSTRAINT PK_Posts PRIMARY KEY (ID),
     CONSTRAINT FK_Posts_Usuarios FOREIGN KEY (ID_Usuario) REFERENCES Usuarios(ID)
 );
@@ -35,6 +36,7 @@ CREATE TABLE Posts(
 CREATE TABLE FiltrosPost (
 	ID_Post INT NOT NULL,
     ID_Filtro INT NOT NULL,
+    CONSTRAINT PK_FiltrosPosts PRIMARY KEY (ID_Post, ID_Filtro),
     CONSTRAINT FK_FiltrosPost_Posts FOREIGN KEY (ID_Post) REFERENCES Posts(ID),
     CONSTRAINT FK_FiltrosPost_Filtros FOREIGN KEY (ID_Filtro) REFERENCES Filtros(ID)
 );
