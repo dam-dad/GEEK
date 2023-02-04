@@ -35,10 +35,12 @@ public class User {
 	
 	public boolean userInDatabase() throws SQLException {
 		return App.conexionLocal.getUserFromDB(getUsername(), getPassword()).next();
+		// return App.conexionRemota.getUserFromDB(getUsername(), getPassword()).next();
 	}
 	
 	public void addUsertoDB() {
 		App.conexionLocal.createUser(getNickname(), getUsername(), getPassword());
+		// App.conexionRemota.createUser(getNickname(), getUsername(), getPassword());
 	}
 	
 	public final IntegerProperty userIDProperty() {

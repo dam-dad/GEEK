@@ -32,7 +32,7 @@ public class DBManager {
 			userFromId = connPostgre
 					.prepareStatement("SELECT * FROM usuarios WHERE id = ?");
 			userFromNamePass = connPostgre
-					.prepareStatement("SELECT * FROM usuarios WHERE nombreusuario LIKE ? AND password LIKE ?");
+					.prepareStatement("SELECT * FROM usuarios WHERE nombreusuario = ? AND password = ?");
 
 			// Queries relacionados con los posts
 			allPosts = connPostgre
@@ -59,8 +59,20 @@ public class DBManager {
 
 	}
 
-	public ResultSet userInDB(String username, String password) {
+	public ResultSet getUserFromDB(int id) {
 
+		try {
+			userFromId.setInt(1, id);
+			resultUser = userFromId.executeQuery();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return resultUser;
+	}
+
+	public ResultSet getUserFromDB(String username, String password) {
+		// FIXME userFromNamePass está instanciado como Null
 		try {
 			userFromNamePass.setString(1, username);
 			userFromNamePass.setString(2, password);
@@ -71,5 +83,9 @@ public class DBManager {
 
 		return resultUser;
 	}
+
+	// public void sendPost() {
+
+	// }
 
 }
