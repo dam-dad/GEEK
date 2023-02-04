@@ -20,8 +20,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
@@ -140,16 +142,24 @@ public class SigninController implements Initializable {
 	}
 
 	@FXML
-	void onSigninAction(ActionEvent event) throws SQLException {
-		if(user.userInDatabase()) {
-			noUserFound = new Label("Éste usuario ya está registrado, inténtelo de nuevo.");
-			noUserFound.setStyle("-fx-text-fill: red;");
-			noUserFound.setPadding(new Insets(0, 0, 10, 0));
-			((VBox) getView().getChildren().get(0)).getChildren().add(5, noUserFound);
-		} else {
-			user.addUsertoDB();
-			App.user = App.conexionLocal.getUserObject(this.user.getUsername(), this.user.getPassword());
-			App.openScene(new MainController().getView(), 850, 550);
+	void onSigninAction(ActionEvent event) {
+		try {
+			if(user.userInDatabase()) {
+				noUserFound = new Label("Éste usuario ya está registrado, inténtelo de nuevo.");
+				noUserFound.setStyle("-fx-text-fill: red;");
+				noUserFound.setPadding(new Insets(0, 0, 10, 0));
+				((VBox) getView().getChildren().get(0)).getChildren().add(5, noUserFound);
+			} else {
+				user.addUsertoDB();
+				App.user = App.conexionLocal.getUserObject(this.user.getUsername(), this.user.getPassword());
+				App.openScene(new MainController().getView(), 850, 550);
+			}
+		} catch (SQLException e) {
+			Alert errorAlert = new Alert(AlertType.ERROR);
+			errorAlert.setTitle("ERROR");
+			errorAlert.setHeaderText("Hubo un error");
+			errorAlert.setContentText("Hubo un error de tipo SQL.");
+			errorAlert.show();
 		}
 	}
 

@@ -8,6 +8,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Properties;
 
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+
 public class DBManager {
 
 	private Connection connPostgre;
@@ -41,8 +44,11 @@ public class DBManager {
 					.prepareStatement("INSERT INTO posts(id_usuario, titulo, contenido) VALUES (?,?)");
 
 		} catch (IOException | SQLException e) {
-			e.printStackTrace();
-		}
+			Alert errorAlert = new Alert(AlertType.ERROR);
+			errorAlert.setTitle("ERROR");
+			errorAlert.setHeaderText("Hubo un error");
+			errorAlert.setContentText("Hubo un error de tipo SQL o de tipo IO en el constructor de la clase.");
+			errorAlert.show();		}
 
 	}
 
