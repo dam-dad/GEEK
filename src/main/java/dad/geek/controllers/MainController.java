@@ -127,6 +127,10 @@ public class MainController implements Initializable {
 			if(t.getCode() == KeyCode.ESCAPE)
 				window.close();
 		});
+		window.setOnCloseRequest(e -> {
+			onReloadPostAction(new ActionEvent());
+			window.close();
+		});
 		window.show();
 	}
 	
