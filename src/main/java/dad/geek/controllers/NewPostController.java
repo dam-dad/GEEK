@@ -74,6 +74,7 @@ public class NewPostController implements Initializable {
 		// bindings
 		
 		post.postContentProperty().bind(contentTextArea.textProperty());
+		profileImage.imageProperty().bind(App.user.profileImageProperty());
 
 	}
 	

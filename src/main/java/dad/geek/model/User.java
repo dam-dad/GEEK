@@ -1,5 +1,6 @@
 package dad.geek.model;
 
+import java.net.URISyntaxException;
 import java.sql.SQLException;
 
 import dad.geek.App;
@@ -13,6 +14,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.image.Image;
 
 public class User {
 	
@@ -26,7 +28,17 @@ public class User {
 	
 	public User() {}
 	
-	public User(int userID, String nickname, String username, String password) {
+	public User(int userID, String nickname, String username, String password, String image) {
+		
+		if(image == null) {
+			try {
+				setProfileImage(new Image(getClass().getResource("/images/user.png").toURI().toString()));
+			} catch (URISyntaxException e) {
+				e.printStackTrace();
+			}
+		} else
+			setProfileImage(new Image(image));
+		
 		setUserID(userID);
 		setNickname(nickname);
 		setUsername(username);
@@ -113,6 +125,7 @@ public class User {
 
 	public final void setProfileImage(final Image profileImage) {
 		this.profileImageProperty().set(profileImage);
+		App.conexionLocal.setUserImage(getUserID(), profileImage.getUrl());
 	}
 
 	public final ListProperty<Post> postsProperty() {

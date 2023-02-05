@@ -73,6 +73,7 @@ public class UserSectionController implements Initializable {
 		
 		nameLabel.textProperty().bind(App.user.nicknameProperty());
 		usernameLabel.textProperty().bind(Bindings.concat("@").concat(App.user.usernameProperty()));
+		profileImage.imageProperty().bind(App.user.profileImageProperty());
 		
 		backButton.visibleProperty().bind(goback);
 		

@@ -18,7 +18,7 @@ public class ConexionMySQL {
 
 	private static Connection connMySQL;
 	private Statement stmtMySQL;
-	private PreparedStatement allPosts, userFromId, userFromNamePass, createUser, sendPost;
+	private PreparedStatement allPosts, userFromId, userFromNamePass, createUser, sendPost, setUserImage;
 	private ResultSet resultPosts, resultUser;
 	
 	public ConexionMySQL() {
@@ -37,6 +37,7 @@ public class ConexionMySQL {
 			userFromNamePass = connMySQL.prepareStatement("select * from usuarios where nombreUsuario = ? and password = ?");
 			createUser = connMySQL.prepareStatement("insert into usuarios (nombre, nombreUsuario, password) values (?, ?, ?)");
 			sendPost = connMySQL.prepareStatement("insert into posts (ID_Usuario, contenido) values (?, ?)");
+			setUserImage = connMySQL.prepareStatement("update usuarios set imagen = ? where id = ?");
 			
 		} catch (SQLException | IOException e) {
 			e.printStackTrace();
@@ -105,7 +106,8 @@ public class ConexionMySQL {
 					posts.getInt("ID"),
 					posts.getString("nombre"),
 					posts.getString("nombreUsuario"),
-					posts.getString("password")
+					posts.getString("password"),
+					posts.getString("imagen")
 				);
 			}
 		} catch (SQLException e) {
@@ -124,7 +126,8 @@ public class ConexionMySQL {
 					posts.getInt("ID"),
 					posts.getString("nombre"),
 					posts.getString("nombreUsuario"),
-					posts.getString("password")
+					posts.getString("password"),
+					posts.getString("imagen")
 				);
 			}
 		} catch (SQLException e) {
@@ -153,6 +156,18 @@ public class ConexionMySQL {
 			createUser.setString(2, username);
 			createUser.setString(3, password);
 			createUser.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public void setUserImage(int id, String url) {
+		
+		try {
+			setUserImage.setString(1, url);
+			setUserImage.setInt(2, id);
+			setUserImage.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

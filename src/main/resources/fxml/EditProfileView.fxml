@@ -14,7 +14,7 @@
    <children>
       <HBox alignment="BOTTOM_CENTER" spacing="5.0">
          <children>
-            <VBox alignment="CENTER">
+            <VBox alignment="CENTER" spacing="5.0">
                <children>
                   <ImageView fx:id="profileImage" fitHeight="64.0" fitWidth="64.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -30,7 +30,7 @@
             </VBox>
             <VBox HBox.hgrow="ALWAYS">
                <children>
-                  <Label fx:id="nameLabel" contentDisplay="RIGHT" text="Nombre de Usuario">
+                  <Label fx:id="nicknameLabel" contentDisplay="RIGHT" text="Nombre de Usuario">
                      <font>
                         <Font size="16.0" />
                      </font>
@@ -47,7 +47,7 @@
                         <Font size="14.0" />
                      </font>
                      <graphic>
-                        <JFXButton fx:id="editNameButton" alignment="CENTER_RIGHT" contentDisplay="RIGHT" onAction="#onEditNameAction" text="Editar">
+                        <JFXButton fx:id="editNicknameButton" alignment="CENTER_RIGHT" contentDisplay="RIGHT" onAction="#onEditNicknameAction" text="Editar">
                            <graphic>
                               <FontIcon iconLiteral="mdi2l-lead-pencil" iconSize="16" />
                            </graphic>
