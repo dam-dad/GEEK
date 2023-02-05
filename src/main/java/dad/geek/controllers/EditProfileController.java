@@ -18,13 +18,15 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 public class EditProfileController implements Initializable {
 	
 	// model
 	
 	private Image newImage;
-	
+	private Stage stage;
 	// view
 	
 	@FXML
@@ -65,7 +67,7 @@ public class EditProfileController implements Initializable {
 		
 		nicknameLabel.textProperty().bind(App.user.nicknameProperty());
 		usernameLabel.textProperty().bind(Bindings.concat("@").concat(App.user.usernameProperty()));
-		profileImage.imageProperty().bind(App.user.profileImageProperty());
+		profileImage.setImage(App.user.getProfileImage());
 		
 	}
 	
@@ -80,18 +82,21 @@ public class EditProfileController implements Initializable {
 		File selectedFile = fileChooser.showOpenDialog(App.primaryStage);
 		if(selectedFile != null) {
 			newImage = new Image(selectedFile.toURI().toString());
+			profileImage.setImage(newImage);
 		}
 		
 	}
 
     @FXML
     void onAcceptAction(ActionEvent event) {
-
+    	if(newImage != null)
+    		App.user.setProfileImage(newImage);
+    	stage.getOnCloseRequest().handle(new WindowEvent(stage, WindowEvent.WINDOW_CLOSE_REQUEST));
     }
 
     @FXML
     void onCancelAction(ActionEvent event) {
-
+    	stage.getOnCloseRequest().handle(new WindowEvent(stage, WindowEvent.WINDOW_CLOSE_REQUEST));
     }
 
     @FXML
@@ -102,6 +107,11 @@ public class EditProfileController implements Initializable {
     @FXML
     void onEditUsernameAction(ActionEvent event) {
 
+    }
+    
+    public EditProfileController setStage(Stage stage) {
+    	this.stage = stage;
+    	return this;
     }
 	
 	public BorderPane getView() {

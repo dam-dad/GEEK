@@ -90,7 +90,7 @@ public class UserSectionController implements Initializable {
 		
 		Stage window = new Stage();
 		window.setTitle("Nuevo Post");
-		window.setScene(new Scene(new EditProfileController().getView()));
+		window.setScene(new Scene(new EditProfileController().setStage(window).getView()));
 		window.setMinWidth(300);
 		window.setMinHeight(400);
 		window.initOwner(App.primaryStage);

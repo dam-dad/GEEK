@@ -15,7 +15,7 @@
    <center>
       <HBox alignment="TOP_CENTER" spacing="5.0" BorderPane.alignment="CENTER">
          <children>
-            <VBox alignment="TOP_CENTER">
+            <VBox alignment="TOP_CENTER" spacing="5.0">
                <children>
                   <ImageView fx:id="profileImage" fitHeight="64.0" fitWidth="64.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
                      <image>
