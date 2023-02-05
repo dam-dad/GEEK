@@ -38,15 +38,6 @@ public class PostController implements Initializable {
 
     @FXML
     private FlowPane imageFlow;
-    
-    @FXML
-    private ImageView imageBottom;
-
-    @FXML
-    private ImageView imageLeft;
-
-    @FXML
-    private ImageView imageRight;
 
     @FXML
     private ImageView profileImage;
