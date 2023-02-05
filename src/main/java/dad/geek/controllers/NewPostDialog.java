@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import dad.geek.utils.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,10 +14,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 public class NewPostDialog implements Initializable {
 	
-	private Stage thisStage;
+	private Stage stage;
 	
 	 @FXML
     private Button downButton;
@@ -46,9 +46,8 @@ public class NewPostDialog implements Initializable {
 
     @FXML
     private BorderPane view;
-    
-    public NewPostDialog(Stage stage) {
-    	thisStage = stage;
+
+    public NewPostDialog() {
     	try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/NewPostDialog.fxml"));
 			loader.setController(this);
@@ -65,12 +64,23 @@ public class NewPostDialog implements Initializable {
 
     @FXML
     void onCreatePost(ActionEvent event) {
-    	thisStage.setScene(new Scene(new NewPostController(thisStage).setPosition(((Button) event.getSource()).getId()).getView()));
-    	thisStage.getScene().setOnKeyPressed(t -> {
+    	
+    	this.stage.setScene(new Scene(
+			new NewPostController()
+				.setStage(this.stage)
+    			.setPosition(((Button) event.getSource()).getId()).getView()));
+    	
+    	this.stage.getScene().setOnKeyPressed(t -> {
 			if(t.getCode() == KeyCode.ESCAPE)
-				thisStage.close();
+				this.stage.getOnCloseRequest().handle(new WindowEvent(this.stage, WindowEvent.WINDOW_CLOSE_REQUEST));
 		});
+    	
     }
+    
+    public NewPostDialog setStage(Stage stage) {
+		this.stage = stage;
+		return this;
+	}
     
     public BorderPane getView() {
 		return view;
