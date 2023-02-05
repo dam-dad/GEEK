@@ -1,7 +1,6 @@
 package dad.geek.controllers;
 
 import java.io.File;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -17,7 +16,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
 
 public class EditProfileController implements Initializable {
@@ -36,18 +35,18 @@ public class EditProfileController implements Initializable {
 
     @FXML
     private JFXButton editUsernameButton;
-    
-    @FXML
-    private ImageView profileImage;
 
     @FXML
     private Label nicknameLabel;
 
     @FXML
+    private ImageView profileImage;
+
+    @FXML
     private Label usernameLabel;
 
     @FXML
-    private VBox view;
+    private BorderPane view;
 	
 	public EditProfileController() {
 		try {
@@ -84,18 +83,28 @@ public class EditProfileController implements Initializable {
 		}
 		
 	}
-	
-	@FXML
-	void onEditNicknameAction(ActionEvent event) {
-		
-	}
-	
-	@FXML
-	void onEditUsernameAction(ActionEvent event) {
-		
-	}
 
-	public VBox getView() {
+    @FXML
+    void onAcceptAction(ActionEvent event) {
+
+    }
+
+    @FXML
+    void onCancelAction(ActionEvent event) {
+
+    }
+
+    @FXML
+    void onEditNicknameAction(ActionEvent event) {
+
+    }
+
+    @FXML
+    void onEditUsernameAction(ActionEvent event) {
+
+    }
+	
+	public BorderPane getView() {
 		return view;
 	}
 	
