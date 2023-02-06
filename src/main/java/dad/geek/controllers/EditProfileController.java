@@ -42,9 +42,6 @@ public class EditProfileController implements Initializable {
     private JFXButton editNicknameButton;
 
     @FXML
-    private JFXButton editUsernameButton;
-
-    @FXML
     private Label nicknameLabel;
 
     @FXML
@@ -123,11 +120,6 @@ public class EditProfileController implements Initializable {
         	 if(name != null && !name.trim().equals(""))
         		 newName.set(name);
          });
-    }
-
-    @FXML
-    void onEditUsernameAction(ActionEvent event) {
-    	// @
     }
     
     public EditProfileController setStage(Stage stage) {

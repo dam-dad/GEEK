@@ -47,13 +47,6 @@
                      <font>
                         <Font size="14.0" />
                      </font>
-                     <graphic>
-                        <JFXButton fx:id="editUsernameButton" alignment="CENTER_RIGHT" contentDisplay="RIGHT" onAction="#onEditUsernameAction" text="Editar">
-                           <graphic>
-                              <FontIcon iconLiteral="mdi2l-lead-pencil" iconSize="16" />
-                           </graphic>
-                        </JFXButton>
-                     </graphic>
                   </Label>
                </children>
                <padding>
