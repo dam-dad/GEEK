@@ -8,6 +8,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Properties;
 
+import dad.geek.model.User;
+
 public class DBManager {
 
 	private Connection connPostgre;
@@ -19,7 +21,7 @@ public class DBManager {
 		try {
 
 			Properties properties = new Properties();
-			properties.loadFromXML(getClass().getResourceAsStream("/properties/conexiones.properties"));
+			properties.load(getClass().getResourceAsStream("/properties/conexiones.properties"));
 			String urlHost = properties.getProperty("SQLHost");
 			String userHost = properties.getProperty("SQLUsername");
 			String passwordHost = properties.getProperty("SQLPassword");
@@ -31,8 +33,8 @@ public class DBManager {
 					.prepareStatement("INSERT INTO usuarios(nombre, nombreusuario, password) VALUES (?,?,?)");
 			userFromId = connPostgre
 					.prepareStatement("SELECT * FROM usuarios WHERE id = ?");
-			userFromNamePass = connPostgre
-					.prepareStatement("SELECT * FROM usuarios WHERE nombreusuario = ? AND password = ?");
+
+			userFromNamePass = connPostgre.prepareStatement("SELECT * FROM usuarios WHERE nombre = ? AND password = ?");
 
 			// Queries relacionados con los posts
 			allPosts = connPostgre
@@ -43,6 +45,8 @@ public class DBManager {
 		} catch (IOException | SQLException e) {
 			e.printStackTrace();
 		}
+
+		System.out.println("userFromNamePass= " + userFromNamePass);
 
 	}
 
@@ -84,8 +88,41 @@ public class DBManager {
 		return resultUser;
 	}
 
-	// public void sendPost() {
+	public User sendPost(int userId) {
+		try {
+			ResultSet posts = getUserFromDB(userId);
+			while (posts.next()) {
+				return new User(
+						// FIXME Cambiar el tipo de dato de la ID de int a long
+						posts.getInt("ID"),
+						posts.getString("nombre"),
+						posts.getString("nombreUsuario"),
+						posts.getString("password"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 
-	// }
+		return null;
+	}
+
+	public User getUserObject(String username, String password) {
+
+		try {
+			ResultSet posts = getUserFromDB(username, password);
+			while (posts.next()) {
+				return new User(
+						// FIXME Cambiar el tipo de dato de la ID de int a long
+						posts.getInt("ID"),
+						posts.getString("nombre"),
+						posts.getString("nombreUsuario"),
+						posts.getString("password"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return null;
+	}
 
 }

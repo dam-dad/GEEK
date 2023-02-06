@@ -18,6 +18,7 @@ import javafx.scene.image.Image;
 
 public class User {
 	
+	// FIXME Cambiar el tipo de dato de la ID de int a long
 	private IntegerProperty userID = new SimpleIntegerProperty();
 	private StringProperty nickname = new SimpleStringProperty();
 	private StringProperty username = new SimpleStringProperty();
@@ -46,13 +47,13 @@ public class User {
 	}
 	
 	public boolean userInDatabase() throws SQLException {
-		return App.conexionLocal.getUserFromDB(getUsername(), getPassword()).next();
-		// return App.conexionRemota.getUserFromDB(getUsername(), getPassword()).next();
+		// return App.conexionLocal.getUserFromDB(getUsername(), getPassword()).next();
+		return App.conexionRemota.getUserFromDB(getUsername(), getPassword()).next();
 	}
 	
 	public void addUsertoDB() {
-		App.conexionLocal.createUser(getNickname(), getUsername(), getPassword());
-		// App.conexionRemota.createUser(getNickname(), getUsername(), getPassword());
+		// App.conexionLocal.createUser(getNickname(), getUsername(), getPassword());
+		App.conexionRemota.createUser(getNickname(), getUsername(), getPassword());
 	}
 	
 	public final IntegerProperty userIDProperty() {
