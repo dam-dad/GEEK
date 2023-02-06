@@ -19,7 +19,7 @@ public class App extends Application {
 
 	public static Stage primaryStage;
 	public static ConexionMySQL conexionLocal = new ConexionMySQL();
-	public static DBManager conexionRemota = new DBManager();
+//	public static DBManager conexionRemota = new DBManager();
 	public static User user = new User();
 	
 //	private MainController controller = new MainController();

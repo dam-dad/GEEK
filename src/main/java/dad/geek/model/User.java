@@ -31,14 +31,19 @@ public class User {
 	
 	public User(int userID, String nickname, String username, String password, String image) {
 		
-		if(image == null) {
+		try {
+			if(image != null && !image.trim().equals(""))
+				setProfileImage(new Image(image));
+			else {
+				setProfileImage(new Image(getClass().getResource("/images/user.png").toURI().toString()));
+			}
+		} catch (Exception e) {
 			try {
 				setProfileImage(new Image(getClass().getResource("/images/user.png").toURI().toString()));
-			} catch (URISyntaxException e) {
-				e.printStackTrace();
+			} catch (URISyntaxException e1) {
+				e1.printStackTrace();
 			}
-		} else
-			setProfileImage(new Image(image));
+		}
 		
 		setUserID(userID);
 		setNickname(nickname);
@@ -47,13 +52,13 @@ public class User {
 	}
 	
 	public boolean userInDatabase() throws SQLException {
-		// return App.conexionLocal.getUserFromDB(getUsername(), getPassword()).next();
-		return App.conexionRemota.getUserFromDB(getUsername(), getPassword()).next();
+		return App.conexionLocal.getUserFromDB(getUsername(), getPassword()).next();
+//		return App.conexionRemota.getUserFromDB(getUsername(), getPassword()).next();
 	}
 	
 	public void addUsertoDB() {
-		// App.conexionLocal.createUser(getNickname(), getUsername(), getPassword());
-		App.conexionRemota.createUser(getNickname(), getUsername(), getPassword());
+		App.conexionLocal.createUser(getNickname(), getUsername(), getPassword());
+//		App.conexionRemota.createUser(getNickname(), getUsername(), getPassword());
 	}
 	
 	public final IntegerProperty userIDProperty() {
@@ -114,6 +119,7 @@ public class User {
 	
 	public final void setNickname(final String nickname) {
 		this.nicknameProperty().set(nickname);
+		App.conexionLocal.setNickname(getUserID(), nickname);
 	}
 
 	public final ObjectProperty<Image> profileImageProperty() {

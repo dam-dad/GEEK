@@ -97,7 +97,8 @@ public class DBManager {
 						posts.getInt("ID"),
 						posts.getString("nombre"),
 						posts.getString("nombreUsuario"),
-						posts.getString("password"));
+						posts.getString("password"),
+						posts.getString("image"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -116,7 +117,8 @@ public class DBManager {
 						posts.getInt("ID"),
 						posts.getString("nombre"),
 						posts.getString("nombreUsuario"),
-						posts.getString("password"));
+						posts.getString("password"),
+						posts.getString("image"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

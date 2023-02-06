@@ -18,7 +18,7 @@ public class ConexionMySQL {
 
 	private static Connection connMySQL;
 	private Statement stmtMySQL;
-	private PreparedStatement allPosts, userFromId, userFromNamePass, createUser, sendPost, setUserImage;
+	private PreparedStatement allPosts, userFromId, userFromNamePass, createUser, sendPost, setUserImage, setNickname;
 	private ResultSet resultPosts, resultUser;
 	
 	public ConexionMySQL() {
@@ -38,6 +38,7 @@ public class ConexionMySQL {
 			createUser = connMySQL.prepareStatement("insert into usuarios (nombre, nombreUsuario, password) values (?, ?, ?)");
 			sendPost = connMySQL.prepareStatement("insert into posts (ID_Usuario, contenido) values (?, ?)");
 			setUserImage = connMySQL.prepareStatement("update usuarios set imagen = ? where id = ?");
+			setNickname = connMySQL.prepareStatement("update usuarios set nombre = ? where id = ?");
 			
 		} catch (SQLException | IOException e) {
 			e.printStackTrace();
@@ -168,6 +169,18 @@ public class ConexionMySQL {
 			setUserImage.setString(1, url);
 			setUserImage.setInt(2, id);
 			setUserImage.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public void setNickname(int id, String nickname) {
+		
+		try {
+			setNickname.setString(1, nickname);
+			setNickname.setInt(2, id);
+			setNickname.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

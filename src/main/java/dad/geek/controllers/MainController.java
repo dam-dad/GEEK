@@ -138,7 +138,6 @@ public class MainController implements Initializable {
 	}
 	
 	private void reloadPosts() {
-		System.out.println("hola");
 		App.primaryStage.getScene().setCursor(Cursor.WAIT);
 		postContainerPane.setContent(laodPosts());
 		App.primaryStage.getScene().setCursor(Cursor.DEFAULT);

@@ -3,17 +3,21 @@ package dad.geek.controllers;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
 
 import dad.geek.App;
 import javafx.beans.binding.Bindings;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
@@ -27,6 +31,8 @@ public class EditProfileController implements Initializable {
 	
 	private Image newImage;
 	private Stage stage;
+	private StringProperty newName = new SimpleStringProperty();
+	
 	// view
 	
 	@FXML
@@ -63,9 +69,11 @@ public class EditProfileController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		
+		newName.set(App.user.getNickname());
+
 		// bindings
 		
-		nicknameLabel.textProperty().bind(App.user.nicknameProperty());
+		nicknameLabel.textProperty().bind(newName);
 		usernameLabel.textProperty().bind(Bindings.concat("@").concat(App.user.usernameProperty()));
 		profileImage.setImage(App.user.getProfileImage());
 		
@@ -91,6 +99,8 @@ public class EditProfileController implements Initializable {
     void onAcceptAction(ActionEvent event) {
     	if(newImage != null)
     		App.user.setProfileImage(newImage);
+    	if(newName != null && !newName.get().trim().equals(""))
+    		App.user.setNickname(newName.get());
     	stage.getOnCloseRequest().handle(new WindowEvent(stage, WindowEvent.WINDOW_CLOSE_REQUEST));
     }
 
@@ -101,12 +111,23 @@ public class EditProfileController implements Initializable {
 
     @FXML
     void onEditNicknameAction(ActionEvent event) {
+    	 TextInputDialog dialog = new TextInputDialog();
+    	 dialog.setTitle("Cambiar nombre");
+         dialog.setHeaderText(String.format("Tu nombre actual es \"%s\".\nIntroduzca su nuevo nombre.", App.user.getNickname()));
+         dialog.setContentText("Nuevo nombre:");
 
+         Optional<String> result = dialog.showAndWait();
+
+         // TODO revisar si el nombre ya está cogido
+         result.ifPresent(name -> {
+        	 if(name != null && !name.trim().equals(""))
+        		 newName.set(name);
+         });
     }
 
     @FXML
     void onEditUsernameAction(ActionEvent event) {
-
+    	// @
     }
     
     public EditProfileController setStage(Stage stage) {
