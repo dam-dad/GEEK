@@ -54,9 +54,9 @@ public class ConexionMySQL {
 		return resultPosts;
 	}
 	
-	public ResultSet getUserFromDB(int id) {
+	public ResultSet getUserFromDB(long id) {
 		try {
-			userFromId.setInt(1, id);
+			userFromId.setLong(1, id);
 			resultUser = userFromId.executeQuery();
 		} catch (SQLException e) {
 			System.err.println("error en oneuser id");
@@ -98,7 +98,7 @@ public class ConexionMySQL {
 		return result;
 	}
 	
-	public User getUserObject(int userId) {
+	public User getUserObject(long userId) {
 		
 		try {
 			ResultSet posts = getUserFromDB(userId);
@@ -141,7 +141,7 @@ public class ConexionMySQL {
 	public void sendPost(Post post) {
 		
 		try {
-			sendPost.setInt(1, post.getUserID());
+			sendPost.setLong(1, post.getUserID());
 			sendPost.setString(2, post.getPostContent());
 			sendPost.executeUpdate();
 		} catch (SQLException e) {
@@ -163,11 +163,11 @@ public class ConexionMySQL {
 		
 	}
 	
-	public void setUserImage(int id, String url) {
+	public void setUserImage(long id, String url) {
 		
 		try {
 			setUserImage.setString(1, url);
-			setUserImage.setInt(2, id);
+			setUserImage.setLong(2, id);
 			setUserImage.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -175,11 +175,11 @@ public class ConexionMySQL {
 		
 	}
 	
-	public void setNickname(int id, String nickname) {
+	public void setNickname(long id, String nickname) {
 		
 		try {
 			setNickname.setString(1, nickname);
-			setNickname.setInt(2, id);
+			setNickname.setLong(2, id);
 			setNickname.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();

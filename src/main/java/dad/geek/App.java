@@ -70,7 +70,7 @@ public class App extends Application {
 	}
 	
 	public static void salir() {
-		Alert alerta = new Alert(AlertType.CONFIRMATION);
+		Alert alerta = new Alert(AlertType.WARNING);
 		alerta.setTitle("Exit");
 		alerta.initOwner(App.primaryStage);
 		alerta.setHeaderText("Va a salir de la aplicación.");
