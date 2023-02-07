@@ -10,12 +10,15 @@ import com.jfoenix.controls.JFXButton;
 
 import dad.geek.App;
 import javafx.beans.binding.Bindings;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
@@ -32,6 +35,7 @@ public class EditProfileController implements Initializable {
 	private Image newImage;
 	private Stage stage;
 	private StringProperty newName = new SimpleStringProperty();
+	private BooleanProperty isValidName = new SimpleBooleanProperty(true);
 	
 	// view
 	
@@ -113,13 +117,19 @@ public class EditProfileController implements Initializable {
     	 dialog.initOwner(stage);
          dialog.setHeaderText(String.format("Tu nombre actual es \"%s\".\nIntroduzca su nuevo nombre.", App.user.getNickname()));
          dialog.setContentText("Nuevo nombre:");
-
+         dialog.getEditor().textProperty().addListener((o,ov,nv) -> {
+        	 if(nv != null && nv.length() > 0 && nv.length() <= 40)
+        		 isValidName.set(false);
+        	 else
+        		 isValidName.set(true);
+         });
+         dialog.getDialogPane().lookupButton(ButtonType.OK).disableProperty().bind(isValidName);
+         
          Optional<String> result = dialog.showAndWait();
 
          // TODO revisar si el nombre ya está cogido
          result.ifPresent(name -> {
-        	 if(name != null && !name.trim().equals(""))
-        		 newName.set(name);
+    		 newName.set(name);
          });
     }
     
