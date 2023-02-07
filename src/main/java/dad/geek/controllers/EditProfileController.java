@@ -110,6 +110,7 @@ public class EditProfileController implements Initializable {
     void onEditNicknameAction(ActionEvent event) {
     	 TextInputDialog dialog = new TextInputDialog();
     	 dialog.setTitle("Cambiar nombre");
+    	 dialog.initOwner(stage);
          dialog.setHeaderText(String.format("Tu nombre actual es \"%s\".\nIntroduzca su nuevo nombre.", App.user.getNickname()));
          dialog.setContentText("Nuevo nombre:");
 
