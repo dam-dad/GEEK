@@ -37,13 +37,15 @@ public class PostController implements Initializable {
 
 	@FXML
 	private JFXTextArea contentTextArea;
+	
+	@FXML
+	private Label contentLabel;
 
 	@FXML
 	private FlowPane filterFlow;
 
 	@FXML
 	private FlowPane imageFlow;
-
 
     @FXML
     private ImageView profileImage;
@@ -75,6 +77,7 @@ public class PostController implements Initializable {
 		// bindings
 
 		profileImage.imageProperty().bind(user.profileImageProperty());
+		contentLabel.textProperty().bind(post.postContentProperty());
 		contentTextArea.textProperty().bind(post.postContentProperty());
 		usernameLabel.textProperty().bind(user.nicknameProperty());
 		arrobaLabel.textProperty().bind(Bindings.concat("@").concat(user.usernameProperty()));
