@@ -76,9 +76,11 @@ public class App extends Application {
 		alerta.setHeaderText("Va a salir de la aplicación.");
 		alerta.setContentText("¿Seguro que quiere salir?");
 		Optional<ButtonType> action = alerta.showAndWait();
-		if (action.get() == ButtonType.OK) {
-			Platform.exit();
-		}
+		action.ifPresent(a -> {
+			if (action.get() == ButtonType.OK) {
+				Platform.exit();
+			}
+		});
 	}
 
 }
