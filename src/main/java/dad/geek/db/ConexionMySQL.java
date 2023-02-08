@@ -13,6 +13,8 @@ import java.util.Properties;
 
 import dad.geek.model.Post;
 import dad.geek.model.User;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 
 public class ConexionMySQL {
 
@@ -23,13 +25,20 @@ public class ConexionMySQL {
 	
 	public ConexionMySQL() {
 		
+		Properties prop = new Properties();
 		try {
-			Properties prop = new Properties();
 			prop.load(getClass().getResourceAsStream("/properties/conexiones_local.properties"));
+		} catch (IOException e) {
+			Alert errorAlert = new Alert(AlertType.ERROR);
+			errorAlert.setTitle("ERROR");
+			errorAlert.setHeaderText("Hubo un error.  :(");
+			errorAlert.setContentText("Hubo un error al inicio de la conexión con la base de datos (IOException).");
+			errorAlert.show();
+		}
 			String url = prop.getProperty("mysqlurl");
 			String username = prop.getProperty("mysqlusername", "root");
 			String password = prop.getProperty("mysqlpassword", "");
-			
+		try {
 			connMySQL = DriverManager.getConnection(url, username, password);
 			
 			allPosts = connMySQL.prepareStatement("select * from posts order by id desc");
@@ -40,16 +49,25 @@ public class ConexionMySQL {
 			setUserImage = connMySQL.prepareStatement("update usuarios set imagen = ? where id = ?");
 			setNickname = connMySQL.prepareStatement("update usuarios set nombre = ? where id = ?");
 			
-		} catch (SQLException | IOException e) {
-			e.printStackTrace();
+		} catch (SQLException e) {
+			Alert errorAlert = new Alert(AlertType.ERROR);
+			errorAlert.setTitle("ERROR");
+			errorAlert.setHeaderText("Hubo un error.  :(");
+			errorAlert.setContentText("Hubo un error al inicio de la conexión con la base de datos (SQLException).");
+			errorAlert.show();
 		}
-	}
+		
+}
 	
 	public ResultSet allPostsFromDB() {
 		try {
 			resultPosts = allPosts.executeQuery();
 		} catch (SQLException e) {
-			System.out.println("error en allposts");
+			Alert errorAlert = new Alert(AlertType.ERROR);
+			errorAlert.setTitle("ERROR");
+			errorAlert.setHeaderText("Hubo un error.  :(");
+			errorAlert.setContentText("Hubo un error al cargar los posts desde la base de datos (SQLException).");
+			errorAlert.show();				
 		}
 		return resultPosts;
 	}
@@ -59,7 +77,11 @@ public class ConexionMySQL {
 			userFromId.setLong(1, id);
 			resultUser = userFromId.executeQuery();
 		} catch (SQLException e) {
-			System.err.println("error en oneuser id");
+			Alert errorAlert = new Alert(AlertType.ERROR);
+			errorAlert.setTitle("ERROR");
+			errorAlert.setHeaderText("Hubo un error.  :(");
+			errorAlert.setContentText("Hubo un error al intentar cargar al usuario desde la base de datos (SQLException).");
+			errorAlert.show();		
 		}
 		return resultUser;
 	}
@@ -70,7 +92,11 @@ public class ConexionMySQL {
 			userFromNamePass.setString(2, password);
 			resultUser = userFromNamePass.executeQuery();
 		} catch (SQLException e) {
-			System.err.println("error en oneuser login " + username + ":" + password + "\n");
+			Alert errorAlert = new Alert(AlertType.ERROR);
+			errorAlert.setTitle("ERROR");
+			errorAlert.setHeaderText("Hubo un error.  :(");
+			errorAlert.setContentText("Hubo un error al intentar cargar al usuario"  + username + " desde la base de datos (SQLException).");
+			errorAlert.show();		
 		}
 		return resultUser;
 	}
@@ -92,7 +118,11 @@ public class ConexionMySQL {
 				
 			}
 		} catch (SQLException e) {
-			System.err.println("error en getAllPosts");
+			Alert errorAlert = new Alert(AlertType.ERROR);
+			errorAlert.setTitle("ERROR");
+			errorAlert.setHeaderText("Hubo un error.  :(");
+			errorAlert.setContentText("Hubo un error al intentar cargar todos los posts (SQLException).");
+			errorAlert.show();		
 		}
 		
 		return result;
@@ -112,7 +142,11 @@ public class ConexionMySQL {
 				);
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			Alert errorAlert = new Alert(AlertType.ERROR);
+			errorAlert.setTitle("ERROR");
+			errorAlert.setHeaderText("Hubo un error.  :(");
+			errorAlert.setContentText("Hubo un error al intentar cargar al usuario (SQLException).");
+			errorAlert.show();		
 		}
 		
 		return null;
@@ -132,7 +166,11 @@ public class ConexionMySQL {
 				);
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			Alert errorAlert = new Alert(AlertType.ERROR);
+			errorAlert.setTitle("ERROR");
+			errorAlert.setHeaderText("Hubo un error.  :(");
+			errorAlert.setContentText("Hubo un error al intentar cargar al usuario (SQLException).");
+			errorAlert.show();		
 		}
 		
 		return null;
@@ -145,7 +183,11 @@ public class ConexionMySQL {
 			sendPost.setString(2, post.getPostContent());
 			sendPost.executeUpdate();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			Alert errorAlert = new Alert(AlertType.ERROR);
+			errorAlert.setTitle("ERROR");
+			errorAlert.setHeaderText("Hubo un error.  :(");
+			errorAlert.setContentText("Hubo un error al intentar enviar un post (SQLException).");
+			errorAlert.show();		
 		}
 		
 	}
@@ -158,8 +200,12 @@ public class ConexionMySQL {
 			createUser.setString(3, password);
 			createUser.executeUpdate();
 		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+			 Alert errorAlert = new Alert(AlertType.ERROR);
+			 errorAlert.setTitle("ERROR");
+			 errorAlert.setHeaderText("Hubo un error.  :(");
+			 errorAlert.setContentText("Hubo un error al intentar crear un nuevo usuario (SQLException).");
+			 errorAlert.show();	
+		}		
 		
 	}
 	
@@ -170,7 +216,11 @@ public class ConexionMySQL {
 			setUserImage.setLong(2, id);
 			setUserImage.executeUpdate();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			Alert errorAlert = new Alert(AlertType.ERROR);
+			errorAlert.setTitle("ERROR");
+			errorAlert.setHeaderText("Hubo un error.  :(");
+			errorAlert.setContentText("Hubo un error al intentar actualizar la imagen de usuario (SQLException).");
+			errorAlert.show();		
 		}
 		
 	}
@@ -182,7 +232,11 @@ public class ConexionMySQL {
 			setNickname.setLong(2, id);
 			setNickname.executeUpdate();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			Alert errorAlert = new Alert(AlertType.ERROR);
+			errorAlert.setTitle("ERROR");
+			errorAlert.setHeaderText("Hubo un error.  :(");
+			errorAlert.setContentText("Hubo un error al intentar actualizar el apodo de usuario (SQLException).");
+			errorAlert.show();		
 		}
 		
 	}
@@ -196,7 +250,13 @@ public class ConexionMySQL {
 			if(resultPosts != null)
 				resultPosts.close();
 			
-		} catch (SQLException e1) {}
+		} catch (SQLException e1) {
+			Alert errorAlert = new Alert(AlertType.ERROR);
+			errorAlert.setTitle("ERROR");
+			errorAlert.setHeaderText("Hubo un error.  :(");
+			errorAlert.setContentText("Hubo un error al intentar cerrar la conexión con la base de datos (SQLException).");
+			errorAlert.show();
+		}
 	}
 	
 }
