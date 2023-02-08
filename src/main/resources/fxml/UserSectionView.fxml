@@ -74,7 +74,7 @@
       </HBox>
       <ScrollPane fx:id="postContainerPane" fitToHeight="true" fitToWidth="true" hmin="180.0" minWidth="200.0" pannable="true" VBox.vgrow="ALWAYS">
          <content>
-            <VBox fx:id="postsContainer" />
+            <VBox fx:id="postsContainer" maxHeight="-Infinity" />
          </content></ScrollPane>
    </children>
    <padding>
