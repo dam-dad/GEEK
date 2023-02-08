@@ -149,8 +149,6 @@ public class UserSectionController implements Initializable {
 	
 	private void onCurrentUserChanged(ObservableValue<? extends User> o, User ov, User nv) {
 		
-		System.out.println("hola");
-		
 		if(ov != null) {
 			nicknameLabel.textProperty().unbind();
 			usernameLabel.textProperty().unbind();
