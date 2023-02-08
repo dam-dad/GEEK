@@ -36,7 +36,7 @@ public class UserSectionController implements Initializable {
 	
 	private BooleanProperty goback = new SimpleBooleanProperty(false);
 	private ListProperty<User> users = new SimpleListProperty<>(FXCollections.observableArrayList());
-	private ObjectProperty<User> userNow = new SimpleObjectProperty<>();
+	private ObjectProperty<User> currentUser = new SimpleObjectProperty<>();
 
 	// view
 	
@@ -54,12 +54,12 @@ public class UserSectionController implements Initializable {
 
     @FXML
     private JFXButton showMoreButton;
-
-    @FXML
-    private Label nameLabel;
-
+    
     @FXML
     private Label usernameLabel;
+
+    @FXML
+    private Label nicknameLabel;
 
     @FXML
     private VBox view;
@@ -81,7 +81,7 @@ public class UserSectionController implements Initializable {
 		// listeners
 		
 		users.sizeProperty().addListener(this::onUsersSizeModified);
-		userNow.addListener(this::onUserNowChanged);
+		currentUser.addListener(this::onCurrentUserChanged);
 		
 		// load data
 		
@@ -94,29 +94,6 @@ public class UserSectionController implements Initializable {
 		
 	}
 	
-	private void onUsersSizeModified(ObservableValue<? extends Number> o, Number ov, Number nv) {
-
-		if(nv != null && nv.intValue() >= 1)
-			userNow.set(users.get(nv.intValue()-1));
-		
-	}
-	
-	private void onUserNowChanged(ObservableValue<? extends User> o, User ov, User nv) {
-		
-		if(ov != null) {
-			nameLabel.textProperty().unbind();
-			usernameLabel.textProperty().unbind();
-			profileImage.imageProperty().unbind();
-		}
-		
-		if(nv != null) {
-			nameLabel.textProperty().bind(nv.nicknameProperty());
-			usernameLabel.textProperty().bind(Bindings.concat("@").concat(nv.usernameProperty()));
-			profileImage.imageProperty().bind(nv.profileImageProperty());
-		}
-    	
-	}
-
 	@FXML
     void onEditAction(ActionEvent event) {
 		
@@ -149,12 +126,34 @@ public class UserSectionController implements Initializable {
     void onBackAction(ActionEvent event) {
     	
 		users.remove(users.size()-1);
-		if (userNow.get().equals(App.user))
+		if (currentUser.get().equals(App.user))
 			goback.set(false);
     	
     }
 	
-    
+    private void onUsersSizeModified(ObservableValue<? extends Number> o, Number ov, Number nv) {
+		
+		if(nv != null && nv.intValue() >= 1)
+			currentUser.set(users.get(nv.intValue()-1));
+		
+	}
+	
+	private void onCurrentUserChanged(ObservableValue<? extends User> o, User ov, User nv) {
+		
+		if(ov != null) {
+			nicknameLabel.textProperty().unbind();
+			usernameLabel.textProperty().unbind();
+			profileImage.imageProperty().unbind();
+		}
+		
+		if(nv != null) {
+			nicknameLabel.textProperty().bind(nv.nicknameProperty());
+			usernameLabel.textProperty().bind(Bindings.concat("@").concat(nv.usernameProperty()));
+			profileImage.imageProperty().bind(nv.profileImageProperty());
+		}
+    	
+	}
+	
     public void changeUser(User user) {
     	
     	if (user.equals(App.user))
@@ -162,7 +161,7 @@ public class UserSectionController implements Initializable {
     	else
     		goback.set(true);
     	
-    	if(!userNow.get().equals(user))
+    	if(!currentUser.get().equals(user))
     		users.add(user);
     	
     }

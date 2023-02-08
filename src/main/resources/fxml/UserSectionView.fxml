@@ -44,7 +44,7 @@
             </ImageView>
             <VBox alignment="CENTER_LEFT" HBox.hgrow="NEVER">
                <children>
-                  <Label fx:id="nameLabel" text="Nombre de Usuario">
+                  <Label fx:id="nicknameLabel" text="Nombre de Usuario">
                      <font>
                         <Font size="16.0" />
                      </font>
