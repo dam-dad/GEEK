@@ -111,6 +111,7 @@ public class MainController implements Initializable {
 		postsContainer.getChildren().clear();
 		for(Post p : App.conexionLocal.getAllPosts()) {
 			postsContainer.getChildren().add(new PostController(p).setMainController(this).getView());
+			postsContainer.getChildren().add(new SplitPane());
 		}
 		return postsContainer;
 	}
