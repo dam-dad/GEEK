@@ -72,7 +72,7 @@
             <Insets top="10.0" />
          </VBox.margin>
       </HBox>
-      <ScrollPane fx:id="postContainerPane" fitToWidth="true" hmin="180.0" minWidth="200.0" pannable="true" vbarPolicy="ALWAYS" VBox.vgrow="NEVER">
+      <ScrollPane fx:id="postContainerPane" fitToHeight="true" fitToWidth="true" hmin="180.0" minWidth="200.0" pannable="true" VBox.vgrow="ALWAYS">
          <content>
             <VBox fx:id="postsContainer" />
          </content></ScrollPane>
