@@ -7,6 +7,7 @@ import java.util.ResourceBundle;
 import com.jfoenix.controls.JFXButton;
 
 import dad.geek.App;
+import dad.geek.model.Post;
 import dad.geek.model.User;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.BooleanProperty;
@@ -23,6 +24,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.VBox;
@@ -39,6 +41,8 @@ public class UserSectionController implements Initializable {
 	private ObjectProperty<User> currentUser = new SimpleObjectProperty<>();
 
 	// view
+	
+	private VBox postsContainer = new VBox();
 	
 	@FXML
     private JFXButton backButton;
@@ -60,7 +64,10 @@ public class UserSectionController implements Initializable {
 
     @FXML
     private Label nicknameLabel;
-
+    
+    @FXML
+    private ScrollPane postContainerPane;
+    
     @FXML
     private VBox view;
 
@@ -150,6 +157,8 @@ public class UserSectionController implements Initializable {
 			nicknameLabel.textProperty().bind(nv.nicknameProperty());
 			usernameLabel.textProperty().bind(Bindings.concat("@").concat(nv.usernameProperty()));
 			profileImage.imageProperty().bind(nv.profileImageProperty());
+			
+			laodPosts();
 		}
     	
 	}
@@ -165,6 +174,14 @@ public class UserSectionController implements Initializable {
     		users.add(user);
     	
     }
+    
+    private VBox laodPosts() {
+		postsContainer.getChildren().clear();
+		for(Post p : App.conexionLocal.getUserPosts(currentUser.get())) {
+			postsContainer.getChildren().add(new PostController(p).getView());
+		}
+		return postsContainer;
+	}
 	
 	public VBox getView() {
 		return view;

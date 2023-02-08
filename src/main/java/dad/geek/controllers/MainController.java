@@ -31,7 +31,6 @@ public class MainController implements Initializable {
 
 	private UserSectionController userSectionController = new UserSectionController();
 	private SearchSectionController searchSectionController = new SearchSectionController();
-	private MainController thisController = this;
 	
 	// view
 	
@@ -111,7 +110,7 @@ public class MainController implements Initializable {
 	private VBox laodPosts() {
 		postsContainer.getChildren().clear();
 		for(Post p : App.conexionLocal.getAllPosts()) {
-			postsContainer.getChildren().add(new PostController(p, thisController).getView());
+			postsContainer.getChildren().add(new PostController(p).setMainController(this).getView());
 		}
 		return postsContainer;
 	}

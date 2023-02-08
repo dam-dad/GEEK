@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import com.jfoenix.controls.JFXTextArea;
-
 import dad.geek.App;
 import dad.geek.model.Post;
 import dad.geek.model.User;
@@ -49,10 +47,9 @@ public class PostController implements Initializable {
     
     @FXML
     private BorderPane view;
-
-	public PostController(Post post, MainController parent) {
+    
+	public PostController(Post post) {
 		this.post = post;
-		this.main = parent;
 
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/PostView_Karim.fxml"));
@@ -83,6 +80,11 @@ public class PostController implements Initializable {
 	@FXML
 	void onOpenUserAction(ActionEvent event) {
 		main.getUserSectionController().changeUser(user);
+	}
+	
+	public PostController setMainController(MainController parent) {
+		this.main = parent;
+		return this;
 	}
 
 	public BorderPane getView() {
