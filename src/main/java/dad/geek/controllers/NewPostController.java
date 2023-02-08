@@ -19,12 +19,13 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 public class NewPostController implements Initializable {
 	
 	// model
 	
-	private Stage thisStage;
+	private Stage stage;
 	private Post post = new Post();
 	
 	// view
@@ -50,10 +51,7 @@ public class NewPostController implements Initializable {
 	@FXML
 	private BorderPane view;
 
-	public NewPostController(Stage stage) {
-
-		thisStage = stage;
-		thisStage.setMinWidth(450);
+	public NewPostController() {
 
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/NewPostView.fxml"));
@@ -76,7 +74,14 @@ public class NewPostController implements Initializable {
 		// bindings
 		
 		post.postContentProperty().bind(contentTextArea.textProperty());
+		profileImage.imageProperty().bind(App.user.profileImageProperty());
 
+	}
+	
+	public NewPostController setStage(Stage stage) {
+		this.stage = stage;
+		this.stage.setMinWidth(450);
+		return this;
 	}
 	
 	public NewPostController setPosition(String posicionImagen) {
@@ -114,7 +119,7 @@ public class NewPostController implements Initializable {
 	@FXML
 	void onSendAction(ActionEvent event) {
 		App.conexionLocal.sendPost(post);
-		thisStage.close();
+		this.stage.getOnCloseRequest().handle(new WindowEvent(this.stage, WindowEvent.WINDOW_CLOSE_REQUEST));
 	}
 	
 	public BorderPane getView() {

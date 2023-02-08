@@ -1,22 +1,26 @@
 package dad.geek.model;
 
+import java.net.URISyntaxException;
 import java.sql.SQLException;
 
 import dad.geek.App;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ListProperty;
+import javafx.beans.property.LongProperty;
 import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleListProperty;
+import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.image.Image;
 
 public class User {
 	
-	private IntegerProperty userID = new SimpleIntegerProperty();
+	// FIXME Cambiar el tipo de dato de la ID de int a long
+	private LongProperty userID = new SimpleLongProperty();
 	private StringProperty nickname = new SimpleStringProperty();
 	private StringProperty username = new SimpleStringProperty();
 	private StringProperty password = new SimpleStringProperty();
@@ -26,7 +30,22 @@ public class User {
 	
 	public User() {}
 	
-	public User(int userID, String nickname, String username, String password) {
+	public User(long userID, String nickname, String username, String password, String image) {
+		
+		try {
+			if(image != null && !image.trim().equals(""))
+				setProfileImage(new Image(image));
+			else {
+				setProfileImage(new Image(getClass().getResource("/images/user.png").toURI().toString()));
+			}
+		} catch (Exception e) {
+			try {
+				setProfileImage(new Image(getClass().getResource("/images/user.png").toURI().toString()));
+			} catch (URISyntaxException e1) {
+				e1.printStackTrace();
+			}
+		}
+		
 		setUserID(userID);
 		setNickname(nickname);
 		setUsername(username);
@@ -35,25 +54,25 @@ public class User {
 	
 	public boolean userInDatabase() throws SQLException {
 		return App.conexionLocal.getUserFromDB(getUsername(), getPassword()).next();
-		// return App.conexionRemota.getUserFromDB(getUsername(), getPassword()).next();
+//		return App.conexionRemota.getUserFromDB(getUsername(), getPassword()).next();
 	}
 	
 	public void addUsertoDB() {
 		App.conexionLocal.createUser(getNickname(), getUsername(), getPassword());
-		// App.conexionRemota.createUser(getNickname(), getUsername(), getPassword());
+//		App.conexionRemota.createUser(getNickname(), getUsername(), getPassword());
 	}
 	
-	public final IntegerProperty userIDProperty() {
+	public final LongProperty userIDProperty() {
 		return this.userID;
 	}
-	
-	public final Integer getUserID() {
-		return this.userID.get();
+
+	public final long getUserID() {
+		return this.userIDProperty().get();
 	}
-	
-	public final void setUserID(final int userID) {
+
+	public final void setUserID(final long userID) {
 		this.userIDProperty().set(userID);
-	}
+	}	
 	
 	public final StringProperty usernameProperty() {
 		return this.username;
@@ -101,6 +120,7 @@ public class User {
 	
 	public final void setNickname(final String nickname) {
 		this.nicknameProperty().set(nickname);
+		App.conexionLocal.setNickname(getUserID(), nickname);
 	}
 
 	public final ObjectProperty<Image> profileImageProperty() {
@@ -113,6 +133,7 @@ public class User {
 
 	public final void setProfileImage(final Image profileImage) {
 		this.profileImageProperty().set(profileImage);
+		App.conexionLocal.setUserImage(getUserID(), profileImage.getUrl());
 	}
 
 	public final ListProperty<Post> postsProperty() {
@@ -126,5 +147,5 @@ public class User {
 	public final void setPosts(final ObservableList<Post> posts) {
 		this.postsProperty().set(posts);
 	}
-	
+
 }

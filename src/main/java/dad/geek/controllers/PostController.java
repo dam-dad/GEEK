@@ -38,15 +38,6 @@ public class PostController implements Initializable {
 
     @FXML
     private FlowPane imageFlow;
-    
-    @FXML
-    private ImageView imageBottom;
-
-    @FXML
-    private ImageView imageLeft;
-
-    @FXML
-    private ImageView imageRight;
 
     @FXML
     private ImageView profileImage;
@@ -79,7 +70,8 @@ public class PostController implements Initializable {
 		user = App.conexionLocal.getUserObject(post.getUserID());
 		
 		// bindings
-	
+
+		profileImage.imageProperty().bind(user.profileImageProperty());
 		contentTextArea.textProperty().bind(post.postContentProperty());
 		usernameLabel.textProperty().bind(user.nicknameProperty());
 		arrobaLabel.textProperty().bind(Bindings.concat("@").concat(user.usernameProperty()));

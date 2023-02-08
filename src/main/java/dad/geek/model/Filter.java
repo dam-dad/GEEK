@@ -1,33 +1,29 @@
 package dad.geek.model;
 
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.LongProperty;
+import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 public class Filter {
 	
-	private IntegerProperty filterID = new SimpleIntegerProperty();
+	private LongProperty filterID = new SimpleLongProperty();
 	private StringProperty filterName = new SimpleStringProperty();
 	private StringProperty filterShortName = new SimpleStringProperty();
 	private StringProperty filterDescription = new SimpleStringProperty();
 	
-	public final int getId() {
-		return this.filterID.get();
-	}
-
-	public final IntegerProperty filterIDProperty() {
+	public final LongProperty filterIDProperty() {
 		return this.filterID;
 	}
 	
-	public final int getFilterID() {
+	public final long getFilterID() {
 		return this.filterIDProperty().get();
 	}
-
-	public final void setFilterID(final int filterID) {
+	
+	public final void setFilterID(final long filterID) {
 		this.filterIDProperty().set(filterID);
 	}
-
+	
 	public final StringProperty filterNameProperty() {
 		return this.filterName;
 	}
@@ -63,5 +59,5 @@ public class Filter {
 	public final void setFilterDescription(final String filterDescription) {
 		this.filterDescriptionProperty().set(filterDescription);
 	}
-	
+
 }

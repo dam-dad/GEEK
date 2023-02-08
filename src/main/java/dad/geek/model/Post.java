@@ -3,21 +3,22 @@ package dad.geek.model;
 import java.time.LocalDateTime;
 
 import dad.geek.utils.DirImages;
-import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ListProperty;
+import javafx.beans.property.LongProperty;
 import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleListProperty;
+import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.image.Image;
 
 public class Post {
 
-	private IntegerProperty postID = new SimpleIntegerProperty();
-	private IntegerProperty userID = new SimpleIntegerProperty();
+	private LongProperty postID = new SimpleLongProperty();
+	private LongProperty userID = new SimpleLongProperty();
 	private StringProperty postTitle = new SimpleStringProperty();
 	private StringProperty postContent = new SimpleStringProperty();
 	private ObjectProperty<Image> postImage = new SimpleObjectProperty<>();
@@ -27,30 +28,30 @@ public class Post {
 	
 	public Post() {	}
 	
-	public Post(int postID, int userID, String postTitle, String postContent) {
+	public Post(long postID, long userID, String postTitle, String postContent) {
 		setPostID(postID);
 		setUserID(userID);
 		setPostTitle(postTitle);
 		setPostContent(postContent);
 	}
 	
-	public final IntegerProperty postIDProperty() {
+	public final LongProperty postIDProperty() {
 		return this.postID;
 	}
-	public final void setPostID(final int postID) {
+	public final long getPostID() {
+		return this.postIDProperty().get();
+	}
+	public final void setPostID(final long postID) {
 		this.postIDProperty().set(postID);
 	}
-	public final int getPostID() {
-		return this.postID.get();
-	}
-	
-	public final IntegerProperty userIDProperty() {
+
+	public final LongProperty userIDProperty() {
 		return this.userID;
 	}
-	public final int getUserID() {
+	public final long getUserID() {
 		return this.userIDProperty().get();
 	}
-	public final void setUserID(final int userID) {
+	public final void setUserID(final long userID) {
 		this.userIDProperty().set(userID);
 	}
 	
@@ -113,5 +114,5 @@ public class Post {
 	public final void setDirImage(final DirImages dirImage) {
 		this.dirImageProperty().set(dirImage);
 	}
-	
+
 }

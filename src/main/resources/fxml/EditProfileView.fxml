@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+
+<BorderPane fx:id="view" minHeight="400.0" minWidth="300.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+   <center>
+      <HBox alignment="TOP_CENTER" spacing="5.0" BorderPane.alignment="CENTER">
+         <children>
+            <VBox alignment="TOP_CENTER" spacing="5.0">
+               <children>
+                  <ImageView fx:id="profileImage" fitHeight="64.0" fitWidth="64.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/user.png" />
+                     </image>
+                  </ImageView>
+                  <JFXButton fx:id="editImageButton" contentDisplay="RIGHT" onAction="#onEditImageAction" text="Cambiar la imagen">
+                     <graphic>
+                        <FontIcon iconLiteral="mdi2l-lead-pencil" iconSize="16" />
+                     </graphic>
+                  </JFXButton>
+               </children>
+            </VBox>
+            <VBox HBox.hgrow="ALWAYS">
+               <children>
+                  <Label fx:id="nicknameLabel" contentDisplay="RIGHT" text="Nombre de Usuario">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                     <graphic>
+                        <JFXButton fx:id="editNicknameButton" contentDisplay="RIGHT" onAction="#onEditNicknameAction" text="Editar">
+                           <graphic>
+                              <FontIcon iconLiteral="mdi2l-lead-pencil" iconSize="16" />
+                           </graphic>
+                        </JFXButton>
+                     </graphic>
+                  </Label>
+                  <Label fx:id="usernameLabel" contentDisplay="RIGHT" maxWidth="1.7976931348623157E308" text="Código de Usuario" VBox.vgrow="ALWAYS">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </VBox>
+         </children>
+      </HBox>
+   </center>
+   <bottom>
+      <HBox alignment="CENTER_RIGHT" spacing="5.0" BorderPane.alignment="CENTER">
+         <children>
+            <JFXButton defaultButton="true" onAction="#onAcceptAction" text="Aceptar" />
+            <JFXButton onAction="#onCancelAction" text="Cancelar" />
+         </children>
+      </HBox>
+   </bottom>
+   <padding>
+      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+   </padding>
+</BorderPane>

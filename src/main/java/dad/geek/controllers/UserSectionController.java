@@ -14,9 +14,14 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 public class UserSectionController implements Initializable {
 	
@@ -68,6 +73,7 @@ public class UserSectionController implements Initializable {
 		
 		nameLabel.textProperty().bind(App.user.nicknameProperty());
 		usernameLabel.textProperty().bind(Bindings.concat("@").concat(App.user.usernameProperty()));
+		profileImage.imageProperty().bind(App.user.profileImageProperty());
 		
 		backButton.visibleProperty().bind(goback);
 		
@@ -81,7 +87,25 @@ public class UserSectionController implements Initializable {
 	
 	@FXML
     void onEditAction(ActionEvent event) {
-
+		
+		Stage window = new Stage();
+		window.setTitle("Nuevo Post");
+		window.setScene(new Scene(new EditProfileController().setStage(window).getView()));
+		window.setMinWidth(300);
+		window.setMinHeight(400);
+		window.initOwner(App.primaryStage);
+		window.initModality(Modality.APPLICATION_MODAL);
+		
+		window.getScene().setOnKeyPressed(t -> {
+			if(t.getCode() == KeyCode.ESCAPE)
+				window.getOnCloseRequest().handle(new WindowEvent(window, WindowEvent.WINDOW_CLOSE_REQUEST));
+		});
+		window.setOnCloseRequest(e -> {
+			window.close();
+		});
+		
+		window.show();
+		
     }
 
     @FXML

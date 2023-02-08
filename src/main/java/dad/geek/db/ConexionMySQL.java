@@ -13,69 +13,53 @@ import java.util.Properties;
 
 import dad.geek.model.Post;
 import dad.geek.model.User;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 
 public class ConexionMySQL {
 
 	private static Connection connMySQL;
 	private Statement stmtMySQL;
-	private PreparedStatement allPosts, userFromId, userFromNamePass, createUser, sendPost;
+	private PreparedStatement allPosts, userFromId, userFromNamePass, createUser, sendPost, setUserImage, setNickname;
 	private ResultSet resultPosts, resultUser;
 	
 	public ConexionMySQL() {
+		
+		try {
 			Properties prop = new Properties();
-			try {
-				prop.load(getClass().getResourceAsStream("/properties/conexiones_local.properties"));
-			} catch (IOException e) {
-				Alert errorAlert = new Alert(AlertType.ERROR);
-				errorAlert.setTitle("ERROR");
-				errorAlert.setHeaderText("Hubo un error");
-				errorAlert.setContentText("Hubo un error de tipo IO en el constructor de la clase.");
-				errorAlert.show();
-			}
+			prop.load(getClass().getResourceAsStream("/properties/conexiones_local.properties"));
 			String url = prop.getProperty("mysqlurl");
 			String username = prop.getProperty("mysqlusername", "root");
 			String password = prop.getProperty("mysqlpassword", "");
-			try {
-				connMySQL = DriverManager.getConnection(url, username, password);
-				allPosts = connMySQL.prepareStatement("select * from posts order by id desc");
-				userFromId = connMySQL.prepareStatement("select * from usuarios where id = ?");
-				userFromNamePass = connMySQL.prepareStatement("select * from usuarios where nombreUsuario = ? and password = ?");
-				createUser = connMySQL.prepareStatement("insert into usuarios (nombre, nombreUsuario, password) values (?, ?, ?)");
-				sendPost = connMySQL.prepareStatement("insert into posts (ID_Usuario, contenido) values (?, ?)");
-			} catch (SQLException e) {
-				Alert errorAlert = new Alert(AlertType.ERROR);
-				errorAlert.setTitle("ERROR");
-				errorAlert.setHeaderText("Hubo un error");
-				errorAlert.setContentText("Hubo un error de tipo SQL en el constructor de la clase.");
-				errorAlert.show();
-			}
 			
+			connMySQL = DriverManager.getConnection(url, username, password);
+			
+			allPosts = connMySQL.prepareStatement("select * from posts order by id desc");
+			userFromId = connMySQL.prepareStatement("select * from usuarios where id = ?");
+			userFromNamePass = connMySQL.prepareStatement("select * from usuarios where nombreUsuario = ? and password = ?");
+			createUser = connMySQL.prepareStatement("insert into usuarios (nombre, nombreUsuario, password) values (?, ?, ?)");
+			sendPost = connMySQL.prepareStatement("insert into posts (ID_Usuario, contenido) values (?, ?)");
+			setUserImage = connMySQL.prepareStatement("update usuarios set imagen = ? where id = ?");
+			setNickname = connMySQL.prepareStatement("update usuarios set nombre = ? where id = ?");
+			
+		} catch (SQLException | IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public ResultSet allPostsFromDB() {
 		try {
 			resultPosts = allPosts.executeQuery();
 		} catch (SQLException e) {
-			Alert errorAlert = new Alert(AlertType.ERROR);
-			errorAlert.setTitle("ERROR");
-			errorAlert.setHeaderText("Hubo un error");
-			errorAlert.setContentText("Hubo un error de tipo SQL en allPostsFromDB().");
-			errorAlert.show();		}
+			System.out.println("error en allposts");
+		}
 		return resultPosts;
 	}
 	
-	public ResultSet getUserFromDB(int id) {
+	public ResultSet getUserFromDB(long id) {
 		try {
-			userFromId.setInt(1, id);
+			userFromId.setLong(1, id);
 			resultUser = userFromId.executeQuery();
 		} catch (SQLException e) {
-			Alert errorAlert = new Alert(AlertType.ERROR);
-			errorAlert.setTitle("ERROR");
-			errorAlert.setHeaderText("Hubo un error");
-			errorAlert.setContentText("Hubo un error de tipo SQL en getUserFromDB(int).");
-			errorAlert.show();
+			System.err.println("error en oneuser id");
 		}
 		return resultUser;
 	}
@@ -86,11 +70,7 @@ public class ConexionMySQL {
 			userFromNamePass.setString(2, password);
 			resultUser = userFromNamePass.executeQuery();
 		} catch (SQLException e) {
-			Alert errorAlert = new Alert(AlertType.ERROR);
-			errorAlert.setTitle("ERROR");
-			errorAlert.setHeaderText("Hubo un error");
-			errorAlert.setContentText("Hubo un error de tipo SQL en getUserFromDB(String, String) " + username + ":" + password + ".");
-			errorAlert.show();
+			System.err.println("error en oneuser login " + username + ":" + password + "\n");
 		}
 		return resultUser;
 	}
@@ -112,17 +92,13 @@ public class ConexionMySQL {
 				
 			}
 		} catch (SQLException e) {
-			Alert errorAlert = new Alert(AlertType.ERROR);
-			errorAlert.setTitle("ERROR");
-			errorAlert.setHeaderText("Hubo un error");
-			errorAlert.setContentText("Hubo un error de tipo SQL en getAllPosts().");
-			errorAlert.show();
+			System.err.println("error en getAllPosts");
 		}
 		
 		return result;
 	}
 	
-	public User getUserObject(int userId) {
+	public User getUserObject(long userId) {
 		
 		try {
 			ResultSet posts = getUserFromDB(userId);
@@ -131,15 +107,12 @@ public class ConexionMySQL {
 					posts.getInt("ID"),
 					posts.getString("nombre"),
 					posts.getString("nombreUsuario"),
-					posts.getString("password")
+					posts.getString("password"),
+					posts.getString("imagen")
 				);
 			}
 		} catch (SQLException e) {
-			Alert errorAlert = new Alert(AlertType.ERROR);
-			errorAlert.setTitle("ERROR");
-			errorAlert.setHeaderText("Hubo un error");
-			errorAlert.setContentText("Hubo un error de tipo SQL en getUserObject(int).");
-			errorAlert.show();
+			e.printStackTrace();
 		}
 		
 		return null;
@@ -154,15 +127,12 @@ public class ConexionMySQL {
 					posts.getInt("ID"),
 					posts.getString("nombre"),
 					posts.getString("nombreUsuario"),
-					posts.getString("password")
+					posts.getString("password"),
+					posts.getString("imagen")
 				);
 			}
 		} catch (SQLException e) {
-			Alert errorAlert = new Alert(AlertType.ERROR);
-			errorAlert.setTitle("ERROR");
-			errorAlert.setHeaderText("Hubo un error");
-			errorAlert.setContentText("Hubo un error de tipo SQL en getUserObject(String, String).");
-			errorAlert.show();
+			e.printStackTrace();
 		}
 		
 		return null;
@@ -171,15 +141,11 @@ public class ConexionMySQL {
 	public void sendPost(Post post) {
 		
 		try {
-			sendPost.setInt(1, post.getUserID());
+			sendPost.setLong(1, post.getUserID());
 			sendPost.setString(2, post.getPostContent());
 			sendPost.executeUpdate();
 		} catch (SQLException e) {
-			Alert errorAlert = new Alert(AlertType.ERROR);
-			errorAlert.setTitle("ERROR");
-			errorAlert.setHeaderText("Hubo un error");
-			errorAlert.setContentText("Hubo un error de tipo SQL en sendPost(Post).");
-			errorAlert.show();
+			e.printStackTrace();
 		}
 		
 	}
@@ -191,12 +157,32 @@ public class ConexionMySQL {
 			createUser.setString(2, username);
 			createUser.setString(3, password);
 			createUser.executeUpdate();
-		} catch (Exception e) {
-			 Alert errorAlert = new Alert(AlertType.ERROR);
-			 errorAlert.setTitle("ERROR");
-			 errorAlert.setHeaderText("Hubo un error");
-			 errorAlert.setContentText("Hubo un error de tipo SQL en createUser(String, String, String).");
-			 errorAlert.show();	
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public void setUserImage(long id, String url) {
+		
+		try {
+			setUserImage.setString(1, url);
+			setUserImage.setLong(2, id);
+			setUserImage.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public void setNickname(long id, String nickname) {
+		
+		try {
+			setNickname.setString(1, nickname);
+			setNickname.setLong(2, id);
+			setNickname.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
 		
 	}
@@ -210,13 +196,7 @@ public class ConexionMySQL {
 			if(resultPosts != null)
 				resultPosts.close();
 			
-		} catch (SQLException e1) {
-			Alert errorAlert = new Alert(AlertType.ERROR);
-			errorAlert.setTitle("ERROR");
-			errorAlert.setHeaderText("Hubo un error");
-			errorAlert.setContentText("Hubo un error de tipo SQL en close().");
-			errorAlert.show();
-		}
+		} catch (SQLException e1) {}
 	}
 	
 }
