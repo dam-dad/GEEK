@@ -30,7 +30,10 @@ public class PostController implements Initializable {
 	// view
 
 	@FXML
-	private Label arrobaLabel;
+	private Label usernameLabel; // TODO nicknameLabel
+	
+	@FXML
+    private Label arrobaLabel; // TODO usernameLabel
 
 	@FXML
 	private JFXTextArea contentTextArea;
@@ -41,17 +44,14 @@ public class PostController implements Initializable {
 	@FXML
 	private FlowPane imageFlow;
 
-	@FXML
-	private ImageView profileImage;
 
-	@FXML
-	private Label usernameLabel;
-
-	@FXML
-	private BorderPane view;
+    @FXML
+    private ImageView profileImage;
+    
+    @FXML
+    private BorderPane view;
 
 	public PostController(Post post, MainController parent) {
-
 		this.post = post;
 		this.main = parent;
 

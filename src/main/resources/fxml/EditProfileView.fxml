@@ -11,7 +11,7 @@
 <?import javafx.scene.text.Font?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<BorderPane fx:id="view" minHeight="400.0" minWidth="300.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane fx:id="view" minHeight="400.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
    <center>
       <HBox alignment="TOP_CENTER" spacing="5.0" BorderPane.alignment="CENTER">
          <children>
@@ -22,7 +22,7 @@
                         <Image url="@../images/user.png" />
                      </image>
                   </ImageView>
-                  <JFXButton fx:id="editImageButton" contentDisplay="RIGHT" onAction="#onEditImageAction" text="Cambiar la imagen">
+                  <JFXButton fx:id="editImageButton" contentDisplay="RIGHT" minWidth="-Infinity" onAction="#onEditImageAction" text="Cambiar la imagen">
                      <graphic>
                         <FontIcon iconLiteral="mdi2l-lead-pencil" iconSize="16" />
                      </graphic>
@@ -57,10 +57,10 @@
       </HBox>
    </center>
    <bottom>
-      <HBox alignment="CENTER_RIGHT" spacing="5.0" BorderPane.alignment="CENTER">
+      <HBox alignment="CENTER_RIGHT" spacing="5.0" BorderPane.alignment="CENTER_RIGHT">
          <children>
             <JFXButton defaultButton="true" onAction="#onAcceptAction" text="Aceptar" />
-            <JFXButton onAction="#onCancelAction" text="Cancelar" />
+            <JFXButton cancelButton="true" onAction="#onCancelAction" text="Cancelar" />
          </children>
       </HBox>
    </bottom>
