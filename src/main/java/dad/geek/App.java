@@ -4,7 +4,6 @@ import java.util.Optional;
 
 import dad.geek.controllers.LoginController;
 import dad.geek.db.ConexionMySQL;
-import dad.geek.db.DBManager;
 import dad.geek.model.User;
 import javafx.application.Application;
 import javafx.application.Platform;
