@@ -34,7 +34,8 @@ public class MainController implements Initializable {
 	
 	// view
 	
-	private VBox postsContainer = new VBox();
+	@FXML
+    private VBox postsContainer;
 	
 	@FXML
     private SplitPane containerPane;

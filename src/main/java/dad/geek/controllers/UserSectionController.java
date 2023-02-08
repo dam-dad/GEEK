@@ -43,7 +43,8 @@ public class UserSectionController implements Initializable {
 
 	// view
 	
-	private VBox postsContainer = new VBox();
+	@FXML
+    private VBox postsContainer;
 	
 	@FXML
     private JFXButton backButton;
