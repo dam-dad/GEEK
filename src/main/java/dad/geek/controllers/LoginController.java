@@ -2,7 +2,6 @@ package dad.geek.controllers;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 import org.kordamp.ikonli.javafx.FontIcon;
