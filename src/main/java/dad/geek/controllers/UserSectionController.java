@@ -25,6 +25,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.SplitPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.VBox;
@@ -179,6 +180,7 @@ public class UserSectionController implements Initializable {
 		postsContainer.getChildren().clear();
 		for(Post p : App.conexionLocal.getUserPosts(currentUser.get())) {
 			postsContainer.getChildren().add(new PostController(p).getView());
+			postsContainer.getChildren().add(new SplitPane());
 		}
 		return postsContainer;
 	}
