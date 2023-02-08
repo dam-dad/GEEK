@@ -10,7 +10,13 @@ import dad.geek.App;
 import dad.geek.model.User;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.ListProperty;
+import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleListProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -29,6 +35,8 @@ public class UserSectionController implements Initializable {
 	// model
 	
 	private BooleanProperty goback = new SimpleBooleanProperty(false);
+	private ListProperty<User> users = new SimpleListProperty<>(FXCollections.observableArrayList());
+	private ObjectProperty<User> userNow = new SimpleObjectProperty<>();
 
 	// view
 	
@@ -70,30 +78,45 @@ public class UserSectionController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		
+		// listeners
+		
+		users.sizeProperty().addListener(this::onUsersSizeModified);
+		userNow.addListener(this::onUserNowChanged);
+		
+		// load data
+		
+		users.add(App.user);
+		
 		// bindings
-		
-		nameLabel.textProperty().bind(App.user.nicknameProperty());
-		usernameLabel.textProperty().bind(Bindings.concat("@").concat(App.user.usernameProperty()));
-		profileImage.imageProperty().bind(App.user.profileImageProperty());
-		
+
 		backButton.visibleProperty().bind(goback);
 		editButton.visibleProperty().bind(goback.not());
 		
 	}
 	
-	@FXML
-    void onBackAction(ActionEvent event) {
-		goback.set(false);
-    	
-    	nameLabel.textProperty().unbind();
-    	usernameLabel.textProperty().unbind();
-    	profileImage.imageProperty().unbind();
-    	
-    	nameLabel.textProperty().bind(App.user.nicknameProperty());
-		usernameLabel.textProperty().bind(Bindings.concat("@").concat(App.user.usernameProperty()));
-		profileImage.imageProperty().bind(App.user.profileImageProperty());
-    }
+	private void onUsersSizeModified(ObservableValue<? extends Number> o, Number ov, Number nv) {
+
+		if(nv != null && nv.intValue() >= 1)
+			userNow.set(users.get(nv.intValue()-1));
+		
+	}
 	
+	private void onUserNowChanged(ObservableValue<? extends User> o, User ov, User nv) {
+		
+		if(ov != null) {
+			nameLabel.textProperty().unbind();
+			usernameLabel.textProperty().unbind();
+			profileImage.imageProperty().unbind();
+		}
+		
+		if(nv != null) {
+			nameLabel.textProperty().bind(nv.nicknameProperty());
+			usernameLabel.textProperty().bind(Bindings.concat("@").concat(nv.usernameProperty()));
+			profileImage.imageProperty().bind(nv.profileImageProperty());
+		}
+    	
+	}
+
 	@FXML
     void onEditAction(ActionEvent event) {
 		
@@ -122,26 +145,26 @@ public class UserSectionController implements Initializable {
     	
     }
     
+    @FXML
+    void onBackAction(ActionEvent event) {
+    	
+		users.remove(users.size()-1);
+		if (userNow.get().equals(App.user))
+			goback.set(false);
+    	
+    }
+	
+    
     public void changeUser(User user) {
-    	if (user.equals(App.user)) {
+    	
+    	if (user.equals(App.user))
     		goback.set(false);
-        	
-        	nameLabel.textProperty().unbind();
-        	usernameLabel.textProperty().unbind();
-        	profileImage.imageProperty().unbind();
-        	
-        	nameLabel.textProperty().bind(App.user.nicknameProperty());
-    		usernameLabel.textProperty().bind(Bindings.concat("@").concat(App.user.usernameProperty()));
-    		profileImage.imageProperty().bind(App.user.profileImageProperty());
-    	} else {
-			goback.set(true);
-			nameLabel.textProperty().unbind();
-			usernameLabel.textProperty().unbind();
-			profileImage.imageProperty().unbind();
-			nameLabel.textProperty().bind(user.nicknameProperty());
-			usernameLabel.textProperty().bind(Bindings.concat("@").concat(user.usernameProperty()));
-			profileImage.imageProperty().bind(user.profileImageProperty());
-		}
+    	else
+    		goback.set(true);
+    	
+    	if(!userNow.get().equals(user))
+    		users.add(user);
+    	
     }
 	
 	public VBox getView() {
