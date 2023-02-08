@@ -112,6 +112,7 @@ public class EditProfileController implements Initializable {
 
     @FXML
     void onEditNicknameAction(ActionEvent event) {
+    	 isValidName.set(true);
     	 TextInputDialog dialog = new TextInputDialog();
     	 dialog.setTitle("Cambiar nombre");
     	 dialog.initOwner(stage);

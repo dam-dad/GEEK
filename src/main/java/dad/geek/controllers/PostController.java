@@ -28,7 +28,10 @@ public class PostController implements Initializable {
 	// view
 	
 	@FXML
-    private Label arrobaLabel;
+	private Label usernameLabel; // TODO nicknameLabel
+	
+	@FXML
+    private Label arrobaLabel; // TODO usernameLabel
 
     @FXML
     private JFXTextArea contentTextArea;
@@ -41,9 +44,6 @@ public class PostController implements Initializable {
 
     @FXML
     private ImageView profileImage;
-
-    @FXML
-    private Label usernameLabel;
     
     @FXML
     private BorderPane view;

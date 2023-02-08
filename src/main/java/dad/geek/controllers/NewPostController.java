@@ -9,11 +9,13 @@ import com.jfoenix.controls.JFXTextArea;
 
 import dad.geek.App;
 import dad.geek.model.Post;
+import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
@@ -29,6 +31,21 @@ public class NewPostController implements Initializable {
 	private Post post = new Post();
 	
 	// view
+	
+	@FXML
+	private BorderPane contentContainer;
+	
+	@FXML
+	private ImageView profileImage;
+	
+	@FXML
+    private Label nicknameLabel;
+	
+	@FXML
+    private Label usernameLabel;
+	
+	@FXML
+	private FlowPane filterFlow;
 
 	@FXML
 	private JFXButton addFilterButton;
@@ -37,16 +54,7 @@ public class NewPostController implements Initializable {
 	private JFXTextArea contentTextArea;
 
 	@FXML
-	private FlowPane filterFlow;
-
-	@FXML
-	private ImageView profileImage;
-
-	@FXML
 	private JFXButton sendButton;
-	
-	@FXML
-    private BorderPane contentContainer;
 
 	@FXML
 	private BorderPane view;
@@ -68,11 +76,12 @@ public class NewPostController implements Initializable {
 		
 		// load data
 		
-//		setPosition();
 		post.setUserID(App.user.getUserID());
 		
 		// bindings
 		
+		nicknameLabel.textProperty().bind(App.user.nicknameProperty());
+		usernameLabel.textProperty().bind(Bindings.concat("@").concat(App.user.usernameProperty()));
 		post.postContentProperty().bind(contentTextArea.textProperty());
 		profileImage.imageProperty().bind(App.user.profileImageProperty());
 

@@ -3,6 +3,7 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXTextArea?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
@@ -27,11 +28,17 @@
          <top>
             <HBox alignment="CENTER_LEFT" maxWidth="1.7976931348623157E308" spacing="10.0" BorderPane.alignment="CENTER">
                <children>
-                  <ImageView fx:id="profileImage" fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="profileImage" fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../images/user.png" />
                      </image>
                   </ImageView>
+                  <VBox alignment="CENTER_LEFT" minHeight="-Infinity" minWidth="-Infinity">
+                     <children>
+                        <Label fx:id="nicknameLabel" text="Nombre de Usuario" />
+                        <Label fx:id="usernameLabel" text="\@Arroba usuario" />
+                     </children>
+                  </VBox>
                   <FlowPane fx:id="filterFlow" focusTraversable="true" hgap="5.0" maxWidth="1.7976931348623157E308" prefWrapLength="0.0" vgap="5.0" HBox.hgrow="ALWAYS" />
                   <JFXButton fx:id="addFilterButton" contentDisplay="GRAPHIC_ONLY" onAction="#onAddFilterAction">
                      <graphic>

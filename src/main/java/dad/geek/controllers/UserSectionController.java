@@ -77,7 +77,6 @@ public class UserSectionController implements Initializable {
 		
 		backButton.visibleProperty().bind(goback);
 		
-		
 	}
 	
 	@FXML
@@ -89,10 +88,10 @@ public class UserSectionController implements Initializable {
     void onEditAction(ActionEvent event) {
 		
 		Stage window = new Stage();
-		window.setTitle("Nuevo Post");
+		window.setTitle("Editar usuario");
 		window.setScene(new Scene(new EditProfileController().setStage(window).getView()));
 		window.setMinWidth(300);
-		window.setMinHeight(400);
+		window.setMinHeight(435);
 		window.initOwner(App.primaryStage);
 		window.initModality(Modality.APPLICATION_MODAL);
 		
