@@ -2,6 +2,7 @@ package dad.geek.controllers;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
@@ -118,6 +119,7 @@ public class NewPostController implements Initializable {
 
 	@FXML
 	void onSendAction(ActionEvent event) {
+		post.setPostDate(LocalDateTime.now());
 		App.conexionLocal.sendPost(post);
 		this.stage.getOnCloseRequest().handle(new WindowEvent(this.stage, WindowEvent.WINDOW_CLOSE_REQUEST));
 	}

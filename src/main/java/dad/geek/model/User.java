@@ -4,7 +4,6 @@ import java.net.URISyntaxException;
 import java.sql.SQLException;
 
 import dad.geek.App;
-import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.LongProperty;
 import javafx.beans.property.ObjectProperty;
@@ -146,6 +145,20 @@ public class User {
 
 	public final void setPosts(final ObservableList<Post> posts) {
 		this.postsProperty().set(posts);
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		User other = (User) obj;
+		if (getUserID() != other.getUserID())
+			return false;
+		return true;
 	}
 
 }

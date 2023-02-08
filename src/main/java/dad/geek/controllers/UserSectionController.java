@@ -7,6 +7,7 @@ import java.util.ResourceBundle;
 import com.jfoenix.controls.JFXButton;
 
 import dad.geek.App;
+import dad.geek.model.User;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -76,13 +77,21 @@ public class UserSectionController implements Initializable {
 		profileImage.imageProperty().bind(App.user.profileImageProperty());
 		
 		backButton.visibleProperty().bind(goback);
-		
+		editButton.visibleProperty().bind(goback.not());
 		
 	}
 	
 	@FXML
     void onBackAction(ActionEvent event) {
-
+		goback.set(false);
+    	
+    	nameLabel.textProperty().unbind();
+    	usernameLabel.textProperty().unbind();
+    	profileImage.imageProperty().unbind();
+    	
+    	nameLabel.textProperty().bind(App.user.nicknameProperty());
+		usernameLabel.textProperty().bind(Bindings.concat("@").concat(App.user.usernameProperty()));
+		profileImage.imageProperty().bind(App.user.profileImageProperty());
     }
 	
 	@FXML
@@ -110,7 +119,29 @@ public class UserSectionController implements Initializable {
 
     @FXML
     void onShowMoreAction(ActionEvent event) {
-
+    	
+    }
+    
+    public void changeUser(User user) {
+    	if (user.equals(App.user)) {
+    		goback.set(false);
+        	
+        	nameLabel.textProperty().unbind();
+        	usernameLabel.textProperty().unbind();
+        	profileImage.imageProperty().unbind();
+        	
+        	nameLabel.textProperty().bind(App.user.nicknameProperty());
+    		usernameLabel.textProperty().bind(Bindings.concat("@").concat(App.user.usernameProperty()));
+    		profileImage.imageProperty().bind(App.user.profileImageProperty());
+    	} else {
+			goback.set(true);
+			nameLabel.textProperty().unbind();
+			usernameLabel.textProperty().unbind();
+			profileImage.imageProperty().unbind();
+			nameLabel.textProperty().bind(user.nicknameProperty());
+			usernameLabel.textProperty().bind(Bindings.concat("@").concat(user.usernameProperty()));
+			profileImage.imageProperty().bind(user.profileImageProperty());
+		}
     }
 	
 	public VBox getView() {
