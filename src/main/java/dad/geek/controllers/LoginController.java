@@ -145,12 +145,13 @@ public class LoginController implements Initializable {
 				noUserFound.setPadding(new Insets(0, 0, 10, 0));
 				((VBox) getView().getChildren().get(0)).getChildren().add(4, noUserFound);
 			}
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			Alert errorAlert = new Alert(AlertType.ERROR);
 			errorAlert.setTitle("ERROR");
 			errorAlert.setHeaderText("Hubo un error");
-			errorAlert.setContentText("Hubo un error al intentar iniciar sesión. (SQLEXception).");
+			errorAlert.setContentText("Hubo un error al intentar iniciar sesión.");
 			errorAlert.show();		
+			loginButton.setDisable(true);
 		}
 		App.primaryStage.centerOnScreen();
 	}
