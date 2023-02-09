@@ -51,6 +51,11 @@
                               <KeyCodeCombination alt="UP" code="P" control="DOWN" meta="UP" shift="DOWN" shortcut="UP" />
                            </accelerator>
                         </MenuItem>
+                        <MenuItem fx:id="editUserItem" mnemonicParsing="false" onAction="#onEditUserAction" text="Editar usuario">
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="E" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                           </accelerator>
+                        </MenuItem>
                         <SeparatorMenuItem mnemonicParsing="false" />
                         <MenuItem fx:id="exitItem" mnemonicParsing="false" onAction="#onExitAction" text="Salir">
                            <accelerator>
