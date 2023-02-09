@@ -12,7 +12,7 @@
 <?import javafx.scene.text.Font?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<VBox fx:id="view" maxHeight="1.7976931348623157E308" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<VBox fx:id="view" maxHeight="1.7976931348623157E308" spacing="10.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <BorderPane>
          <right>
@@ -33,7 +33,7 @@
             </JFXButton>
          </left>
          <VBox.margin>
-            <Insets bottom="5.0" right="5.0" top="5.0" />
+            <Insets />
          </VBox.margin>
       </BorderPane>
       <HBox alignment="CENTER" VBox.vgrow="NEVER">
@@ -69,7 +69,7 @@
             <JFXButton fx:id="verMasButton" onAction="#onShowMoreAction" text="Ver más" />
          </children>
          <VBox.margin>
-            <Insets top="10.0" />
+            <Insets />
          </VBox.margin>
       </HBox>
       <ScrollPane fx:id="postContainerPane" fitToHeight="true" fitToWidth="true" hmin="180.0" minWidth="200.0" pannable="true" VBox.vgrow="ALWAYS">
