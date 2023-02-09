@@ -5,3 +5,4 @@
 /bin/
 src/main/resources/properties/conexion_local.properties
 /.vscode/
+src/main/resources/properties/conexiones.properties
