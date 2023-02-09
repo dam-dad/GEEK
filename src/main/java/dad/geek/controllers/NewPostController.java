@@ -25,26 +25,26 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
 public class NewPostController implements Initializable {
-	
+
 	// model
-	
+
 	private Stage stage;
 	private Post post = new Post();
-	
+
 	// view
-	
+
 	@FXML
 	private BorderPane contentContainer;
-	
+
 	@FXML
 	private ImageView profileImage;
-	
+
 	@FXML
-    private Label nicknameLabel;
-	
+	private Label nicknameLabel;
+
 	@FXML
-    private Label usernameLabel;
-	
+	private Label usernameLabel;
+
 	@FXML
 	private FlowPane filterFlow;
 
@@ -71,31 +71,31 @@ public class NewPostController implements Initializable {
 		}
 
 	}
-	
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		
+
 		// load data
-		
+
 		post.setUserID(App.user.getUserID());
-		
+
 		// bindings
-		
+
 		nicknameLabel.textProperty().bind(App.user.nicknameProperty());
 		usernameLabel.textProperty().bind(Bindings.concat("@").concat(App.user.usernameProperty()));
 		post.postContentProperty().bind(contentTextArea.textProperty());
 		profileImage.imageProperty().bind(App.user.profileImageProperty());
 
 	}
-	
+
 	public NewPostController setStage(Stage stage) {
 		this.stage = stage;
 		this.stage.setMinWidth(450);
 		return this;
 	}
-	
+
 	public NewPostController setPosition(String posicionImagen) {
-		
+
 		ImageView image = new ImageView(new Image("/images/ejemplo.png"));
 		image.setFitWidth(200);
 		image.setFitHeight(200);
@@ -114,16 +114,16 @@ public class NewPostController implements Initializable {
 		case "emptyButton":
 			break;
 		}
-		
+
 		BorderPane.setAlignment(image, Pos.CENTER);
-		
+
 		return this;
-		
+
 	}
 
 	@FXML
 	void onAddFilterAction(ActionEvent event) {
-		
+
 	}
 
 	@FXML
@@ -132,7 +132,12 @@ public class NewPostController implements Initializable {
 		App.conexionLocal.sendPost(post);
 		this.stage.getOnCloseRequest().handle(new WindowEvent(this.stage, WindowEvent.WINDOW_CLOSE_REQUEST));
 	}
-	
+
+	@FXML
+	void onAddImage(ActionEvent event) {
+
+	}
+
 	public BorderPane getView() {
 		return view;
 	}
