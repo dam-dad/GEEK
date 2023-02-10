@@ -23,7 +23,11 @@
             <VBox fx:id="userContainer" />
             <ScrollPane fx:id="postContainerPane" fitToWidth="true" hmin="180.0" minWidth="200.0" pannable="true">
                <content>
-                  <VBox fx:id="postsContainer" />
+                  <BorderPane>
+                     <center>
+                        <VBox fx:id="postsContainer" maxWidth="500.0" />
+                     </center>
+                  </BorderPane>
                </content></ScrollPane>
          </items>
          <BorderPane.margin>
