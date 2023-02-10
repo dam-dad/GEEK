@@ -12,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class App extends Application {
@@ -40,7 +41,17 @@ public class App extends Application {
 		primaryStage.setScene(new Scene(controller.getView()));
 		primaryStage.show();
 		
-		conexionLocal = new ConexionMySQL();
+		try {
+			conexionLocal = new ConexionMySQL();
+		} catch (Exception e1) {
+			Alert errorAlert = new Alert(AlertType.ERROR);
+			errorAlert.setTitle("ERROR");
+			errorAlert.setHeaderText("Hubo un error");
+			errorAlert.setContentText(e1.getMessage());
+			errorAlert.initOwner(App.primaryStage);
+			errorAlert.initModality(Modality.APPLICATION_MODAL);
+			errorAlert.show();
+		}
 
 		App.primaryStage.setMinWidth(450);
 		App.primaryStage.setMinHeight(500);
