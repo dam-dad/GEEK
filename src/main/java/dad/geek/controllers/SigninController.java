@@ -2,7 +2,6 @@ package dad.geek.controllers;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 import org.kordamp.ikonli.javafx.FontIcon;
@@ -28,6 +27,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 
 public class SigninController implements Initializable {
 
@@ -154,11 +154,13 @@ public class SigninController implements Initializable {
 				App.user = App.conexionLocal.getUserObject(this.user.getUsername(), this.user.getPassword());
 				App.openScene(new MainController().getView(), 850, 550);
 			}
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			Alert errorAlert = new Alert(AlertType.ERROR);
 			errorAlert.setTitle("ERROR");
 			errorAlert.setHeaderText("Hubo un error");
-			errorAlert.setContentText("Hubo un error al intentar crear un perfil. (SQLException)");
+			errorAlert.setContentText(e.getMessage());
+			errorAlert.initOwner(App.primaryStage);
+			errorAlert.initModality(Modality.APPLICATION_MODAL);
 			errorAlert.show();
 		}
 	}

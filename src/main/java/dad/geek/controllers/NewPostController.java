@@ -16,11 +16,14 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
@@ -129,7 +132,17 @@ public class NewPostController implements Initializable {
 	@FXML
 	void onSendAction(ActionEvent event) {
 		post.setPostDate(LocalDateTime.now());
-		App.conexionLocal.sendPost(post);
+		try {
+			App.conexionLocal.sendPost(post);
+		} catch (Exception e) {
+			Alert errorAlert = new Alert(AlertType.ERROR);
+			errorAlert.setTitle("ERROR");
+			errorAlert.setHeaderText("Hubo un error");
+			errorAlert.setContentText(e.getMessage());
+			errorAlert.initOwner(App.primaryStage);
+			errorAlert.initModality(Modality.APPLICATION_MODAL);
+			errorAlert.show();
+		}
 		this.stage.getOnCloseRequest().handle(new WindowEvent(this.stage, WindowEvent.WINDOW_CLOSE_REQUEST));
 	}
 

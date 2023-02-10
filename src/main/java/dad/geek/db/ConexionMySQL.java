@@ -20,11 +20,12 @@ public class ConexionMySQL {
 
 	private static Connection connMySQL;
 	private Statement stmtMySQL;
-	private PreparedStatement allPosts, userFromId, userFromNamePass, createUser, sendPost, setUserImage, setNickname, userPosts;
-	private ResultSet resultPosts, resultUser;
-	
-	public ConexionMySQL() {
-		
+	private PreparedStatement allPosts, userFromId, userFromNamePass, createUser, sendPost, setUserImage, setNickname,
+			userPosts;
+//	private ResultSet resultPosts, resultUser;
+
+	public ConexionMySQL() throws Exception {
+
 		Properties prop = new Properties();
 		try {
 			prop.load(getClass().getResourceAsStream("/properties/conexiones_local.properties"));
@@ -35,221 +36,192 @@ public class ConexionMySQL {
 			errorAlert.setContentText("Hubo un error al inicio de la conexión con la base de datos (IOException).");
 			errorAlert.show();
 		}
-			String url = prop.getProperty("mysqlurl");
-			String username = prop.getProperty("mysqlusername", "root");
-			String password = prop.getProperty("mysqlpassword", "");
+		String url = prop.getProperty("mysqlurl");
+		String username = prop.getProperty("mysqlusername", "root");
+		String password = prop.getProperty("mysqlpassword", "");
 		try {
 			connMySQL = DriverManager.getConnection(url, username, password);
-			
+
 			allPosts = connMySQL.prepareStatement("select * from posts order by id desc");
 			userFromId = connMySQL.prepareStatement("select * from usuarios where id = ?");
-			userFromNamePass = connMySQL.prepareStatement("select * from usuarios where nombreUsuario = ? and password = ?");
-			createUser = connMySQL.prepareStatement("insert into usuarios (nombre, nombreUsuario, password) values (?, ?, ?)");
+			userFromNamePass = connMySQL
+					.prepareStatement("select * from usuarios where nombreUsuario = ? and password = ?");
+			createUser = connMySQL
+					.prepareStatement("insert into usuarios (nombre, nombreUsuario, password) values (?, ?, ?)");
 			sendPost = connMySQL.prepareStatement("insert into posts (ID_Usuario, contenido) values (?, ?)");
 			setUserImage = connMySQL.prepareStatement("update usuarios set imagen = ? where id = ?");
 			setNickname = connMySQL.prepareStatement("update usuarios set nombre = ? where id = ?");
 			userPosts = connMySQL.prepareStatement("select * from posts where ID_Usuario = ? order by id desc");
-			
+
 		} catch (SQLException e) {
-			errorAlert("Hubo un error al inicio de la conexión con la base de datos (SQLException).");
+			throw new Exception("Hubo un error al inicio de la conexión con la base de datos (SQLException).");
 		}
-		
-}
-	
-	public ResultSet allPostsFromDB() {
-		try {
-			resultPosts = allPosts.executeQuery();
-		} catch (SQLException e) {
-			errorAlert("Hubo un error al cargar los posts desde la base de datos (SQLException).");
-		}
-		return resultPosts;
+
 	}
-	
-	public ResultSet getUserFromDB(long id) {
+
+	private ResultSet allPostsFromDB() throws Exception {
+		try {
+			return allPosts.executeQuery();
+		} catch (SQLException e) {
+			throw new Exception("Hubo un error al cargar los posts desde la base de datos (SQLException).");
+		}
+	}
+
+	private ResultSet getUserFromDB(long id) throws Exception{
 		try {
 			userFromId.setLong(1, id);
-			resultUser = userFromId.executeQuery();
+			return userFromId.executeQuery();
 		} catch (SQLException e) {
-			errorAlert("Hubo un error al intentar cargar al usuario desde la base de datos (SQLException).");
+			throw new Exception("Hubo un error al intentar cargar al usuario desde la base de datos (SQLException).");
 		}
-		return resultUser;
 	}
-	
-	public ResultSet getUserFromDB(String username, String password) {
+
+	public ResultSet getUserFromDB(String username, String password) throws Exception {
 		try {
 			userFromNamePass.setString(1, username);
 			userFromNamePass.setString(2, password);
-			resultUser = userFromNamePass.executeQuery();
+			return userFromNamePass.executeQuery();
 		} catch (SQLException e) {
-			errorAlert("Hubo un error al intentar cargar al usuario"  + username + " desde la base de datos (SQLException).");
+			throw new Exception("Hubo un error al intentar cargar al usuario" + username
+					+ " desde la base de datos (SQLException).");
 		}
-		return resultUser;
 	}
-	
-	public ResultSet getUserPostsFromDB(User user) {
+
+	public ResultSet getUserPostsFromDB(User user) throws Exception {
 		try {
 			userPosts.setLong(1, user.getUserID());
-			resultPosts = userPosts.executeQuery();
+			return userPosts.executeQuery();
 		} catch (SQLException e) {
-			errorAlert("Hubo un error al intentar cargar los posts del usuario " + user.getUsername() + " desde la base de datos (SQLException).");
+			throw new Exception("Hubo un error al intentar cargar los posts del usuario " + user.getUsername()
+					+ " desde la base de datos (SQLException).");
 		}
-		return resultPosts;
 	}
-	
-	public List<Post> getAllPosts() {
-		
+
+	public List<Post> getAllPosts() throws Exception {
+
 		List<Post> result = new ArrayList<>();
 		ResultSet posts = allPostsFromDB();
-		
+
 		try {
-			while(posts.next()) {
-				
-				result.add(new Post(
-					posts.getInt("ID"),
-					posts.getInt("ID_Usuario"),
-					posts.getString("titulo"),
-					posts.getString("contenido")
-				));
-				
+			while (posts.next()) {
+
+				result.add(new Post(posts.getInt("ID"), posts.getInt("ID_Usuario"), posts.getString("titulo"),
+						posts.getString("contenido")));
+
 			}
 		} catch (SQLException e) {
-			errorAlert("Hubo un error al intentar cargar todos los posts (SQLException).");
+			throw new Exception("Hubo un error al intentar cargar todos los posts (SQLException).");
 		}
-		
+
 		return result;
 	}
-	
-	public List<Post> getUserPosts(User user) {
+
+	public List<Post> getUserPosts(User user) throws Exception {
 		List<Post> result = new ArrayList<>();
 		ResultSet posts = getUserPostsFromDB(user);
-		
+
 		try {
-			while(posts.next()) {
-				
-				result.add(new Post(
-					posts.getInt("ID"),
-					posts.getInt("ID_Usuario"),
-					posts.getString("titulo"),
-					posts.getString("contenido")
-				));
-				
+			while (posts.next()) {
+
+				result.add(new Post(posts.getInt("ID"), posts.getInt("ID_Usuario"), posts.getString("titulo"),
+						posts.getString("contenido")));
+
 			}
 		} catch (SQLException e) {
-			errorAlert("Hubo un error al intentar cargar los posts del usuario " + user.getUsername() + " (SQLException).");
+			throw new Exception("Hubo un error al intentar cargar los posts del usuario " + user.getUsername()
+					+ " (SQLException).");
 		}
-		
+
 		return result;
 	}
-	
-	public User getUserObject(long userId) {
-		
+
+	public User getUserObject(long userId) throws Exception {
+
 		try {
 			ResultSet posts = getUserFromDB(userId);
-			while(posts.next()) {
-				return new User(
-					posts.getInt("ID"),
-					posts.getString("nombre"),
-					posts.getString("nombreUsuario"),
-					posts.getString("password"),
-					posts.getString("imagen")
-				);
+			while (posts.next()) {
+				return new User(posts.getInt("ID"), posts.getString("nombre"), posts.getString("nombreUsuario"),
+						posts.getString("password"), posts.getString("imagen"));
 			}
 		} catch (SQLException e) {
-			errorAlert("Hubo un error al intentar cargar al usuario (SQLException).");
+			throw new Exception("Hubo un error al intentar cargar al usuario (SQLException).");
 		}
-		
+
 		return null;
 	}
-	
-	public User getUserObject(String username, String password) {
-		
+
+	public User getUserObject(String username, String password) throws Exception {
+
 		try {
 			ResultSet posts = getUserFromDB(username, password);
-			while(posts.next()) {
-				return new User(
-					posts.getInt("ID"),
-					posts.getString("nombre"),
-					posts.getString("nombreUsuario"),
-					posts.getString("password"),
-					posts.getString("imagen")
-				);
+			while (posts.next()) {
+				return new User(posts.getInt("ID"), posts.getString("nombre"), posts.getString("nombreUsuario"),
+						posts.getString("password"), posts.getString("imagen"));
 			}
 		} catch (SQLException e) {
-			errorAlert("Hubo un error al intentar cargar al usuario (SQLException).");
+			throw new Exception("Hubo un error al intentar cargar al usuario (SQLException).");
 		}
-		
+
 		return null;
 	}
-	
-	public void sendPost(Post post) {
-		
+
+	public void sendPost(Post post) throws Exception {
+
 		try {
 			sendPost.setLong(1, post.getUserID());
 			sendPost.setString(2, post.getPostContent());
 			sendPost.executeUpdate();
 		} catch (SQLException e) {
-			errorAlert("Hubo un error al intentar enviar un post (SQLException).");
+			throw new Exception("Hubo un error al intentar enviar un post (SQLException).");
 		}
-		
+
 	}
-	
-	public void createUser(String nickname, String username, String password) {
-		
+
+	public void createUser(String nickname, String username, String password) throws Exception {
+
 		try {
 			createUser.setString(1, nickname);
 			createUser.setString(2, username);
 			createUser.setString(3, password);
 			createUser.executeUpdate();
 		} catch (SQLException e) {
-			 errorAlert("Hubo un error al intentar crear un nuevo usuario (SQLException).");
-		}		
-		
+			throw new Exception("Hubo un error al intentar crear un nuevo usuario (SQLException).");
+		}
+
 	}
-	
-	public void setUserImage(long id, String url) {
-		
+
+	public void setUserImage(long id, String url) throws Exception {
+
 		try {
 			setUserImage.setString(1, url);
 			setUserImage.setLong(2, id);
 			setUserImage.executeUpdate();
 		} catch (SQLException e) {
-			errorAlert("Hubo un error al intentar actualizar la imagen de usuario (SQLException).");
+			throw new Exception("Hubo un error al intentar actualizar la imagen de usuario (SQLException).");
 		}
-		
+
 	}
-	
-	public void setNickname(long id, String nickname) {
-		
+
+	public void setNickname(long id, String nickname) throws Exception {
+
 		try {
 			setNickname.setString(1, nickname);
 			setNickname.setLong(2, id);
 			setNickname.executeUpdate();
 		} catch (SQLException e) {
-			errorAlert("Hubo un error al intentar actualizar el apodo de usuario (SQLException).");
+			throw new Exception("Hubo un error al intentar actualizar el apodo de usuario (SQLException).");
 		}
-		
-	}
-	
-	public void close() {
-		try {
-			if(connMySQL != null)
-				connMySQL.close();
-			if(stmtMySQL != null)
-				stmtMySQL.close();
-			if(resultPosts != null)
-				resultPosts.close();
-			
-		} catch (SQLException e1) {
-			errorAlert("Hubo un error al intentar cerrar la conexión con la base de datos (SQLException).");
-		}
-	}
-	
-	private void errorAlert(String content) {
-		Alert errorAlert = new Alert(AlertType.ERROR);
-		errorAlert.setTitle("ERROR");
-		errorAlert.setHeaderText("Hubo un error.  :(");
-		errorAlert.setContentText(content);
-		errorAlert.show();
+
 	}
 
+	public void close() throws Exception {
+		try {
+			if (connMySQL != null)
+				connMySQL.close();
+			if (stmtMySQL != null)
+				stmtMySQL.close();
+		} catch (SQLException e1) {
+			throw new Exception("Hubo un error al intentar cerrar la conexión con la base de datos (SQLException).");
+		}
+	}
 }
