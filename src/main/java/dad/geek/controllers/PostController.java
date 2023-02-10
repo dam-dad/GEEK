@@ -12,10 +12,13 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
+import javafx.stage.Modality;
 
 public class PostController implements Initializable {
 
@@ -66,7 +69,17 @@ public class PostController implements Initializable {
 
 		// load data
 
-		user = App.conexionLocal.getUserObject(post.getUserID());
+		try {
+			user = App.conexionLocal.getUserObject(post.getUserID());
+		} catch (Exception e) {
+			Alert errorAlert = new Alert(AlertType.ERROR);
+			errorAlert.setTitle("ERROR");
+			errorAlert.setHeaderText("Hubo un error");
+			errorAlert.setContentText(e.getMessage());
+			errorAlert.initOwner(App.primaryStage);
+			errorAlert.initModality(Modality.APPLICATION_MODAL);
+			errorAlert.show();
+		}
 
 		// bindings
 

@@ -17,7 +17,7 @@ import javafx.stage.Stage;
 public class App extends Application {
 
 	public static Stage primaryStage;
-	public static ConexionMySQL conexionLocal = new ConexionMySQL();
+	public static ConexionMySQL conexionLocal;
 //	public static DBManager conexionRemota = new DBManager();
 	public static User user = new User();
 	
@@ -39,6 +39,8 @@ public class App extends Application {
 		primaryStage.setTitle("GEEK");
 		primaryStage.setScene(new Scene(controller.getView()));
 		primaryStage.show();
+		
+		conexionLocal = new ConexionMySQL();
 
 		App.primaryStage.setMinWidth(450);
 		App.primaryStage.setMinHeight(500);

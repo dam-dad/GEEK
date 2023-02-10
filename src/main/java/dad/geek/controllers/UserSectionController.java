@@ -23,9 +23,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitPane;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.VBox;
@@ -178,12 +180,23 @@ public class UserSectionController implements Initializable {
     }
     
     private VBox laodPosts() {
-		postsContainer.getChildren().clear();
-		for(Post p : App.conexionLocal.getUserPosts(currentUser.get())) {
-			postsContainer.getChildren().add(new PostController(p).getView());
-			postsContainer.getChildren().add(new SplitPane());
+		try {
+			postsContainer.getChildren().clear();
+			for(Post p : App.conexionLocal.getUserPosts(currentUser.get())) {
+				postsContainer.getChildren().add(new PostController(p).getView());
+				postsContainer.getChildren().add(new SplitPane());
+			}
+			return postsContainer;
+		} catch (Exception e) {
+			Alert errorAlert = new Alert(AlertType.ERROR);
+			errorAlert.setTitle("ERROR");
+			errorAlert.setHeaderText("Hubo un error");
+			errorAlert.setContentText(e.getMessage());
+			errorAlert.initOwner(App.primaryStage);
+			errorAlert.initModality(Modality.APPLICATION_MODAL);
+			errorAlert.show();
+			return null;
 		}
-		return postsContainer;
 	}
 	
 	public VBox getView() {

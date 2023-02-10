@@ -18,13 +18,16 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextInputDialog;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
@@ -98,10 +101,20 @@ public class EditProfileController implements Initializable {
 
     @FXML
     void onAcceptAction(ActionEvent event) {
-    	if(newImage != null)
-    		App.user.setProfileImage(newImage);
-    	if(newName != null && !newName.get().trim().equals(""))
-    		App.user.setNickname(newName.get());
+    	try {
+			if(newImage != null)
+				App.user.setProfileImage(newImage);
+			if(newName != null && !newName.get().trim().equals(""))
+				App.user.setNickname(newName.get());
+		} catch (Exception e) {
+			Alert errorAlert = new Alert(AlertType.ERROR);
+			errorAlert.setTitle("ERROR");
+			errorAlert.setHeaderText("Hubo un error");
+			errorAlert.setContentText(e.getMessage());
+			errorAlert.initOwner(App.primaryStage);
+			errorAlert.initModality(Modality.APPLICATION_MODAL);
+			errorAlert.show();
+		}
     	stage.getOnCloseRequest().handle(new WindowEvent(stage, WindowEvent.WINDOW_CLOSE_REQUEST));
     }
 

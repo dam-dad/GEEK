@@ -1,8 +1,5 @@
 package dad.geek.model;
 
-import java.net.URISyntaxException;
-import java.sql.SQLException;
-
 import dad.geek.App;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.LongProperty;
@@ -29,7 +26,7 @@ public class User {
 	
 	public User() {}
 	
-	public User(long userID, String nickname, String username, String password, String image) {
+	public User(long userID, String nickname, String username, String password, String image) throws Exception {
 		
 		try {
 			if(image != null && !image.trim().equals(""))
@@ -40,7 +37,7 @@ public class User {
 		} catch (Exception e) {
 			try {
 				setProfileImage(new Image(getClass().getResource("/images/user.png").toURI().toString()));
-			} catch (URISyntaxException e1) {
+			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
 		}
@@ -51,12 +48,12 @@ public class User {
 		setPassword(password);
 	}
 	
-	public boolean userInDatabase() throws SQLException {
+	public boolean userInDatabase() throws Exception {
 		return App.conexionLocal.getUserFromDB(getUsername(), getPassword()).next();
 //		return App.conexionRemota.getUserFromDB(getUsername(), getPassword()).next();
 	}
 	
-	public void addUsertoDB() {
+	public void addUsertoDB() throws Exception {
 		App.conexionLocal.createUser(getNickname(), getUsername(), getPassword());
 //		App.conexionRemota.createUser(getNickname(), getUsername(), getPassword());
 	}
@@ -117,7 +114,7 @@ public class User {
 		return this.nicknameProperty().get();
 	}
 	
-	public final void setNickname(final String nickname) {
+	public final void setNickname(final String nickname) throws Exception {
 		this.nicknameProperty().set(nickname);
 		App.conexionLocal.setNickname(getUserID(), nickname);
 	}
@@ -130,7 +127,7 @@ public class User {
 		return this.profileImageProperty().get();
 	}
 
-	public final void setProfileImage(final Image profileImage) {
+	public final void setProfileImage(final Image profileImage) throws Exception {
 		this.profileImageProperty().set(profileImage);
 		App.conexionLocal.setUserImage(getUserID(), profileImage.getUrl());
 	}

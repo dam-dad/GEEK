@@ -88,7 +88,7 @@ public class DBManager {
 		return resultUser;
 	}
 
-	public User sendPost(int userId) {
+	public User sendPost(int userId) throws Exception {
 		try {
 			ResultSet posts = getUserFromDB(userId);
 			while (posts.next()) {
@@ -107,7 +107,7 @@ public class DBManager {
 		return null;
 	}
 
-	public User getUserObject(String username, String password) {
+	public User getUserObject(String username, String password) throws Exception {
 
 		try {
 			ResultSet posts = getUserFromDB(username, password);
