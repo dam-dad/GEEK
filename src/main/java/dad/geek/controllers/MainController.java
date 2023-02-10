@@ -145,23 +145,7 @@ public class MainController implements Initializable {
 	@FXML
 	void onEditUserAction(ActionEvent event) {
 		
-		Stage window = new Stage();
-		window.setTitle("Editar usuario");
-		window.setScene(new Scene(new EditProfileController().setStage(window).getView()));
-		window.setMinWidth(300);
-		window.setMinHeight(435);
-		window.initOwner(App.primaryStage);
-		window.initModality(Modality.APPLICATION_MODAL);
-		
-		window.getScene().setOnKeyPressed(t -> {
-			if(t.getCode() == KeyCode.ESCAPE)
-				window.getOnCloseRequest().handle(new WindowEvent(window, WindowEvent.WINDOW_CLOSE_REQUEST));
-		});
-		window.setOnCloseRequest(e -> {
-			window.close();
-		});
-		
-		window.show();
+		userSectionController.openEditWindow();
 		
 	}
 	
