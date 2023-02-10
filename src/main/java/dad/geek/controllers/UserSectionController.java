@@ -184,7 +184,9 @@ public class UserSectionController implements Initializable {
 		try {
 			postsContainer.getChildren().clear();
 			for(Post p : App.conexionLocal.getUserPosts(currentUser.get())) {
-				postsContainer.getChildren().add(new PostController(p).getView());
+				PostController controller = new PostController(p);
+				controller.getUserButton().setMouseTransparent(true);
+				postsContainer.getChildren().add(controller.getView());
 				postsContainer.getChildren().add(new SplitPane());
 			}
 			return postsContainer;

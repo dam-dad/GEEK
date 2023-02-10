@@ -28,7 +28,7 @@
    <top>
       <HBox alignment="CENTER_LEFT" spacing="10.0" BorderPane.alignment="CENTER">
          <children>
-            <JFXButton contentDisplay="GRAPHIC_ONLY" onAction="#onOpenUserAction">
+            <JFXButton fx:id="userButton" contentDisplay="GRAPHIC_ONLY" onAction="#onOpenUserAction">
                <graphic>
                   <ImageView fx:id="profileImage" fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                      <image>

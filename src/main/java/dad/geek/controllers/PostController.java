@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import com.jfoenix.controls.JFXButton;
+
 import dad.geek.App;
 import dad.geek.model.Post;
 import dad.geek.model.User;
@@ -13,8 +15,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
@@ -45,6 +47,9 @@ public class PostController implements Initializable {
 	@FXML
 	private FlowPane imageFlow;
 
+	@FXML
+    private JFXButton userButton;
+	
     @FXML
     private ImageView profileImage;
     
@@ -102,6 +107,10 @@ public class PostController implements Initializable {
 
 	public BorderPane getView() {
 		return view;
+	}
+	
+	public JFXButton getUserButton() {
+		return userButton;
 	}
 
 }
