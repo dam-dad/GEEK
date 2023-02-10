@@ -150,7 +150,6 @@ public class LoginController implements Initializable {
 			errorAlert.setHeaderText("Hubo un error");
 			errorAlert.setContentText("Hubo un error al intentar iniciar sesión.");
 			errorAlert.show();		
-			loginButton.setDisable(true);
 		}
 		App.primaryStage.centerOnScreen();
 	}

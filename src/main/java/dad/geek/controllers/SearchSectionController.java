@@ -4,14 +4,16 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
-import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextField;
 
 import dad.geek.model.Filter;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 
 public class SearchSectionController implements Initializable {
@@ -20,14 +22,16 @@ public class SearchSectionController implements Initializable {
 	Filter filter = new Filter();
 	
 	//view
-	@FXML
+    @FXML
+    private FlowPane filtersFlowPane;
+    @FXML
+    private JFXButton searchButton;
+    @FXML
+    private JFXComboBox<?> searchFiltersComboBox;
+    @FXML
+    private JFXTextField searchUserText;
+    @FXML
     private VBox view;
-    @FXML
-    private JFXListView<?> filtersListView;
-    @FXML
-    private JFXComboBox<?> searchOptionsComboBox;
-    @FXML
-    private JFXTextField searchTextFied;
     
     public SearchSectionController() {
     	try {
@@ -44,36 +48,49 @@ public class SearchSectionController implements Initializable {
 		
 	}
 	
+
+    @FXML
+    void onSearchAction(ActionEvent event) {
+
+    }
+    
 	public VBox getView() {
 		return view;
 	}
 
-	public Filter getFilter() {
-		return filter;
-	}
-	public void setFilter(Filter filter) {
-		this.filter = filter;
+	public FlowPane getFiltersFlowPane() {
+		return filtersFlowPane;
 	}
 
-	public JFXListView<?> getFiltersListView() {
-		return filtersListView;
-	}
-	public void setFiltersListView(JFXListView<?> filtersListView) {
-		this.filtersListView = filtersListView;
+	public void setFiltersFlowPane(FlowPane filtersFlowPane) {
+		this.filtersFlowPane = filtersFlowPane;
 	}
 
-	public JFXComboBox<?> getSearchOptionsComboBox() {
-		return searchOptionsComboBox;
-	}
-	public void setSearchOptionsComboBox(JFXComboBox<?> searchOptionsComboBox) {
-		this.searchOptionsComboBox = searchOptionsComboBox;
+	public JFXButton getSearchButton() {
+		return searchButton;
 	}
 
-	public JFXTextField getSearchTextFied() {
-		return searchTextFied;
+	public void setSearchButton(JFXButton searchButton) {
+		this.searchButton = searchButton;
 	}
-	public void setSearchTextFied(JFXTextField searchTextFied) {
-		this.searchTextFied = searchTextFied;
-	}	
+
+	public JFXComboBox<?> getSearchFiltersComboBox() {
+		return searchFiltersComboBox;
+	}
+
+	public void setSearchFiltersComboBox(JFXComboBox<?> searchFiltersComboBox) {
+		this.searchFiltersComboBox = searchFiltersComboBox;
+	}
+
+	public JFXTextField getSearchUserText() {
+		return searchUserText;
+	}
+
+	public void setSearchUserText(JFXTextField searchUserText) {
+		this.searchUserText = searchUserText;
+	}
+	
+	
+    
 
 }
