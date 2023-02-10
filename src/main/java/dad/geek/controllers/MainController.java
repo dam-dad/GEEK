@@ -135,9 +135,10 @@ public class MainController implements Initializable {
 
 	@FXML
 	void onCreatePostAction(ActionEvent event) {
+		
 		Stage window = new Stage();
 		window.setTitle("Nuevo Post");
-		window.setScene(new Scene(new NewPostDialog().setStage(window).getView()));
+		window.setScene(new Scene(new NewPostController().setStage(window).getView()));
 		window.setMinHeight(300);
 		window.setMinWidth(300);
 		window.initOwner(App.primaryStage);
@@ -153,6 +154,7 @@ public class MainController implements Initializable {
 		});
 		
 		window.show();
+		
 	}
 	
 	@FXML
