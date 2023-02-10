@@ -22,6 +22,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
@@ -183,7 +184,9 @@ public class UserSectionController implements Initializable {
 		try {
 			postsContainer.getChildren().clear();
 			for(Post p : App.conexionLocal.getUserPosts(currentUser.get())) {
-				postsContainer.getChildren().add(new PostController(p).getView());
+				PostController controller = new PostController(p);
+				controller.getUserButton().setMouseTransparent(true);
+				postsContainer.getChildren().add(controller.getView());
 				postsContainer.getChildren().add(new SplitPane());
 			}
 			return postsContainer;
@@ -198,6 +201,12 @@ public class UserSectionController implements Initializable {
 			return null;
 		}
 	}
+    
+    public void refreshPosts() {
+    	App.primaryStage.getScene().setCursor(Cursor.WAIT);
+    	postContainerPane.setContent(laodPosts());
+		App.primaryStage.getScene().setCursor(Cursor.DEFAULT);
+    }
 	
 	public VBox getView() {
 		return view;
