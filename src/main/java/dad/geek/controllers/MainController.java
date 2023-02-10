@@ -187,6 +187,7 @@ public class MainController implements Initializable {
 	@FXML
 	void onReloadPostAction(ActionEvent event) {
 		reloadPosts();
+		userSectionController.refreshPosts();
 	}
 
 	@FXML

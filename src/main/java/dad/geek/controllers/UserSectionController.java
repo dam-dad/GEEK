@@ -22,6 +22,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
@@ -198,6 +199,12 @@ public class UserSectionController implements Initializable {
 			return null;
 		}
 	}
+    
+    public void refreshPosts() {
+    	App.primaryStage.getScene().setCursor(Cursor.WAIT);
+    	postContainerPane.setContent(laodPosts());
+		App.primaryStage.getScene().setCursor(Cursor.DEFAULT);
+    }
 	
 	public VBox getView() {
 		return view;
