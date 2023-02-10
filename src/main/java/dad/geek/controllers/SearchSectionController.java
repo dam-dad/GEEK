@@ -27,7 +27,7 @@ public class SearchSectionController implements Initializable {
     @FXML
     private JFXButton searchButton;
     @FXML
-    private JFXComboBox<?> searchFiltersComboBox;
+    private JFXComboBox<Filter> searchFiltersComboBox;
     @FXML
     private JFXTextField searchUserText;
     @FXML
@@ -74,11 +74,11 @@ public class SearchSectionController implements Initializable {
 		this.searchButton = searchButton;
 	}
 
-	public JFXComboBox<?> getSearchFiltersComboBox() {
+	public JFXComboBox<Filter> getSearchFiltersComboBox() {
 		return searchFiltersComboBox;
 	}
 
-	public void setSearchFiltersComboBox(JFXComboBox<?> searchFiltersComboBox) {
+	public void setSearchFiltersComboBox(JFXComboBox<Filter> searchFiltersComboBox) {
 		this.searchFiltersComboBox = searchFiltersComboBox;
 	}
 
