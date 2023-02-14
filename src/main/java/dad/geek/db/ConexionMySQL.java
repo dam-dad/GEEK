@@ -19,7 +19,6 @@ import javafx.scene.control.Alert.AlertType;
 public class ConexionMySQL {
 
 	private static Connection connMySQL;
-	private Statement stmtMySQL;
 	private PreparedStatement allPosts, userFromId, userFromNamePass, createUser, sendPost, setUserImage, setNickname,
 			userPosts;
 //	private ResultSet resultPosts, resultUser;
@@ -218,8 +217,6 @@ public class ConexionMySQL {
 		try {
 			if (connMySQL != null)
 				connMySQL.close();
-			if (stmtMySQL != null)
-				stmtMySQL.close();
 		} catch (SQLException e1) {
 			throw new Exception("Hubo un error al intentar cerrar la conexión con la base de datos (SQLException).");
 		}

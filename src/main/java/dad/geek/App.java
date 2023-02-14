@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import dad.geek.controllers.LoginController;
 import dad.geek.db.ConexionMySQL;
+import dad.geek.db.DBManager;
 import dad.geek.model.User;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -18,7 +19,8 @@ import javafx.stage.Stage;
 public class App extends Application {
 
 	public static Stage primaryStage;
-	public static ConexionMySQL conexionLocal;
+//	public static ConexionMySQL conexionLocal;
+	public static DBManager conexionLocal;
 //	public static DBManager conexionRemota = new DBManager();
 	public static User user = new User();
 	
@@ -42,7 +44,8 @@ public class App extends Application {
 		primaryStage.show();
 		
 		try {
-			conexionLocal = new ConexionMySQL();
+//			conexionLocal = new ConexionMySQL();
+			conexionLocal = new DBManager();
 		} catch (Exception e1) {
 			Alert errorAlert = new Alert(AlertType.ERROR);
 			errorAlert.setTitle("ERROR");
