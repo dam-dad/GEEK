@@ -135,7 +135,7 @@ public class LoginController implements Initializable {
 			if(user.userInDatabase()) {
 				
 				App.user = App.conexionLocal.getUserObject(this.user.getUsername(), this.user.getPassword());
-//				App.user = App.conexionRemota.getUserObject(this.user.getUsername(), this.user.getPassword());
+				// App.user = App.conexionRemota.getUserObject(this.user.getUsername(), this.user.getPassword());
 				App.openScene(new MainController().getView(), 850, 550);
 				
 			} else {
@@ -145,6 +145,7 @@ public class LoginController implements Initializable {
 				((VBox) getView().getChildren().get(0)).getChildren().add(4, noUserFound);
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
 			Alert errorAlert = new Alert(AlertType.ERROR);
 			errorAlert.setTitle("ERROR");
 			errorAlert.setHeaderText("Hubo un error");

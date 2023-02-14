@@ -17,7 +17,7 @@ public class DBManager {
 
 	private Connection connPostgre;
 	private PreparedStatement allPosts, userFromId, userFromNamePass, createUser, sendPost, setUserImage, setNickname,
-	userPosts;
+			userPosts;
 
 	public DBManager() {
 
@@ -60,7 +60,7 @@ public class DBManager {
 
 	}
 
-	private ResultSet getUserFromDB(long id) throws Exception{
+	private ResultSet getUserFromDB(long id) throws Exception {
 		try {
 			userFromId.setLong(1, id);
 			return userFromId.executeQuery();
@@ -70,6 +70,7 @@ public class DBManager {
 	}
 
 	public ResultSet getUserFromDB(String username, String password) throws Exception {
+
 		try {
 			userFromNamePass.setString(1, username);
 			userFromNamePass.setString(2, password);
@@ -106,7 +107,7 @@ public class DBManager {
 
 		return null;
 	}
-	
+
 	public User getUserObject(long userId) throws Exception {
 
 		try {
@@ -121,7 +122,7 @@ public class DBManager {
 
 		return null;
 	}
-	
+
 	public List<Post> getAllPosts() throws Exception {
 
 		List<Post> result = new ArrayList<>();
@@ -140,7 +141,7 @@ public class DBManager {
 
 		return result;
 	}
-	
+
 	private ResultSet allPostsFromDB() throws Exception {
 		try {
 			return allPosts.executeQuery();
@@ -148,7 +149,7 @@ public class DBManager {
 			throw new Exception("Hubo un error al cargar los posts desde la base de datos (SQLException).");
 		}
 	}
-	
+
 	public List<Post> getUserPosts(User user) throws Exception {
 		List<Post> result = new ArrayList<>();
 		ResultSet posts = getUserPostsFromDB(user);
@@ -167,7 +168,7 @@ public class DBManager {
 
 		return result;
 	}
-	
+
 	public ResultSet getUserPostsFromDB(User user) throws Exception {
 		try {
 			userPosts.setLong(1, user.getUserID());
@@ -177,7 +178,7 @@ public class DBManager {
 					+ " desde la base de datos (SQLException).");
 		}
 	}
-	
+
 	public void setNickname(long id, String nickname) throws Exception {
 
 		try {
@@ -201,7 +202,7 @@ public class DBManager {
 		}
 
 	}
-	
+
 	public void close() throws Exception {
 		try {
 			if (connPostgre != null)
@@ -210,4 +211,5 @@ public class DBManager {
 			throw new Exception("Hubo un error al intentar cerrar la conexión con la base de datos (SQLException).");
 		}
 	}
+
 }
