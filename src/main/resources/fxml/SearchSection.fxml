@@ -30,7 +30,7 @@
         <content>
             <BorderPane>
                <center>
-                  <VBox fx:id="searchResultContainer" maxWidth="200.0" />
+                  <VBox fx:id="searchResultContainer" maxWidth="500.0" />
                </center>
             </BorderPane>
         </content>

@@ -30,6 +30,8 @@ public class SearchSectionController implements Initializable {
 	Filter filter2 = new Filter();
 	Filter filter3 = new Filter();
 	Filter filter4 = new Filter();
+	
+	User user = new User();
 
 	
 	//view
@@ -58,6 +60,10 @@ public class SearchSectionController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		user.usernameProperty().bind(searchUserText.textProperty());
+
+		
+		
 		filter1.setFilterName("Ordenadores");
 		filter2.setFilterName("Programación");
 		filter3.setFilterName("Videojuegos");
@@ -75,29 +81,38 @@ public class SearchSectionController implements Initializable {
 
     @FXML
     void onSearchAction(ActionEvent event) throws Exception {
-    	if (searchUserText.getText().isBlank() && searchFiltersComboBox.getSelectionModel().getSelectedItem().equals(null)) {
-    		searchButton.setDisable(true);
-    	}
+//    	if (searchUserText.getText().isBlank() && searchFiltersComboBox.getSelectionModel().getSelectedItem().equals(null)) {
+//    		searchButton.setDisable(true);
+//    	}
     	
-    	if (!searchUserText.getText().isBlank() && searchFiltersComboBox.getSelectionModel().getSelectedItem().equals(null)) {
-    		searchButton.setDisable(false);
+//    	if (!searchUserText.getText().isBlank() && searchFiltersComboBox.getSelectionModel().getSelectedItem().equals(null)) {
+//    		searchButton.setDisable(false);
     		loadPostNoFilter();
-    	}
+//    	}
     	
-    	if (searchUserText.getText().isBlank() && searchFiltersComboBox.getSelectionModel().getSelectedItem().equals(null)) {
-    		searchButton.setDisable(true);
-    	}
+//    	if (searchUserText.getText().isBlank() && !searchFiltersComboBox.getSelectionModel().getSelectedItem().equals(null)) {
+//    		searchButton.setDisable(false);
+//    	}
     }
     
     private VBox loadPostNoFilter() throws Exception {
 		try {
-			User user = new User();
-			user.setUsername(searchUserText.getText());
-			for(Post p : App.conexionLocal.getUserPosts(user)) {
-				PostController controller = new PostController(p);
-				controller.getUserButton().setMouseTransparent(true);
-				searchResultContainer.getChildren().add(controller.getView());
-				searchResultContainer.getChildren().add(new SplitPane());
+			if(user.userInDatabase()) {
+				user = App.conexionLocal.getUserObject(user.getUsername());
+				System.out.println(user.getUsername());
+				for(Post p : App.conexionLocal.getUserPosts(user)) {
+					PostController controller = new PostController(p);
+					controller.getUserButton().setMouseTransparent(true);
+					searchResultContainer.getChildren().add(controller.getView());
+					searchResultContainer.getChildren().add(new SplitPane());
+					Alert errorAlert = new Alert(AlertType.ERROR);
+					errorAlert.setTitle("ERROR");
+					errorAlert.setHeaderText("Hubo un error");
+					errorAlert.setContentText(user.getUsername());
+					errorAlert.initOwner(App.primaryStage);
+					errorAlert.initModality(Modality.APPLICATION_MODAL);
+					errorAlert.show();
+				}
 			}
 			return searchResultContainer;
 		} catch (Exception e) {
