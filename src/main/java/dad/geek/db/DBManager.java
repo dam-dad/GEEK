@@ -1,5 +1,7 @@
 package dad.geek.db;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -7,6 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 
@@ -210,6 +213,29 @@ public class DBManager {
 		} catch (SQLException e1) {
 			throw new Exception("Hubo un error al intentar cerrar la conexión con la base de datos (SQLException).");
 		}
+	}
+
+	private byte[] transformarImagen(File file) {
+		byte[] bytea = null;
+		try (FileInputStream fis = new FileInputStream(file)) {
+			ArrayList<Byte> byteArrayList = new ArrayList<>();
+
+			int valor;
+			while((valor = fis.read()) != -1) {
+				byteArrayList.add((byte) valor);
+			}
+
+			bytea = new byte[byteArrayList.size()];
+
+			for(int i = 0; i < byteArrayList.size(); i++) {
+				bytea[i] = byteArrayList.get(i);
+			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return bytea;
 	}
 
 }
