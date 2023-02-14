@@ -12,6 +12,7 @@ import dad.geek.App;
 import dad.geek.model.Filter;
 import dad.geek.model.Post;
 import dad.geek.model.User;
+import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -60,19 +61,20 @@ public class SearchSectionController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		user.usernameProperty().bind(searchUserText.textProperty());
+		user.usernameProperty().bindBidirectional(searchUserText.textProperty());
+
+		searchButton.disableProperty().bind(Bindings.isEmpty(searchUserText.textProperty()).and(Bindings.isNull(searchFiltersComboBox.getSelectionModel().selectedItemProperty())));
 
 		
-		
-		filter1.setFilterName("Ordenadores");
-		filter2.setFilterName("Programación");
-		filter3.setFilterName("Videojuegos");
-		filter4.setFilterName("Diseño");
-		
-		searchFiltersComboBox.getItems().add(filter1);
-		searchFiltersComboBox.getItems().add(filter2);
-		searchFiltersComboBox.getItems().add(filter3);
-		searchFiltersComboBox.getItems().add(filter4);
+//		filter1.setFilterName("Ordenadores");
+//		filter2.setFilterName("Programación");
+//		filter3.setFilterName("Videojuegos");
+//		filter4.setFilterName("Diseño");
+//		
+//		searchFiltersComboBox.getItems().add(filter1);
+//		searchFiltersComboBox.getItems().add(filter2);
+//		searchFiltersComboBox.getItems().add(filter3);
+//		searchFiltersComboBox.getItems().add(filter4);
 
 
 		
@@ -81,38 +83,39 @@ public class SearchSectionController implements Initializable {
 
     @FXML
     void onSearchAction(ActionEvent event) throws Exception {
-//    	if (searchUserText.getText().isBlank() && searchFiltersComboBox.getSelectionModel().getSelectedItem().equals(null)) {
-//    		searchButton.setDisable(true);
-//    	}
+    	if (!searchUserText.getText().isEmpty() && searchFiltersComboBox.getSelectionModel().getSelectedItem() == null) {
+    		searchResultContainerPane.setContent(loadPostNoFilter());
+    	}
     	
-//    	if (!searchUserText.getText().isBlank() && searchFiltersComboBox.getSelectionModel().getSelectedItem().equals(null)) {
-//    		searchButton.setDisable(false);
-    		loadPostNoFilter();
-//    	}
+    	if (searchUserText.getText().isEmpty() && searchFiltersComboBox.getSelectionModel().getSelectedItem() != null) {
+
+    	}
     	
-//    	if (searchUserText.getText().isBlank() && !searchFiltersComboBox.getSelectionModel().getSelectedItem().equals(null)) {
-//    		searchButton.setDisable(false);
-//    	}
+    	if (!searchUserText.getText().isEmpty() && searchFiltersComboBox.getSelectionModel().getSelectedItem() != null) {
+
+    	}
     }
     
     private VBox loadPostNoFilter() throws Exception {
 		try {
-			if(user.userInDatabase()) {
+			searchResultContainer.getChildren().clear();
+			if(user.userInDatabase2()) {
 				user = App.conexionLocal.getUserObject(user.getUsername());
-				System.out.println(user.getUsername());
 				for(Post p : App.conexionLocal.getUserPosts(user)) {
 					PostController controller = new PostController(p);
 					controller.getUserButton().setMouseTransparent(true);
 					searchResultContainer.getChildren().add(controller.getView());
 					searchResultContainer.getChildren().add(new SplitPane());
-					Alert errorAlert = new Alert(AlertType.ERROR);
-					errorAlert.setTitle("ERROR");
-					errorAlert.setHeaderText("Hubo un error");
-					errorAlert.setContentText(user.getUsername());
-					errorAlert.initOwner(App.primaryStage);
-					errorAlert.initModality(Modality.APPLICATION_MODAL);
-					errorAlert.show();
 				}
+			}
+			else {
+				Alert sinUsuarioAlert = new Alert(AlertType.ERROR);
+				sinUsuarioAlert.setTitle("NO USERS");
+				sinUsuarioAlert.setHeaderText("No hay usuarios");
+				sinUsuarioAlert.setContentText("No se ha encontrado el usuario con el nombre: " + searchUserText.getText());
+				sinUsuarioAlert.initOwner(App.primaryStage);
+				sinUsuarioAlert.initModality(Modality.APPLICATION_MODAL);
+				sinUsuarioAlert.show();
 			}
 			return searchResultContainer;
 		} catch (Exception e) {

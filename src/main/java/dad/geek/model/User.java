@@ -53,6 +53,11 @@ public class User {
 //		return App.conexionRemota.getUserFromDB(getUsername(), getPassword()).next();
 	}
 	
+	public boolean userInDatabase2() throws Exception {
+		return App.conexionLocal.getUserFromDB(getUsername()).next();
+//		return App.conexionRemota.getUserFromDB(getUsername()).next();
+	}
+	
 	public void addUsertoDB() throws Exception {
 		App.conexionLocal.createUser(getNickname(), getUsername(), getPassword());
 //		App.conexionRemota.createUser(getNickname(), getUsername(), getPassword());
