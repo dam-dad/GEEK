@@ -110,6 +110,11 @@ public class MainController implements Initializable {
 				containerPane.setDividerPositions(0.25, 0.75);
 			}
 		});
+		
+		App.primaryStage.setOnCloseRequest(e -> {
+			e.consume();
+			App.salir();
+		});
 
 	}
 	
@@ -139,8 +144,8 @@ public class MainController implements Initializable {
 		Stage window = new Stage();
 		window.setTitle("Nuevo Post");
 		window.setScene(new Scene(new NewPostController().setStage(window).getView()));
-		window.setMinHeight(300);
-		window.setMinWidth(300);
+		window.setMinWidth(450);
+		window.setMinHeight(330);
 		window.initOwner(App.primaryStage);
 		window.initModality(Modality.APPLICATION_MODAL);
 		
@@ -194,12 +199,12 @@ public class MainController implements Initializable {
 
 	}
 	
-	public BorderPane getView() {
-		return view;
-	}
-	
 	public UserSectionController getUserSectionController() {
 		return userSectionController;
+	}
+	
+	public BorderPane getView() {
+		return view;
 	}
 
 }

@@ -45,7 +45,7 @@
                </graphic>
             </Button>
             <Label text="Sin imagen" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <Button fx:id="emptyButton" mnemonicParsing="false" onAction="#onCreatePost" GridPane.columnIndex="1" GridPane.rowIndex="3">
+            <Button fx:id="emptyButton" mnemonicParsing="false" onAction="#onNoImageAction" GridPane.columnIndex="1" GridPane.rowIndex="3">
                <graphic>
                   <ImageView fx:id="emptyImage" pickOnBounds="true" preserveRatio="true" />
                </graphic>

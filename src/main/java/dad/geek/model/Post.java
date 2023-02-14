@@ -21,7 +21,7 @@ public class Post {
 	private LongProperty userID = new SimpleLongProperty();
 	private StringProperty postTitle = new SimpleStringProperty();
 	private StringProperty postContent = new SimpleStringProperty();
-	private ObjectProperty<Image> postImage = new SimpleObjectProperty<>();
+	private ListProperty<Image> postImage = new SimpleListProperty<>(FXCollections.observableArrayList());
 	private ObjectProperty<LocalDateTime> postDate = new SimpleObjectProperty<>();
 	private ObjectProperty<DirImages> dirImage = new SimpleObjectProperty<>();
 	private ListProperty<Filter> filters = new SimpleListProperty<>(FXCollections.observableArrayList());
@@ -74,16 +74,6 @@ public class Post {
 	public final void setPostContent(final String postContent) {
 		this.postContentProperty().set(postContent);
 	}
-	
-	public final ObjectProperty<Image> postImageProperty() {
-		return this.postImage;
-	}
-	public final Image getPostImage() {
-		return this.postImageProperty().get();
-	}
-	public final void setPostImage(final Image postImage) {
-		this.postImageProperty().set(postImage);
-	}
 
 	public final ObjectProperty<LocalDateTime> postDateProperty() {
 		return this.postDate;
@@ -113,6 +103,18 @@ public class Post {
 	}
 	public final void setDirImage(final DirImages dirImage) {
 		this.dirImageProperty().set(dirImage);
+	}
+
+	public final ListProperty<Image> postImageProperty() {
+		return this.postImage;
+	}
+
+	public final ObservableList<Image> getPostImage() {
+		return this.postImageProperty().get();
+	}
+	
+	public final void setPostImage(final ObservableList<Image> postImage) {
+		this.postImageProperty().set(postImage);
 	}
 
 }

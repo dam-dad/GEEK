@@ -39,7 +39,7 @@
       </BorderPane>
       <HBox alignment="CENTER_LEFT" VBox.vgrow="NEVER">
          <children>
-            <ImageView fx:id="profileImage" fitHeight="64.0" fitWidth="64.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" HBox.hgrow="ALWAYS">
+            <ImageView fx:id="profileImage" fitHeight="64.0" fitWidth="64.0" nodeOrientation="INHERIT" onMouseClicked="#onProfileImageClicked" pickOnBounds="true" preserveRatio="true" HBox.hgrow="ALWAYS">
                <image>
                   <Image url="@../images/user.png" />
                </image>
