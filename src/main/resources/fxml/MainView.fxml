@@ -20,7 +20,7 @@
    <center>
       <SplitPane fx:id="containerPane" dividerPositions="0.25" maxHeight="1.7976931348623157E308" BorderPane.alignment="CENTER">
          <items>
-            <VBox fx:id="userContainer" />
+            <VBox fx:id="userContainer" alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" />
             <ScrollPane fx:id="postContainerPane" fitToWidth="true" hmin="180.0" minWidth="200.0" pannable="true">
                <content>
                   <BorderPane>

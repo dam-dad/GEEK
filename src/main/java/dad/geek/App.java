@@ -3,7 +3,6 @@ package dad.geek;
 import java.util.Optional;
 
 import dad.geek.controllers.LoginController;
-import dad.geek.db.ConexionMySQL;
 import dad.geek.db.DBManager;
 import dad.geek.model.User;
 import javafx.application.Application;
@@ -42,6 +41,9 @@ public class App extends Application {
 		primaryStage.setTitle("GEEK");
 		primaryStage.setScene(new Scene(controller.getView()));
 		primaryStage.show();
+		primaryStage.setMinWidth(450);
+		primaryStage.setMinHeight(500);
+		primaryStage.centerOnScreen();
 		
 		try {
 //			conexionLocal = new ConexionMySQL();
@@ -56,9 +58,6 @@ public class App extends Application {
 			errorAlert.show();
 		}
 
-		App.primaryStage.setMinWidth(450);
-		App.primaryStage.setMinHeight(500);
-		App.primaryStage.centerOnScreen();
 
 		
 	}

@@ -22,6 +22,7 @@ import javafx.scene.control.SplitPane;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -82,6 +83,7 @@ public class MainController implements Initializable {
 		}
 	}
 
+	@SuppressWarnings("static-access")
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		
@@ -89,7 +91,8 @@ public class MainController implements Initializable {
 		
 		userContainer.getChildren().add(userSectionController.getView());
 		containerPane.getItems().add(searchSectionController.getView());
-		containerPane.setDividerPositions(0.25, 0.75);
+		userContainer.setVgrow(userContainer.getChildren().get(0), Priority.ALWAYS);
+		containerPane.setDividerPositions(0.1, 0.9);
 		
 		postContainerPane.setContent(laodPosts());
 		
@@ -125,7 +128,6 @@ public class MainController implements Initializable {
 				postsContainer.getChildren().add(new PostController(p).setMainController(this).getView());
 				postsContainer.getChildren().add(new SplitPane());
 			}
-			return postsContainer;
 		} catch (Exception e) {
 			Alert errorAlert = new Alert(AlertType.ERROR);
 			errorAlert.setTitle("ERROR");
@@ -136,6 +138,7 @@ public class MainController implements Initializable {
 			errorAlert.show();
 			return null;
 		}
+		return postsContainer;
 	}
 
 	@FXML

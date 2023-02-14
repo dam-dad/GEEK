@@ -212,12 +212,9 @@ public class UserSectionController implements Initializable {
 		try {
 			postsContainer.getChildren().clear();
 			for(Post p : App.conexionLocal.getUserPosts(currentUser.get())) {
-				PostController controller = new PostController(p);
-				controller.getUserButton().setMouseTransparent(true);
-				postsContainer.getChildren().add(controller.getView());
+				postsContainer.getChildren().add(new PostController(p).getView());
 				postsContainer.getChildren().add(new SplitPane());
 			}
-			return postsContainer;
 		} catch (Exception e) {
 			Alert errorAlert = new Alert(AlertType.ERROR);
 			errorAlert.setTitle("ERROR");
@@ -228,6 +225,7 @@ public class UserSectionController implements Initializable {
 			errorAlert.show();
 			return null;
 		}
+		return postsContainer;
 	}
     
     public void refreshPosts() {
