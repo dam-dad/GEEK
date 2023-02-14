@@ -3,7 +3,7 @@ CREATE TABLE Usuarios (
     nombre VARCHAR(40),
     nombreUsuario VARCHAR(40) NOT NULL,
     password VARCHAR(100) NOT NULL,
-    imagen TEXT,
+    imagen bytea,
     CONSTRAINT PK_Usuarios PRIMARY KEY (ID)
 );
 
@@ -28,7 +28,7 @@ CREATE TABLE Posts(
     ID_Usuario INT8 NOT NULL,
     titulo VARCHAR(50),
     contenido TEXT,
-    imagen TEXT,
+    imagen bytea,
     CONSTRAINT PK_Posts PRIMARY KEY (ID),
     CONSTRAINT FK_Posts_Usuarios FOREIGN KEY (ID_Usuario) REFERENCES Usuarios(ID)
 );
