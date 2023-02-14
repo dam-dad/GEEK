@@ -110,6 +110,11 @@ public class MainController implements Initializable {
 				containerPane.setDividerPositions(0.25, 0.75);
 			}
 		});
+		
+		App.primaryStage.setOnCloseRequest(e -> {
+			e.consume();
+			App.salir();
+		});
 
 	}
 	
@@ -194,12 +199,12 @@ public class MainController implements Initializable {
 
 	}
 	
-	public BorderPane getView() {
-		return view;
-	}
-	
 	public UserSectionController getUserSectionController() {
 		return userSectionController;
+	}
+	
+	public BorderPane getView() {
+		return view;
 	}
 
 }
