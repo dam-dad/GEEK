@@ -61,36 +61,26 @@ public class SearchSectionController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		user.usernameProperty().bindBidirectional(searchUserText.textProperty());
-
+		//bindings
+		user.usernameProperty().bind(searchUserText.textProperty());
+		
 		searchButton.disableProperty().bind(Bindings.isEmpty(searchUserText.textProperty()).and(Bindings.isNull(searchFiltersComboBox.getSelectionModel().selectedItemProperty())));
-
-		
-//		filter1.setFilterName("Ordenadores");
-//		filter2.setFilterName("Programación");
-//		filter3.setFilterName("Videojuegos");
-//		filter4.setFilterName("Diseño");
-//		
-//		searchFiltersComboBox.getItems().add(filter1);
-//		searchFiltersComboBox.getItems().add(filter2);
-//		searchFiltersComboBox.getItems().add(filter3);
-//		searchFiltersComboBox.getItems().add(filter4);
-
-
-		
 	}
 	
 
     @FXML
     void onSearchAction(ActionEvent event) throws Exception {
+    	//si hay texto pero no hay ningún filtro seleccionado
     	if (!searchUserText.getText().isEmpty() && searchFiltersComboBox.getSelectionModel().getSelectedItem() == null) {
+    		user.usernameProperty().bind(searchUserText.textProperty());
     		searchResultContainerPane.setContent(loadPostNoFilter());
+    		user.usernameProperty().unbind();
     	}
-    	
+    	//si no hay texto pero sí hay un filtro seleccionado
     	if (searchUserText.getText().isEmpty() && searchFiltersComboBox.getSelectionModel().getSelectedItem() != null) {
-
+    		
     	}
-    	
+    	//si hay texto y también algún filtro seleccionado
     	if (!searchUserText.getText().isEmpty() && searchFiltersComboBox.getSelectionModel().getSelectedItem() != null) {
 
     	}
@@ -100,6 +90,7 @@ public class SearchSectionController implements Initializable {
 		try {
 			searchResultContainer.getChildren().clear();
 			if(user.userInDatabase2()) {
+				System.out.println(user.getUsername());
 				user = App.conexionLocal.getUserObject(user.getUsername());
 				for(Post p : App.conexionLocal.getUserPosts(user)) {
 					PostController controller = new PostController(p);
