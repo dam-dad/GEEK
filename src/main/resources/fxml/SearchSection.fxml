@@ -4,7 +4,8 @@
 <?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
@@ -25,7 +26,15 @@
          </VBox.margin>
       </HBox>
       <JFXComboBox fx:id="searchFiltersComboBox" maxWidth="1.7976931348623157E308" promptText="Selecciona un filtro" />
-      <FlowPane fx:id="filtersFlowPane" prefHeight="200.0" prefWidth="200.0" />
+      <ScrollPane fx:id="searchResultContainerPane">
+        <content>
+            <BorderPane>
+               <center>
+                  <VBox fx:id="searchResultContainer" maxWidth="200.0" />
+               </center>
+            </BorderPane>
+        </content>
+      </ScrollPane>
    </children>
    <padding>
       <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

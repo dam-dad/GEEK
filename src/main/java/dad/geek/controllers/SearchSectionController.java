@@ -8,28 +8,41 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
 
+import dad.geek.App;
 import dad.geek.model.Filter;
+import dad.geek.model.Post;
+import dad.geek.model.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.layout.FlowPane;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.SplitPane;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 
 public class SearchSectionController implements Initializable {
 	
 	//model
-	Filter filter = new Filter();
+	Filter filter1 = new Filter();
+	Filter filter2 = new Filter();
+	Filter filter3 = new Filter();
+	Filter filter4 = new Filter();
+
 	
 	//view
     @FXML
-    private FlowPane filtersFlowPane;
+    private ScrollPane searchResultContainerPane;
     @FXML
     private JFXButton searchButton;
     @FXML
     private JFXComboBox<Filter> searchFiltersComboBox;
     @FXML
     private JFXTextField searchUserText;
+    @FXML
+    private VBox searchResultContainer;
     @FXML
     private VBox view;
     
@@ -45,25 +58,70 @@ public class SearchSectionController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		filter1.setFilterName("Ordenadores");
+		filter2.setFilterName("Programación");
+		filter3.setFilterName("Videojuegos");
+		filter4.setFilterName("Diseño");
+		
+		searchFiltersComboBox.getItems().add(filter1);
+		searchFiltersComboBox.getItems().add(filter2);
+		searchFiltersComboBox.getItems().add(filter3);
+		searchFiltersComboBox.getItems().add(filter4);
+
+
 		
 	}
 	
 
     @FXML
-    void onSearchAction(ActionEvent event) {
-
+    void onSearchAction(ActionEvent event) throws Exception {
+    	if (searchUserText.getText().isBlank() && searchFiltersComboBox.getSelectionModel().getSelectedItem().equals(null)) {
+    		searchButton.setDisable(true);
+    	}
+    	
+    	if (!searchUserText.getText().isBlank() && searchFiltersComboBox.getSelectionModel().getSelectedItem().equals(null)) {
+    		searchButton.setDisable(false);
+    		loadPostNoFilter();
+    	}
+    	
+    	if (searchUserText.getText().isBlank() && searchFiltersComboBox.getSelectionModel().getSelectedItem().equals(null)) {
+    		searchButton.setDisable(true);
+    	}
+    }
+    
+    private VBox loadPostNoFilter() throws Exception {
+		try {
+			User user = new User();
+			user.setUsername(searchUserText.getText());
+			for(Post p : App.conexionLocal.getUserPosts(user)) {
+				PostController controller = new PostController(p);
+				controller.getUserButton().setMouseTransparent(true);
+				searchResultContainer.getChildren().add(controller.getView());
+				searchResultContainer.getChildren().add(new SplitPane());
+			}
+			return searchResultContainer;
+		} catch (Exception e) {
+			Alert errorAlert = new Alert(AlertType.ERROR);
+			errorAlert.setTitle("ERROR");
+			errorAlert.setHeaderText("Hubo un error");
+			errorAlert.setContentText(e.getMessage());
+			errorAlert.initOwner(App.primaryStage);
+			errorAlert.initModality(Modality.APPLICATION_MODAL);
+			errorAlert.show();
+			return null;
+		}
     }
     
 	public VBox getView() {
 		return view;
 	}
 
-	public FlowPane getFiltersFlowPane() {
-		return filtersFlowPane;
+	public ScrollPane getsearchResultContainerPane() {
+		return searchResultContainerPane;
 	}
 
-	public void setFiltersFlowPane(FlowPane filtersFlowPane) {
-		this.filtersFlowPane = filtersFlowPane;
+	public void setsearchResultContainerPane(ScrollPane searchResultContainerPane) {
+		this.searchResultContainerPane = searchResultContainerPane;
 	}
 
 	public JFXButton getSearchButton() {
