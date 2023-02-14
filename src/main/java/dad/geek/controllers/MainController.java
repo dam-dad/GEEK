@@ -135,9 +135,10 @@ public class MainController implements Initializable {
 
 	@FXML
 	void onCreatePostAction(ActionEvent event) {
+		
 		Stage window = new Stage();
 		window.setTitle("Nuevo Post");
-		window.setScene(new Scene(new NewPostDialog().setStage(window).getView()));
+		window.setScene(new Scene(new NewPostController().setStage(window).getView()));
 		window.setMinHeight(300);
 		window.setMinWidth(300);
 		window.initOwner(App.primaryStage);
@@ -153,28 +154,13 @@ public class MainController implements Initializable {
 		});
 		
 		window.show();
+		
 	}
 	
 	@FXML
 	void onEditUserAction(ActionEvent event) {
 		
-		Stage window = new Stage();
-		window.setTitle("Editar usuario");
-		window.setScene(new Scene(new EditProfileController().setStage(window).getView()));
-		window.setMinWidth(300);
-		window.setMinHeight(435);
-		window.initOwner(App.primaryStage);
-		window.initModality(Modality.APPLICATION_MODAL);
-		
-		window.getScene().setOnKeyPressed(t -> {
-			if(t.getCode() == KeyCode.ESCAPE)
-				window.getOnCloseRequest().handle(new WindowEvent(window, WindowEvent.WINDOW_CLOSE_REQUEST));
-		});
-		window.setOnCloseRequest(e -> {
-			window.close();
-		});
-		
-		window.show();
+		userSectionController.openEditWindow();
 		
 	}
 	

@@ -16,11 +16,13 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.stage.Modality;
@@ -33,7 +35,9 @@ public class NewPostController implements Initializable {
 
 	private Stage stage;
 	private Post post = new Post();
-
+	double prefWidth;
+	double prefHeight;
+	
 	// view
 
 	@FXML
@@ -81,7 +85,9 @@ public class NewPostController implements Initializable {
 		// load data
 
 		post.setUserID(App.user.getUserID());
-
+		prefWidth = view.getPrefWidth();
+		prefHeight = view.getPrefHeight();
+		
 		// bindings
 
 		nicknameLabel.textProperty().bind(App.user.nicknameProperty());
@@ -97,28 +103,34 @@ public class NewPostController implements Initializable {
 		return this;
 	}
 
-	public NewPostController setPosition(String posicionImagen) {
+	public NewPostController setPosition(String posicionImagen, Image image) {
 
-		ImageView image = new ImageView(new Image("/images/ejemplo.png"));
-		image.setFitWidth(200);
-		image.setFitHeight(200);
-		image.setVisible(true);
-
+		ImageView imageView = new ImageView(image);
+		imageView.setFitWidth(200);
+		imageView.setFitHeight(200);
+		imageView.setVisible(true);
+		
 		switch (posicionImagen) {
 		case "leftButton":
-			contentContainer.setLeft(image);
+			contentContainer.setLeft(imageView);
+			view.setPrefWidth((view.getPrefWidth() <= prefWidth + 200) ? view.getPrefWidth() + 200:view.getPrefWidth());
 			break;
 		case "rightButton":
-			contentContainer.setRight(image);
+			contentContainer.setRight(imageView);
+			view.setPrefWidth((view.getPrefWidth() <= prefWidth + 200) ? view.getPrefWidth() + 200:view.getPrefWidth());
 			break;
 		case "downButton":
-			contentContainer.setBottom(image);
+			contentContainer.setBottom(imageView);
+			view.setPrefHeight((view.getPrefHeight() == prefHeight) ? view.getPrefHeight() + 250:view.getPrefHeight());
 			break;
 		case "emptyButton":
 			break;
 		}
-
-		BorderPane.setAlignment(image, Pos.CENTER);
+		
+		stage.setMinWidth(view.getPrefWidth());
+		stage.setMinHeight(view.getPrefHeight());
+		stage.centerOnScreen();
+		BorderPane.setAlignment(imageView, Pos.CENTER);
 
 		return this;
 
@@ -148,6 +160,24 @@ public class NewPostController implements Initializable {
 
 	@FXML
 	void onAddImage(ActionEvent event) {
+		
+		Stage window = new Stage();
+		window.setTitle("Nuevo Post");
+		window.setScene(new Scene(new NewPostDialog().setStage(window).setParent(this).getView()));
+		window.setMinHeight(300);
+		window.setMinWidth(300);
+		window.initOwner(App.primaryStage);
+		window.initModality(Modality.APPLICATION_MODAL);
+		
+		window.getScene().setOnKeyPressed(t -> {
+			if(t.getCode() == KeyCode.ESCAPE)
+				window.getOnCloseRequest().handle(new WindowEvent(window, WindowEvent.WINDOW_CLOSE_REQUEST));
+		});
+		window.setOnCloseRequest(e -> {
+			window.close();
+		});
+		
+		window.show();
 
 	}
 

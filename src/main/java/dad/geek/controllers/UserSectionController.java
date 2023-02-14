@@ -109,6 +109,12 @@ public class UserSectionController implements Initializable {
 	@FXML
     void onEditAction(ActionEvent event) {
 		
+		openEditWindow();
+		
+    }
+	
+	public void openEditWindow() {
+		
 		Stage window = new Stage();
 		window.setTitle("Editar usuario");
 		window.setScene(new Scene(new EditProfileController().setStage(window).getView()));
@@ -127,7 +133,7 @@ public class UserSectionController implements Initializable {
 		
 		window.show();
 		
-    }
+	}
 
     @FXML
     void onShowMoreAction(ActionEvent event) {
