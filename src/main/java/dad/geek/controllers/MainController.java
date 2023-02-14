@@ -139,8 +139,8 @@ public class MainController implements Initializable {
 		Stage window = new Stage();
 		window.setTitle("Nuevo Post");
 		window.setScene(new Scene(new NewPostController().setStage(window).getView()));
-		window.setMinHeight(300);
-		window.setMinWidth(300);
+		window.setMinWidth(450);
+		window.setMinHeight(330);
 		window.initOwner(App.primaryStage);
 		window.initModality(Modality.APPLICATION_MODAL);
 		

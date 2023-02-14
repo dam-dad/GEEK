@@ -56,10 +56,6 @@ public class App extends Application {
 		App.primaryStage.setMinWidth(450);
 		App.primaryStage.setMinHeight(500);
 		App.primaryStage.centerOnScreen();
-		App.primaryStage.setOnCloseRequest(e -> {
-			e.consume();
-			App.salir();
-		});	
 
 		
 	}
