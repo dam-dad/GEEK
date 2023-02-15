@@ -123,9 +123,9 @@ public class NewPostController implements Initializable {
 			contentContainer.setBottom(imageView);
 			view.setPrefHeight((view.getPrefHeight() == prefHeight) ? view.getPrefHeight() + 250:view.getPrefHeight());
 			break;
-		case "emptyButton":
-			break;
 		}
+		
+		post.getPostImage().add(image);
 		
 		stage.setMinWidth(view.getPrefWidth());
 		stage.setMinHeight(view.getPrefHeight());
@@ -134,6 +134,23 @@ public class NewPostController implements Initializable {
 
 		return this;
 
+	}
+	
+	public void noImages() {
+		
+		view.setPrefWidth(450);
+		view.setPrefHeight(330);
+		
+		stage.setWidth(view.getPrefWidth());
+		stage.setHeight(view.getPrefHeight());
+		stage.setMinWidth(view.getPrefWidth());
+		stage.setMinHeight(view.getPrefHeight());
+		contentContainer.setLeft(null);
+		contentContainer.setRight(null);
+		contentContainer.setBottom(null);
+		post.getPostImage().clear();
+		stage.centerOnScreen();
+		
 	}
 
 	@FXML

@@ -95,6 +95,12 @@ public class NewPostDialog implements Initializable {
     	
     }
     
+    @FXML
+    void onNoImageAction(ActionEvent event) {
+    	this.stage.getOnCloseRequest().handle(new WindowEvent(this.stage, WindowEvent.WINDOW_CLOSE_REQUEST));
+    	newPostController.noImages();
+    }
+    
     public NewPostDialog setParent(NewPostController parent) {
     	this.newPostController = parent;
     	return this;

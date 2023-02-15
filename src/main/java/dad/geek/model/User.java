@@ -1,5 +1,7 @@
 package dad.geek.model;
 
+import java.io.File;
+
 import dad.geek.App;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.LongProperty;

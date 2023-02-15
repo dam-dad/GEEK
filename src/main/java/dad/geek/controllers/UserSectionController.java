@@ -25,15 +25,17 @@ import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitPane;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
 
 public class UserSectionController implements Initializable {
@@ -110,6 +112,26 @@ public class UserSectionController implements Initializable {
     void onEditAction(ActionEvent event) {
 		
 		openEditWindow();
+		
+    }
+	
+	@FXML
+    void onProfileImageClicked(MouseEvent event) {
+		
+		Stage window = new Stage();
+		window.initStyle(StageStyle.UNDECORATED);
+		window.setTitle("Imagen de perfil");
+		window.setScene(new Scene(new ShowImageController().setImageView(profileImage.getImage()).setStage(window).getView()));
+		
+		window.getScene().setOnKeyPressed(t -> {
+			if(t.getCode() == KeyCode.ESCAPE)
+				window.getOnCloseRequest().handle(new WindowEvent(window, WindowEvent.WINDOW_CLOSE_REQUEST));
+		});
+		window.setOnCloseRequest(e -> {
+			window.close();
+		});
+		
+		window.show();
 		
     }
 	
@@ -190,12 +212,9 @@ public class UserSectionController implements Initializable {
 		try {
 			postsContainer.getChildren().clear();
 			for(Post p : App.conexionLocal.getUserPosts(currentUser.get())) {
-				PostController controller = new PostController(p);
-				controller.getUserButton().setMouseTransparent(true);
-				postsContainer.getChildren().add(controller.getView());
+				postsContainer.getChildren().add(new PostController(p).getView());
 				postsContainer.getChildren().add(new SplitPane());
 			}
-			return postsContainer;
 		} catch (Exception e) {
 			Alert errorAlert = new Alert(AlertType.ERROR);
 			errorAlert.setTitle("ERROR");
@@ -206,6 +225,7 @@ public class UserSectionController implements Initializable {
 			errorAlert.show();
 			return null;
 		}
+		return postsContainer;
 	}
     
     public void refreshPosts() {

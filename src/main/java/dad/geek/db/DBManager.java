@@ -116,7 +116,7 @@ public class DBManager {
 		try {
 			ResultSet posts = getUserFromDB(userId);
 			while (posts.next()) {
-				return new User(posts.getInt("ID"), posts.getString("nombre"), posts.getString("nombreUsuario"),
+				return new User(posts.getLong("ID"), posts.getString("nombre"), posts.getString("nombreUsuario"),
 						posts.getString("password"), posts.getString("imagen"));
 			}
 		} catch (SQLException e) {
@@ -134,7 +134,7 @@ public class DBManager {
 		try {
 			while (posts.next()) {
 
-				result.add(new Post(posts.getInt("ID"), posts.getInt("ID_Usuario"), posts.getString("titulo"),
+				result.add(new Post(posts.getLong("ID"), posts.getLong("ID_Usuario"), posts.getString("titulo"),
 						posts.getString("contenido")));
 
 			}
@@ -160,7 +160,7 @@ public class DBManager {
 		try {
 			while (posts.next()) {
 
-				result.add(new Post(posts.getInt("ID"), posts.getInt("ID_Usuario"), posts.getString("titulo"),
+				result.add(new Post(posts.getLong("ID"), posts.getLong("ID_Usuario"), posts.getString("titulo"),
 						posts.getString("contenido")));
 
 			}

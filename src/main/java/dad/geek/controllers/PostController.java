@@ -85,6 +85,8 @@ public class PostController implements Initializable {
 			errorAlert.initModality(Modality.APPLICATION_MODAL);
 			errorAlert.show();
 		}
+		
+		userButton.setMouseTransparent(true);
 
 		// bindings
 
@@ -102,15 +104,12 @@ public class PostController implements Initializable {
 	
 	public PostController setMainController(MainController parent) {
 		this.main = parent;
+		userButton.setMouseTransparent(false);
 		return this;
 	}
 
 	public BorderPane getView() {
 		return view;
-	}
-	
-	public JFXButton getUserButton() {
-		return userButton;
 	}
 
 }
