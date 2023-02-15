@@ -39,46 +39,45 @@ import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
 
 public class UserSectionController implements Initializable {
-	
+
 	// model
-	
+
 	private BooleanProperty goback = new SimpleBooleanProperty(false);
 	private ListProperty<User> users = new SimpleListProperty<>(FXCollections.observableArrayList());
 	private ObjectProperty<User> currentUser = new SimpleObjectProperty<>();
 
 	// view
-	
+
 	@FXML
-    private VBox postsContainer;
-	
+	private VBox postsContainer;
+
 	@FXML
-    private JFXButton backButton;
-	
+	private JFXButton backButton;
+
 	@FXML
-    private JFXButton editButton;
+	private JFXButton editButton;
 
-    @FXML
-    private Label filterNumberLabel;
+	@FXML
+	private Label filterNumberLabel;
 
-    @FXML
-    private ImageView profileImage;
+	@FXML
+	private ImageView profileImage;
 
-    @FXML
-    private JFXButton showMoreButton;
-    
-    @FXML
-    private Label usernameLabel;
+	@FXML
+	private JFXButton showMoreButton;
 
-    @FXML
-    private Label nicknameLabel;
-    
-    @FXML
-    private ScrollPane postContainerPane;
-    
-    @FXML
-    private VBox view;
+	@FXML
+	private Label usernameLabel;
 
-	
+	@FXML
+	private Label nicknameLabel;
+
+	@FXML
+	private ScrollPane postContainerPane;
+
+	@FXML
+	private VBox view;
+
 	public UserSectionController() {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/UserSectionView.fxml"));
@@ -91,52 +90,57 @@ public class UserSectionController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		
+
 		// listeners
-		
+
 		users.sizeProperty().addListener(this::onUsersSizeModified);
 		currentUser.addListener(this::onCurrentUserChanged);
-		
+
 		// load data
-		
+
 		users.add(App.user);
-		
+
 		// bindings
 
 		backButton.visibleProperty().bind(goback);
 		editButton.visibleProperty().bind(goback.not());
-		
+
 	}
-	
+
 	@FXML
-    void onEditAction(ActionEvent event) {
-		
+	void onEditAction(ActionEvent event) {
+
 		openEditWindow();
-		
-    }
-	
+
+	}
+
+	//TODO Añadir tamaño máximo a la imagen
 	@FXML
-    void onProfileImageClicked(MouseEvent event) {
-		
+	void onProfileImageClicked(MouseEvent event) {
+
 		Stage window = new Stage();
 		window.initStyle(StageStyle.UNDECORATED);
 		window.setTitle("Imagen de perfil");
-		window.setScene(new Scene(new ShowImageController().setImageView(profileImage.getImage()).setStage(window).getView()));
+		window.setScene(
+				new Scene(new ShowImageController().setImageView(profileImage.getImage()).setStage(window).getView()));
+
+		window.initOwner(App.primaryStage);
+		window.initModality(Modality.APPLICATION_MODAL);
 		
 		window.getScene().setOnKeyPressed(t -> {
-			if(t.getCode() == KeyCode.ESCAPE)
+			if (t.getCode() == KeyCode.ESCAPE)
 				window.getOnCloseRequest().handle(new WindowEvent(window, WindowEvent.WINDOW_CLOSE_REQUEST));
 		});
 		window.setOnCloseRequest(e -> {
 			window.close();
 		});
-		
+
 		window.show();
-		
-    }
-	
+
+	}
+
 	public void openEditWindow() {
-		
+
 		Stage window = new Stage();
 		window.setTitle("Editar usuario");
 		window.setScene(new Scene(new EditProfileController().setStage(window).getView()));
@@ -144,74 +148,74 @@ public class UserSectionController implements Initializable {
 		window.setMinHeight(435);
 		window.initOwner(App.primaryStage);
 		window.initModality(Modality.APPLICATION_MODAL);
-		
+
 		window.getScene().setOnKeyPressed(t -> {
-			if(t.getCode() == KeyCode.ESCAPE)
+			if (t.getCode() == KeyCode.ESCAPE)
 				window.getOnCloseRequest().handle(new WindowEvent(window, WindowEvent.WINDOW_CLOSE_REQUEST));
 		});
 		window.setOnCloseRequest(e -> {
 			window.close();
 		});
-		
+
 		window.show();
-		
+
 	}
 
-    @FXML
-    void onShowMoreAction(ActionEvent event) {
-    	
-    }
-    
-    @FXML
-    void onBackAction(ActionEvent event) {
-    	
-		users.remove(users.size()-1);
+	@FXML
+	void onShowMoreAction(ActionEvent event) {
+
+	}
+
+	@FXML
+	void onBackAction(ActionEvent event) {
+
+		users.remove(users.size() - 1);
 		if (currentUser.get().equals(App.user))
 			goback.set(false);
-    	
-    }
-	
-    private void onUsersSizeModified(ObservableValue<? extends Number> o, Number ov, Number nv) {
-		
-		if(nv != null && nv.intValue() >= 1)
-			currentUser.set(users.get(nv.intValue()-1));
-		
+
 	}
-	
+
+	private void onUsersSizeModified(ObservableValue<? extends Number> o, Number ov, Number nv) {
+
+		if (nv != null && nv.intValue() >= 1)
+			currentUser.set(users.get(nv.intValue() - 1));
+
+	}
+
 	private void onCurrentUserChanged(ObservableValue<? extends User> o, User ov, User nv) {
-		
-		if(ov != null) {
+
+		if (ov != null) {
 			nicknameLabel.textProperty().unbind();
 			usernameLabel.textProperty().unbind();
 			profileImage.imageProperty().unbind();
 		}
-		
-		if(nv != null) {
+
+		if (nv != null) {
 			nicknameLabel.textProperty().bind(nv.nicknameProperty());
 			usernameLabel.textProperty().bind(Bindings.concat("@").concat(nv.usernameProperty()));
 			profileImage.imageProperty().bind(nv.profileImageProperty());
-			
+
 			postContainerPane.setContent(laodPosts());
 		}
-    	
+
 	}
-	
-    public void changeUser(User user) {
-    	
-    	if (user.equals(App.user))
-    		goback.set(false);
-    	else
-    		goback.set(true);
-    	
-    	if(!currentUser.get().equals(user))
-    		users.add(user);
-    	
-    }
-    
-    private VBox laodPosts() {
+
+	public void changeUser(User user) {
+
+		if (user.equals(App.user))
+			goback.set(false);
+		else
+			goback.set(true);
+
+		if (!currentUser.get().equals(user))
+			users.add(user);
+
+	}
+
+	private VBox laodPosts() {
 		try {
 			postsContainer.getChildren().clear();
-			for(Post p : App.conexionLocal.getUserPosts(currentUser.get())) {
+			for (Post p : App.conexionLocal.getUserPosts(currentUser.get())) {
 				postsContainer.getChildren().add(new PostController(p).getView());
 				postsContainer.getChildren().add(new SplitPane());
 			}
@@ -227,15 +231,15 @@ public class UserSectionController implements Initializable {
 		}
 		return postsContainer;
 	}
-    
-    public void refreshPosts() {
-    	App.primaryStage.getScene().setCursor(Cursor.WAIT);
-    	postContainerPane.setContent(laodPosts());
+
+	public void refreshPosts() {
+		App.primaryStage.getScene().setCursor(Cursor.WAIT);
+		postContainerPane.setContent(laodPosts());
 		App.primaryStage.getScene().setCursor(Cursor.DEFAULT);
-    }
-	
+	}
+
 	public VBox getView() {
 		return view;
 	}
-    
+
 }

@@ -29,46 +29,46 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 
 public class LoginController implements Initializable {
-	
+
 	// model
-	
+
 	private User user = new User();
-	
+
 	// view
 
 	private Label noUserFound;
-	
-    @FXML
-    private ImageView welcomeImage;
-    @FXML
-    private Label welcomeLabel;
-    
-    @FXML
-    private FontIcon usernameIcon;
-    @FXML
-    private JFXTextField usernameText;
-    
-    @FXML
-    private FontIcon passwordImage;
-    @FXML
-    private JFXTextField passwordText;
-    @FXML
-    private JFXPasswordField passwordPassText;
 
-    @FXML
-    private JFXCheckBox showPasswordCheck;
-    
 	@FXML
-    private Hyperlink noAccountLink;
+	private ImageView welcomeImage;
+	@FXML
+	private Label welcomeLabel;
 
-    @FXML
-    private JFXButton loginButton;
+	@FXML
+	private FontIcon usernameIcon;
+	@FXML
+	private JFXTextField usernameText;
 
-    @FXML
-    private BorderPane view;
-	
+	@FXML
+	private FontIcon passwordImage;
+	@FXML
+	private JFXTextField passwordText;
+	@FXML
+	private JFXPasswordField passwordPassText;
+
+	@FXML
+	private JFXCheckBox showPasswordCheck;
+
+	@FXML
+	private Hyperlink noAccountLink;
+
+	@FXML
+	private JFXButton loginButton;
+
+	@FXML
+	private BorderPane view;
+
 	public LoginController() {
-		
+
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/LoginView.fxml"));
 			loader.setController(this);
@@ -76,68 +76,68 @@ public class LoginController implements Initializable {
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
-		
+
 	}
-	
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
 		// bindings
-		
+
 		user.usernameProperty().bind(usernameText.textProperty());
-		
+
 		user.passwordProperty().bindBidirectional(passwordText.textProperty());
 		user.passwordProperty().bindBidirectional(passwordPassText.textProperty());
-		
+
 		passwordText.managedProperty().bind(showPasswordCheck.selectedProperty());
 		passwordText.visibleProperty().bind(showPasswordCheck.selectedProperty());
-		
+
 		passwordPassText.managedProperty().bind(showPasswordCheck.selectedProperty().not());
 		passwordPassText.visibleProperty().bind(showPasswordCheck.selectedProperty().not());
-		
+
 		// listeners
-		
+
 		showPasswordCheck.selectedProperty().addListener(this::onShowPasswordChanged);
-		
+
 	}
-	
+
 	private void onShowPasswordChanged(ObservableValue<? extends Boolean> o, Boolean ov, Boolean nv) {
-		
-		if(nv) {
+
+		if (nv) {
 			passwordText.setLabelFloat(true);
 		}
-		
+
 	}
-	
+
 	private void hideLabel() {
-		
-		if(noUserFound != null) {
+
+		if (noUserFound != null) {
 			noUserFound.setVisible(false);
 			noUserFound.setManaged(false);
 		}
-		
+
 	}
-	
+
 	@FXML
-    void onTextClicked(MouseEvent event) {
+	void onTextClicked(MouseEvent event) {
 		hideLabel();
-    }
+	}
 
 	@FXML
 	void hasNoAccountAction(ActionEvent event) {
 		App.openScene(new SigninController().getView(), 450, 550);
 	}
-	
+
 	@FXML
 	void onLoginAction(ActionEvent event) {
 		try {
 			hideLabel();
-			if(user.userInDatabase()) {
-				System.out.println(this.user.getUsername() + " " + this.user.getPassword());
+			if (user.userInDatabase()) {
+//				System.out.println(this.user.getUsername() + " " + this.user.getPassword());
 				App.user = App.conexionLocal.getUserObject(this.user.getUsername(), this.user.getPassword());
 				// App.user = App.conexionRemota.getUserObject(this.user.getUsername(), this.user.getPassword());
 				App.openScene(new MainController().getView(), 850, 550);
-				
+
 			} else {
 				noUserFound = new Label("No existe este usuario, inténtelo de nuevo.");
 				noUserFound.setStyle("-fx-text-fill: red;");
@@ -150,12 +150,12 @@ public class LoginController implements Initializable {
 			errorAlert.setTitle("ERROR");
 			errorAlert.setHeaderText("Hubo un error");
 			errorAlert.setContentText("Hubo un error al intentar iniciar sesión.");
-			errorAlert.show();		
+			errorAlert.show();
 			loginButton.setDisable(true);
 		}
 		App.primaryStage.centerOnScreen();
 	}
-	
+
 	public BorderPane getView() {
 		return view;
 	}

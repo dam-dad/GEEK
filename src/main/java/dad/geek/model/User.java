@@ -1,7 +1,5 @@
 package dad.geek.model;
 
-import java.io.File;
-
 import dad.geek.App;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.LongProperty;
@@ -17,6 +15,7 @@ import javafx.scene.image.Image;
 
 public class User {
 	
+	// FIXME Cambiar el tipo de dato de la ID de int a long
 	private LongProperty userID = new SimpleLongProperty();
 	private StringProperty nickname = new SimpleStringProperty();
 	private StringProperty username = new SimpleStringProperty();
@@ -24,13 +23,14 @@ public class User {
 	private StringProperty mail = new SimpleStringProperty(); // TODO lo implementamos con mail al final????????????
 	private ObjectProperty<Image> profileImage = new SimpleObjectProperty<>();
 	private ListProperty<Post> posts = new SimpleListProperty<>(FXCollections.observableArrayList());
-	
-	public User() {}
-	
+
+	public User() {
+	}
+
 	public User(long userID, String nickname, String username, String password, String image) throws Exception {
-		
+
 		try {
-			if(image != null && !image.trim().equals(""))
+			if (image != null && !image.trim().equals(""))
 				setProfileImage(new Image(image));
 			else {
 				setProfileImage(new Image(getClass().getResource("/images/user.png").toURI().toString()));
@@ -42,23 +42,23 @@ public class User {
 				e1.printStackTrace();
 			}
 		}
-		
+
 		setUserID(userID);
 		setNickname(nickname);
 		setUsername(username);
 		setPassword(password);
 	}
-	
+
 	public boolean userInDatabase() throws Exception {
 		return App.conexionLocal.getUserFromDB(getUsername(), getPassword()).next();
 		// return App.conexionRemota.getUserFromDB(getUsername(), getPassword()).next();
 	}
-	
+
 	public void addUsertoDB() throws Exception {
 		App.conexionLocal.createUser(getNickname(), getUsername(), getPassword());
 //		App.conexionRemota.createUser(getNickname(), getUsername(), getPassword());
 	}
-	
+
 	public final LongProperty userIDProperty() {
 		return this.userID;
 	}
@@ -69,28 +69,28 @@ public class User {
 
 	public final void setUserID(final long userID) {
 		this.userIDProperty().set(userID);
-	}	
-	
+	}
+
 	public final StringProperty usernameProperty() {
 		return this.username;
 	}
-	
+
 	public final String getUsername() {
 		return this.usernameProperty().get();
 	}
-	
+
 	public final void setUsername(final String username) {
 		this.usernameProperty().set(username);
 	}
-	
+
 	public final StringProperty passwordProperty() {
 		return this.password;
 	}
-	
+
 	public final String getPassword() {
 		return this.passwordProperty().get();
 	}
-	
+
 	public final void setPassword(final String password) {
 		this.passwordProperty().set(password);
 	}
@@ -110,11 +110,11 @@ public class User {
 	public final StringProperty nicknameProperty() {
 		return this.nickname;
 	}
-	
+
 	public final String getNickname() {
 		return this.nicknameProperty().get();
 	}
-	
+
 	public final void setNickname(final String nickname) throws Exception {
 		this.nicknameProperty().set(nickname);
 		App.conexionLocal.setNickname(getUserID(), nickname);
@@ -123,7 +123,7 @@ public class User {
 	public final ObjectProperty<Image> profileImageProperty() {
 		return this.profileImage;
 	}
-	
+
 	public final Image getProfileImage() {
 		return this.profileImageProperty().get();
 	}
@@ -136,7 +136,7 @@ public class User {
 	public final ListProperty<Post> postsProperty() {
 		return this.posts;
 	}
-	
+
 	public final ObservableList<Post> getPosts() {
 		return this.postsProperty().get();
 	}
@@ -144,7 +144,7 @@ public class User {
 	public final void setPosts(final ObservableList<Post> posts) {
 		this.postsProperty().set(posts);
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

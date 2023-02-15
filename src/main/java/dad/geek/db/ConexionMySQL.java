@@ -65,7 +65,7 @@ public class ConexionMySQL {
 		}
 	}
 
-	private ResultSet getUserFromDB(long id) throws Exception{
+	private ResultSet getUserFromDB(long id) throws Exception {
 		try {
 			userFromId.setLong(1, id);
 			return userFromId.executeQuery();
