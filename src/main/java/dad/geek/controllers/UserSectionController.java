@@ -114,6 +114,7 @@ public class UserSectionController implements Initializable {
 
 	}
 
+	//TODO Añadir tamaño máximo a la imagen
 	@FXML
 	void onProfileImageClicked(MouseEvent event) {
 
@@ -123,6 +124,9 @@ public class UserSectionController implements Initializable {
 		window.setScene(
 				new Scene(new ShowImageController().setImageView(profileImage.getImage()).setStage(window).getView()));
 
+		window.initOwner(App.primaryStage);
+		window.initModality(Modality.APPLICATION_MODAL);
+		
 		window.getScene().setOnKeyPressed(t -> {
 			if (t.getCode() == KeyCode.ESCAPE)
 				window.getOnCloseRequest().handle(new WindowEvent(window, WindowEvent.WINDOW_CLOSE_REQUEST));

@@ -97,6 +97,7 @@ public class EditProfileController implements Initializable {
 
 	}
 
+	//TODO Problemas al seleccionar la imagen del usuario (No se guarda en la base de datos)
 	@FXML
 	void onAcceptAction(ActionEvent event) {
 		try {
