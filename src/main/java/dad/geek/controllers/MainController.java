@@ -29,49 +29,49 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
 public class MainController implements Initializable {
-	
+
 	// controllers
 
 	private UserSectionController userSectionController = new UserSectionController();
 	private SearchSectionController searchSectionController = new SearchSectionController();
-	
+
 	// view
-	
+
 	@FXML
-    private VBox postsContainer;
-	
+	private VBox postsContainer;
+
 	@FXML
-    private SplitPane containerPane;
+	private SplitPane containerPane;
 
-    @FXML
-    private FontIcon darkModeIcon;
+	@FXML
+	private FontIcon darkModeIcon;
 
-    @FXML
-    private MenuItem darkModeItem;
+	@FXML
+	private MenuItem darkModeItem;
 
-    @FXML
-    private ToggleSwitch darkModeSwitch;
+	@FXML
+	private ToggleSwitch darkModeSwitch;
 
-    @FXML
-    private MenuItem exitItem;
-    
-    @FXML
-    private MenuItem editUserItem;
+	@FXML
+	private MenuItem exitItem;
 
-    @FXML
-    private MenuItem informeItem;
+	@FXML
+	private MenuItem editUserItem;
 
-    @FXML
-    private MenuItem newPostItem;
+	@FXML
+	private MenuItem informeItem;
 
-    @FXML
-    private ScrollPane postContainerPane;
+	@FXML
+	private MenuItem newPostItem;
 
-    @FXML
-    private VBox userContainer;
+	@FXML
+	private ScrollPane postContainerPane;
 
-    @FXML
-    private BorderPane view;
+	@FXML
+	private VBox userContainer;
+
+	@FXML
+	private BorderPane view;
 
 	public MainController() {
 		try {
@@ -86,18 +86,18 @@ public class MainController implements Initializable {
 	@SuppressWarnings("static-access")
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		
+
 		// load data
-		
+
 		userContainer.getChildren().add(userSectionController.getView());
 		containerPane.getItems().add(searchSectionController.getView());
 		userContainer.setVgrow(userContainer.getChildren().get(0), Priority.ALWAYS);
 		containerPane.setDividerPositions(0.1, 0.9);
-		
+
 		postContainerPane.setContent(laodPosts());
-		
+
 		// listeners
-		
+
 		darkModeSwitch.selectedProperty().addListener((observable, oldValue, newValue) -> {
 			if (newValue) {
 				darkModeIcon.setIconLiteral("mdi2m-moon-waning-crescent");
@@ -105,26 +105,26 @@ public class MainController implements Initializable {
 				darkModeIcon.setIconLiteral("mdi2w-white-balance-sunny");
 			}
 		});
-		
-		App.primaryStage.maximizedProperty().addListener((o,ov,nv) -> {
-			if(App.primaryStage.isMaximized())
+
+		App.primaryStage.maximizedProperty().addListener((o, ov, nv) -> {
+			if (App.primaryStage.isMaximized())
 				containerPane.setDividerPositions(0.2, 0.80);
 			else {
 				containerPane.setDividerPositions(0.25, 0.75);
 			}
 		});
-		
+
 		App.primaryStage.setOnCloseRequest(e -> {
 			e.consume();
 			App.salir();
 		});
 
 	}
-	
+
 	private VBox laodPosts() {
 		try {
 			postsContainer.getChildren().clear();
-			for(Post p : App.conexionLocal.getAllPosts()) {
+			for (Post p : App.conexionLocal.getAllPosts()) {
 				postsContainer.getChildren().add(new PostController(p).setMainController(this).getView());
 				postsContainer.getChildren().add(new SplitPane());
 			}
@@ -143,7 +143,7 @@ public class MainController implements Initializable {
 
 	@FXML
 	void onCreatePostAction(ActionEvent event) {
-		
+
 		Stage window = new Stage();
 		window.setTitle("Nuevo Post");
 		window.setScene(new Scene(new NewPostController().setStage(window).getView()));
@@ -151,33 +151,33 @@ public class MainController implements Initializable {
 		window.setMinHeight(330);
 		window.initOwner(App.primaryStage);
 		window.initModality(Modality.APPLICATION_MODAL);
-		
+
 		window.getScene().setOnKeyPressed(t -> {
-			if(t.getCode() == KeyCode.ESCAPE)
+			if (t.getCode() == KeyCode.ESCAPE)
 				window.getOnCloseRequest().handle(new WindowEvent(window, WindowEvent.WINDOW_CLOSE_REQUEST));
 		});
 		window.setOnCloseRequest(e -> {
 			reloadPosts();
 			window.close();
 		});
-		
+
 		window.show();
-		
+
 	}
-	
+
 	@FXML
 	void onEditUserAction(ActionEvent event) {
-		
+
 		userSectionController.openEditWindow();
-		
+
 	}
-	
+
 	private void reloadPosts() {
 		App.primaryStage.getScene().setCursor(Cursor.WAIT);
 		postContainerPane.setContent(laodPosts());
 		App.primaryStage.getScene().setCursor(Cursor.DEFAULT);
 	}
-	
+
 	@FXML
 	void onReloadPostAction(ActionEvent event) {
 		reloadPosts();
@@ -201,11 +201,11 @@ public class MainController implements Initializable {
 	void onGenerateInformeAction(ActionEvent event) {
 
 	}
-	
+
 	public UserSectionController getUserSectionController() {
 		return userSectionController;
 	}
-	
+
 	public BorderPane getView() {
 		return view;
 	}

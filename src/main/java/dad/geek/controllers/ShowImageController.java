@@ -17,17 +17,17 @@ import javafx.stage.WindowEvent;
 public class ShowImageController implements Initializable {
 
 	private Stage stage;
-	
-	// view
-	
-	@FXML
-    private ImageView imageView;
 
-    @FXML
-    private BorderPane view;
+	// view
+
+	@FXML
+	private ImageView imageView;
+
+	@FXML
+	private BorderPane view;
 
 	public ShowImageController() {
-		
+
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ShowImageView.fxml"));
 			loader.setController(this);
@@ -35,24 +35,24 @@ public class ShowImageController implements Initializable {
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
-		
-	}	
-	
+
+	}
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		
+
 	}
-	
+
 	@FXML
-    void onCloseAction(ActionEvent event) {
+	void onCloseAction(ActionEvent event) {
 		stage.getOnCloseRequest().handle(new WindowEvent(stage, WindowEvent.WINDOW_CLOSE_REQUEST));
-    }
-	
+	}
+
 	public ShowImageController setStage(Stage stage) {
 		this.stage = stage;
 		return this;
 	}
-	
+
 	public ShowImageController setImageView(Image image) {
 		this.imageView.setImage(image);
 		return this;

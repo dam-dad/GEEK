@@ -34,10 +34,10 @@ public class PostController implements Initializable {
 
 	@FXML
 	private Label usernameLabel; // TODO nicknameLabel
-	
+
 	@FXML
-    private Label arrobaLabel; // TODO usernameLabel
-	
+	private Label arrobaLabel; // TODO usernameLabel
+
 	@FXML
 	private Label contentLabel;
 
@@ -48,14 +48,14 @@ public class PostController implements Initializable {
 	private FlowPane imageFlow;
 
 	@FXML
-    private JFXButton userButton;
-	
-    @FXML
-    private ImageView profileImage;
-    
-    @FXML
-    private BorderPane view;
-    
+	private JFXButton userButton;
+
+	@FXML
+	private ImageView profileImage;
+
+	@FXML
+	private BorderPane view;
+
 	public PostController(Post post) {
 		this.post = post;
 
@@ -85,7 +85,7 @@ public class PostController implements Initializable {
 			errorAlert.initModality(Modality.APPLICATION_MODAL);
 			errorAlert.show();
 		}
-		
+
 		userButton.setMouseTransparent(true);
 
 		// bindings
@@ -101,7 +101,7 @@ public class PostController implements Initializable {
 	void onOpenUserAction(ActionEvent event) {
 		main.getUserSectionController().changeUser(user);
 	}
-	
+
 	public PostController setMainController(MainController parent) {
 		this.main = parent;
 		userButton.setMouseTransparent(false);
