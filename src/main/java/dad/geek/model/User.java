@@ -50,12 +50,12 @@ public class User {
 	}
 
 	public boolean userInDatabase() throws Exception {
-		return App.conexionLocal.getUserFromDB(getUsername(), getPassword()).next();
+		return App.conexionDB.getUserFromDB(getUsername(), getPassword()).next();
 //		return App.conexionRemota.getUserFromDB(getUsername(), getPassword()).next();
 	}
 
 	public void addUsertoDB() throws Exception {
-		App.conexionLocal.createUser(getNickname(), getUsername(), getPassword());
+		App.conexionDB.createUser(getNickname(), getUsername(), getPassword());
 //		App.conexionRemota.createUser(getNickname(), getUsername(), getPassword());
 	}
 
@@ -117,7 +117,7 @@ public class User {
 
 	public final void setNickname(final String nickname) throws Exception {
 		this.nicknameProperty().set(nickname);
-		App.conexionLocal.setNickname(getUserID(), nickname);
+		App.conexionDB.setNickname(getUserID(), nickname);
 	}
 
 	public final ObjectProperty<Image> profileImageProperty() {
@@ -130,7 +130,7 @@ public class User {
 
 	public final void setProfileImage(final Image profileImage) throws Exception {
 		this.profileImageProperty().set(profileImage);
-		App.conexionLocal.setUserImage(getUserID(), profileImage.getUrl());
+		App.conexionDB.setUserImage(getUserID(), profileImage.getUrl());
 	}
 
 	public final ListProperty<Post> postsProperty() {

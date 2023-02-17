@@ -19,7 +19,7 @@ public class App extends Application {
 
 	public static Stage primaryStage;
 //	public static ConexionMySQL conexionLocal;
-	public static DBManager conexionLocal;
+	public static DBManager conexionDB;
 //	public static DBManager conexionRemota = new DBManager();
 	public static User user = new User();
 
@@ -47,7 +47,7 @@ public class App extends Application {
 
 		try {
 //			conexionLocal = new ConexionMySQL();
-			conexionLocal = new DBManager();
+			conexionDB = new DBManager();
 		} catch (Exception e1) {
 			Alert errorAlert = new Alert(AlertType.ERROR);
 			errorAlert.setTitle("ERROR");
@@ -76,7 +76,7 @@ public class App extends Application {
 	}
 
 	public static void salir() {
-		Alert alerta = new Alert(AlertType.WARNING);
+		Alert alerta = new Alert(AlertType.CONFIRMATION);
 		alerta.setTitle("Exit");
 		alerta.initOwner(App.primaryStage);
 		alerta.setHeaderText("Va a salir de la aplicación.");

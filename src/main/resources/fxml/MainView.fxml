@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ScrollPane?>
@@ -21,12 +22,18 @@
       <SplitPane fx:id="containerPane" dividerPositions="0.25" maxHeight="1.7976931348623157E308" BorderPane.alignment="CENTER">
          <items>
             <VBox fx:id="userContainer" alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" />
-            <ScrollPane fx:id="postContainerPane" fitToWidth="true" hmin="180.0" minWidth="200.0" pannable="true">
+            <ScrollPane fx:id="postContainerPane" fitToWidth="true" hmin="180.0" maxWidth="1.7976931348623157E308" minWidth="200.0" pannable="true">
                <content>
-                  <BorderPane>
+                  <BorderPane maxWidth="1.7976931348623157E308">
                      <center>
-                        <VBox fx:id="postsContainer" maxWidth="500.0" />
+                        <VBox fx:id="postsContainer" maxWidth="1.7976931348623157E308" />
                      </center>
+                     <bottom>
+                        <Hyperlink fx:id="showMoreLink" onAction="#onShowMoreAction" text="Mostrar más..." BorderPane.alignment="CENTER">
+                           <padding>
+                              <Insets bottom="5.0" top="5.0" />
+                           </padding></Hyperlink>
+                     </bottom>
                   </BorderPane>
                </content></ScrollPane>
          </items>

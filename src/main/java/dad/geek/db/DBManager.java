@@ -15,6 +15,7 @@ import dad.geek.model.User;
 
 public class DBManager {
 
+	private int numberOfPosts = 0;
 	private Connection connPostgre;
 	private PreparedStatement allPosts, userFromId, userFromNamePass, createUser, sendPost, setUserImage, setNickname,
 			userPosts;
@@ -31,12 +32,10 @@ public class DBManager {
 
 			connPostgre = DriverManager.getConnection(urlHost, userHost, passwordHost);
 
-			allPosts = connPostgre.prepareStatement("select * from posts order by id desc");
+			allPosts = connPostgre.prepareStatement("select * from posts order by id desc limit ?");
 			userFromId = connPostgre.prepareStatement("select * from usuarios where id = ?");
-			userFromNamePass = connPostgre
-					.prepareStatement("select * from usuarios where nombreUsuario = ? and password = ?");
-			createUser = connPostgre
-					.prepareStatement("insert into usuarios (nombre, nombreUsuario, password) values (?, ?, ?)");
+			userFromNamePass = connPostgre.prepareStatement("select * from usuarios where nombreUsuario = ? and password = ?");
+			createUser = connPostgre.prepareStatement("insert into usuarios (nombre, nombreUsuario, password) values (?, ?, ?)");
 			sendPost = connPostgre.prepareStatement("insert into posts (ID_Usuario, contenido) values (?, ?)");
 			setUserImage = connPostgre.prepareStatement("update usuarios set imagen = ? where id = ?");
 			setNickname = connPostgre.prepareStatement("update usuarios set nombre = ? where id = ?");
@@ -122,18 +121,23 @@ public class DBManager {
 		return null;
 	}
 
-	public List<Post> getAllPosts() throws Exception {
+	public List<Post> getAllPosts(boolean reload) throws Exception {
 
 		List<Post> result = new ArrayList<>();
-		ResultSet posts = allPostsFromDB();
+		ResultSet posts = allPostsFromDB(reload);
 
 		try {
 			while (posts.next()) {
 
-				result.add(new Post(posts.getLong("ID"), posts.getLong("ID_Usuario"), posts.getString("titulo"),
-						posts.getString("contenido")));
-
+				result.add(new Post(
+					posts.getLong("ID"), 
+					posts.getLong("ID_Usuario"), 
+					posts.getString("titulo"),
+					posts.getString("contenido")
+				));
+				
 			}
+			
 		} catch (SQLException e) {
 			throw new Exception("Hubo un error al intentar cargar todos los posts (SQLException).");
 		}
@@ -141,8 +145,10 @@ public class DBManager {
 		return result;
 	}
 
-	private ResultSet allPostsFromDB() throws Exception {
+	private ResultSet allPostsFromDB(boolean reload) throws Exception {
 		try {
+			numberOfPosts = reload ? 10 : numberOfPosts + 10;
+			allPosts.setInt(1, numberOfPosts);
 			return allPosts.executeQuery();
 		} catch (SQLException e) {
 			throw new Exception("Hubo un error al cargar los posts desde la base de datos (SQLException).");

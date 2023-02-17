@@ -215,7 +215,7 @@ public class UserSectionController implements Initializable {
 	private VBox laodPosts() {
 		try {
 			postsContainer.getChildren().clear();
-			for (Post p : App.conexionLocal.getUserPosts(currentUser.get())) {
+			for (Post p : App.conexionDB.getUserPosts(currentUser.get())) {
 				postsContainer.getChildren().add(new PostController(p).getView());
 				postsContainer.getChildren().add(new SplitPane());
 			}
