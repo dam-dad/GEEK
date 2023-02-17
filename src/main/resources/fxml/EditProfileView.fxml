@@ -11,7 +11,7 @@
 <?import javafx.scene.text.Font?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<BorderPane fx:id="view" minHeight="400.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane fx:id="view" minHeight="350.0" minWidth="350.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
    <center>
       <HBox alignment="TOP_CENTER" spacing="5.0" BorderPane.alignment="CENTER">
          <children>
@@ -43,7 +43,7 @@
                         </JFXButton>
                      </graphic>
                   </Label>
-                  <Label fx:id="usernameLabel" contentDisplay="RIGHT" maxWidth="1.7976931348623157E308" text="Código de Usuario" VBox.vgrow="ALWAYS">
+                  <Label fx:id="usernameLabel" contentDisplay="RIGHT" maxWidth="1.7976931348623157E308" text="Código de Usuario">
                      <font>
                         <Font size="14.0" />
                      </font>

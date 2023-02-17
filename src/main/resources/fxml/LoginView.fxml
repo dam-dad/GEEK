@@ -37,7 +37,7 @@
             </Label>
             <HBox alignment="CENTER" spacing="10.0">
                <children>
-                  <FontIcon fx:id="usernameIcon" iconLiteral="fas-user" iconSize="32" />
+                  <FontIcon fx:id="usernameIcon" iconLiteral="mdi2a-at" iconSize="32" />
                   <JFXTextField fx:id="usernameText" focusColor="BLACK" labelFloat="true" onMouseClicked="#onTextClicked" promptText="Nombre de usuario">
                      <font>
                         <Font size="15.0" />

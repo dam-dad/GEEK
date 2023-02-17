@@ -144,8 +144,8 @@ public class UserSectionController implements Initializable {
 		Stage window = new Stage();
 		window.setTitle("Editar usuario");
 		window.setScene(new Scene(new EditProfileController().setStage(window).getView()));
-		window.setMinWidth(300);
-		window.setMinHeight(435);
+		window.setMinWidth(350);
+		window.setMinHeight(370);
 		window.initOwner(App.primaryStage);
 		window.initModality(Modality.APPLICATION_MODAL);
 
