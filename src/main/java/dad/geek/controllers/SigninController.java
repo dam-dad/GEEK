@@ -141,6 +141,7 @@ public class SigninController implements Initializable {
 		App.openScene(new LoginController().getView(), 450, 500);
 	}
 
+	// TODO revisar si el nombre ya está cogido
 	@FXML
 	void onSigninAction(ActionEvent event) {
 		try {

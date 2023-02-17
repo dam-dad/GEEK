@@ -121,7 +121,6 @@ public class MainController implements Initializable {
 
 	}
 
-	//TODO Los post no se extienden a la máxima
 	private VBox laodPosts() {
 		try {
 			postsContainer.getChildren().clear();
