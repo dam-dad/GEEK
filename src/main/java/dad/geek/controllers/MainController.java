@@ -99,7 +99,11 @@ public class MainController implements Initializable {
 		containerPane.setDividerPositions(0.1, 0.9);
 
 		laodPosts(false);
-
+		
+//		AutoUpdateThread thread = new AutoUpdateThread(this);
+//		ScheduledExecutorService exec = Executors.newSingleThreadScheduledExecutor();
+//		exec.scheduleAtFixedRate(thread, 3, 1000, TimeUnit.SECONDS);
+		
 		// listeners
 
 		darkModeSwitch.selectedProperty().addListener((observable, oldValue, newValue) -> {
@@ -120,6 +124,7 @@ public class MainController implements Initializable {
 
 		App.primaryStage.setOnCloseRequest(e -> {
 			e.consume();
+//			thread.interrupt();
 			App.salir();
 		});
 
