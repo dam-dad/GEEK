@@ -17,12 +17,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseButton;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Modality;
 
 public class PostController implements Initializable {
@@ -36,16 +33,13 @@ public class PostController implements Initializable {
 	// view
 
 	@FXML
-	private Label usernameLabel; // TODO nicknameLabel
+	private Label nicknameLabel;
 
 	@FXML
-	private Label arrobaLabel; // TODO usernameLabel
+	private Label usernameLabel;
 
 	@FXML
 	private Label contentLabel;
-	
-	@FXML
-    private StackPane contentPane;
 
 	@FXML
 	private FlowPane filterFlow;
@@ -98,38 +92,8 @@ public class PostController implements Initializable {
 
 		profileImage.imageProperty().bind(user.profileImageProperty());
 		contentLabel.textProperty().bind(post.postContentProperty());
-		usernameLabel.textProperty().bind(user.nicknameProperty());
-		arrobaLabel.textProperty().bind(Bindings.concat("@").concat(user.usernameProperty()));
-		
-		contentLabel.setOnMouseClicked(mouseEvent -> {
-            if(mouseEvent.getButton().equals(MouseButton.PRIMARY)){
-                if(mouseEvent.getClickCount() == 2){
-                	contentLabel.setVisible(false);
-                    TextArea textarea = new TextArea(contentLabel.getText());
-                    textarea.setPrefHeight(contentLabel.getHeight() + 10);
-                    textarea.setEditable(false);
-                    contentPane.getChildren().add(textarea);
-
-                    textarea.setOnKeyPressed(event ->{
-                        if(event.getCode().toString().equals("ENTER")) {
-                        	contentPane.getChildren().remove(textarea);
-                        	contentLabel.setVisible(true);
-                        }
-                    });
-                    
-                    textarea.focusedProperty().addListener((o,ov,nv) -> {
-                    	
-                    	if(nv != null && nv == false) {
-                    		contentPane.getChildren().remove(textarea);
-                        	contentLabel.setVisible(true);
-                    	}
-                    	
-                    });
-                    
-                    
-                }
-            }
-        });
+		nicknameLabel.textProperty().bind(user.nicknameProperty());
+		usernameLabel.textProperty().bind(Bindings.concat("@").concat(user.usernameProperty()));
 
 	}
 

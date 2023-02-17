@@ -44,8 +44,8 @@
             </JFXButton>
             <VBox minHeight="-Infinity" minWidth="-Infinity">
                <children>
-                  <Label fx:id="usernameLabel" text="Nombre de Usuario" />
-                  <Label fx:id="arrobaLabel" text="\@Arroba usuario" />
+                  <Label fx:id="nicknameLabel" text="Nombre de Usuario" />
+                  <Label fx:id="usernameLabel" text="\@Arroba usuario" />
                </children>
             </VBox>
          </children>
