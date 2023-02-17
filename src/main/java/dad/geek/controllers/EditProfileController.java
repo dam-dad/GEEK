@@ -141,7 +141,6 @@ public class EditProfileController implements Initializable {
 
 		Optional<String> result = dialog.showAndWait();
 
-		// TODO revisar si el nombre ya está cogido
 		result.ifPresent(name -> {
 			newName.set(name);
 		});

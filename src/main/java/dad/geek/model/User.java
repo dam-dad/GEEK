@@ -15,7 +15,6 @@ import javafx.scene.image.Image;
 
 public class User {
 
-	// FIXME Cambiar el tipo de dato de la ID de int a long
 	private LongProperty userID = new SimpleLongProperty();
 	private StringProperty nickname = new SimpleStringProperty();
 	private StringProperty username = new SimpleStringProperty();
