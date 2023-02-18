@@ -17,7 +17,7 @@ public class DBManager {
 
 	private int numberOfPosts = 0;
 	private Connection connPostgre;
-	private PreparedStatement allPosts, userFromId, userFromNamePass, createUser, sendPost, setUserImage, setNickname,
+	private PreparedStatement allPosts, userFromId, userFromNamePass, userFromName, createUser, sendPost, setUserImage, setNickname,
 			userPosts;
 
 	public DBManager() {
@@ -35,6 +35,7 @@ public class DBManager {
 			allPosts = connPostgre.prepareStatement("select * from posts order by id desc limit ?");
 			userFromId = connPostgre.prepareStatement("select * from usuarios where id = ?");
 			userFromNamePass = connPostgre.prepareStatement("select * from usuarios where nombreUsuario = ? and password = ?");
+			userFromName = connPostgre.prepareStatement("select * from usuarios where nombreUsuario = ?");
 			createUser = connPostgre.prepareStatement("insert into usuarios (nombre, nombreUsuario, password) values (?, ?, ?)");
 			sendPost = connPostgre.prepareStatement("insert into posts (ID_Usuario, contenido) values (?, ?)");
 			setUserImage = connPostgre.prepareStatement("update usuarios set imagen = ? where id = ?");
@@ -78,6 +79,16 @@ public class DBManager {
 					+ " desde la base de datos (SQLException).");
 		}
 	}
+	
+	public ResultSet getUserFromDB(String username) throws Exception {
+		try {
+			userFromName.setString(1, username);
+			return userFromName.executeQuery();
+		} catch (SQLException e) {
+			throw new Exception("Hubo un error al intentar cargar al usuario" + username
+					+ " desde la base de datos (SQLException).");
+		}
+	}
 
 	public void sendPost(Post post) throws Exception {
 
@@ -95,6 +106,21 @@ public class DBManager {
 
 		try {
 			ResultSet posts = getUserFromDB(username, password);
+			while (posts.next()) {
+				return new User(posts.getLong("ID"), posts.getString("nombre"), posts.getString("nombreUsuario"),
+						posts.getString("password"), posts.getString("imagen"));
+			}
+		} catch (SQLException e) {
+			throw new Exception("Hubo un error al intentar cargar al usuario (SQLException).");
+		}
+
+		return null;
+	}
+	
+	public User getUserObject(String username) throws Exception {
+
+		try {
+			ResultSet posts = getUserFromDB(username);
 			while (posts.next()) {
 				return new User(posts.getLong("ID"), posts.getString("nombre"), posts.getString("nombreUsuario"),
 						posts.getString("password"), posts.getString("imagen"));
