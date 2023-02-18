@@ -90,11 +90,8 @@ public class SearchSectionController implements Initializable {
 		try {
 			searchResultContainer.getChildren().clear();
 			if(user.userInDatabase2()) {
-				System.out.println(user.getUsername());
 				user = App.conexionDB.getUserObject(user.getUsername());
 				for(Post p : App.conexionDB.getUserPosts(user)) {
-//					PostController controller = new PostController(p);
-//					controller.getUserButton().setMouseTransparent(true);
 					searchResultContainer.getChildren().add(new PostController(p).getView());
 					searchResultContainer.getChildren().add(new SplitPane());
 				}
