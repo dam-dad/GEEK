@@ -32,34 +32,34 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
 public class EditProfileController implements Initializable {
-	
+
 	// model
-	
+
 	private Image newImage;
 	private Stage stage;
 	private StringProperty newName = new SimpleStringProperty();
 	private BooleanProperty isValidName = new SimpleBooleanProperty(true);
-	
+
 	// view
-	
+
 	@FXML
-    private JFXButton editImageButton;
+	private JFXButton editImageButton;
 
-    @FXML
-    private JFXButton editNicknameButton;
+	@FXML
+	private JFXButton editNicknameButton;
 
-    @FXML
-    private Label nicknameLabel;
+	@FXML
+	private Label nicknameLabel;
 
-    @FXML
-    private ImageView profileImage;
+	@FXML
+	private ImageView profileImage;
 
-    @FXML
-    private Label usernameLabel;
+	@FXML
+	private Label usernameLabel;
 
-    @FXML
-    private BorderPane view;
-	
+	@FXML
+	private BorderPane view;
+
 	public EditProfileController() {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/EditProfileView.fxml"));
@@ -72,39 +72,38 @@ public class EditProfileController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		
+
 		newName.set(App.user.getNickname());
 
 		// bindings
-		
+
 		nicknameLabel.textProperty().bind(newName);
 		usernameLabel.textProperty().bind(Bindings.concat("@").concat(App.user.usernameProperty()));
 		profileImage.setImage(App.user.getProfileImage());
-		
+
 	}
-	
+
 	@FXML
 	void onEditImageAction(ActionEvent event) {
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("Abrir imagen");
 		fileChooser.setInitialDirectory(new File(System.getProperty("user.home") + "\\Pictures\\"));
-		fileChooser.getExtensionFilters().addAll(
-		     new FileChooser.ExtensionFilter("PNG Files", "*.png", "*.jpg")
-		);
+		fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("PNG Files", "*.png", "*.jpg"));
 		File selectedFile = fileChooser.showOpenDialog(App.primaryStage);
-		if(selectedFile != null) {
+		if (selectedFile != null) {
 			newImage = new Image(selectedFile.toURI().toString());
 			profileImage.setImage(newImage);
 		}
-		
+
 	}
 
-    @FXML
-    void onAcceptAction(ActionEvent event) {
-    	try {
-			if(newImage != null)
+	//TODO Problemas al seleccionar la imagen del usuario (No se guarda en la base de datos)
+	@FXML
+	void onAcceptAction(ActionEvent event) {
+		try {
+			if (newImage != null)
 				App.user.setProfileImage(newImage);
-			if(newName != null && !newName.get().trim().equals(""))
+			if (newName != null && !newName.get().trim().equals(""))
 				App.user.setNickname(newName.get());
 		} catch (Exception e) {
 			Alert errorAlert = new Alert(AlertType.ERROR);
@@ -115,45 +114,45 @@ public class EditProfileController implements Initializable {
 			errorAlert.initModality(Modality.APPLICATION_MODAL);
 			errorAlert.show();
 		}
-    	stage.getOnCloseRequest().handle(new WindowEvent(stage, WindowEvent.WINDOW_CLOSE_REQUEST));
-    }
+		stage.getOnCloseRequest().handle(new WindowEvent(stage, WindowEvent.WINDOW_CLOSE_REQUEST));
+	}
 
-    @FXML
-    void onCancelAction(ActionEvent event) {
-    	stage.getOnCloseRequest().handle(new WindowEvent(stage, WindowEvent.WINDOW_CLOSE_REQUEST));
-    }
+	@FXML
+	void onCancelAction(ActionEvent event) {
+		stage.getOnCloseRequest().handle(new WindowEvent(stage, WindowEvent.WINDOW_CLOSE_REQUEST));
+	}
 
-    @FXML
-    void onEditNicknameAction(ActionEvent event) {
-    	 isValidName.set(true);
-    	 TextInputDialog dialog = new TextInputDialog();
-    	 dialog.setTitle("Cambiar nombre");
-    	 dialog.initOwner(stage);
-         dialog.setHeaderText(String.format("Tu nombre actual es \"%s\".\nIntroduzca su nuevo nombre.", App.user.getNickname()));
-         dialog.setContentText("Nuevo nombre:");
-         dialog.getEditor().textProperty().addListener((o,ov,nv) -> {
-        	 if(nv != null && nv.length() > 0 && nv.length() <= 40)
-        		 isValidName.set(false);
-        	 else
-        		 isValidName.set(true);
-         });
-         dialog.getDialogPane().lookupButton(ButtonType.OK).disableProperty().bind(isValidName);
-         
-         Optional<String> result = dialog.showAndWait();
+	@FXML
+	void onEditNicknameAction(ActionEvent event) {
+		isValidName.set(true);
+		TextInputDialog dialog = new TextInputDialog();
+		dialog.setTitle("Cambiar nombre");
+		dialog.initOwner(stage);
+		dialog.setHeaderText(
+				String.format("Tu nombre actual es \"%s\".\nIntroduzca su nuevo nombre.", App.user.getNickname()));
+		dialog.setContentText("Nuevo nombre:");
+		dialog.getEditor().textProperty().addListener((o, ov, nv) -> {
+			if (nv != null && nv.length() > 0 && nv.length() <= 40)
+				isValidName.set(false);
+			else
+				isValidName.set(true);
+		});
+		dialog.getDialogPane().lookupButton(ButtonType.OK).disableProperty().bind(isValidName);
 
-         // TODO revisar si el nombre ya está cogido
-         result.ifPresent(name -> {
-    		 newName.set(name);
-         });
-    }
-    
-    public EditProfileController setStage(Stage stage) {
-    	this.stage = stage;
-    	return this;
-    }
-	
+		Optional<String> result = dialog.showAndWait();
+
+		result.ifPresent(name -> {
+			newName.set(name);
+		});
+	}
+
+	public EditProfileController setStage(Stage stage) {
+		this.stage = stage;
+		return this;
+	}
+
 	public BorderPane getView() {
 		return view;
 	}
-	
+
 }

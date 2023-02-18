@@ -21,26 +21,29 @@ public class Post {
 	private LongProperty userID = new SimpleLongProperty();
 	private StringProperty postTitle = new SimpleStringProperty();
 	private StringProperty postContent = new SimpleStringProperty();
-	private ObjectProperty<Image> postImage = new SimpleObjectProperty<>();
+	private ListProperty<Image> postImage = new SimpleListProperty<>(FXCollections.observableArrayList());
 	private ObjectProperty<LocalDateTime> postDate = new SimpleObjectProperty<>();
 	private ObjectProperty<DirImages> dirImage = new SimpleObjectProperty<>();
 	private ListProperty<Filter> filters = new SimpleListProperty<>(FXCollections.observableArrayList());
-	
-	public Post() {	}
-	
+
+	public Post() {
+	}
+
 	public Post(long postID, long userID, String postTitle, String postContent) {
 		setPostID(postID);
 		setUserID(userID);
 		setPostTitle(postTitle);
 		setPostContent(postContent);
 	}
-	
+
 	public final LongProperty postIDProperty() {
 		return this.postID;
 	}
+
 	public final long getPostID() {
 		return this.postIDProperty().get();
 	}
+
 	public final void setPostID(final long postID) {
 		this.postIDProperty().set(postID);
 	}
@@ -48,49 +51,47 @@ public class Post {
 	public final LongProperty userIDProperty() {
 		return this.userID;
 	}
+
 	public final long getUserID() {
 		return this.userIDProperty().get();
 	}
+
 	public final void setUserID(final long userID) {
 		this.userIDProperty().set(userID);
 	}
-	
+
 	public final StringProperty postTitleProperty() {
 		return this.postTitle;
 	}
+
 	public final String getPostTitle() {
 		return this.postTitleProperty().get();
 	}
+
 	public final void setPostTitle(final String postTitle) {
 		this.postTitleProperty().set(postTitle);
 	}
-	
+
 	public final StringProperty postContentProperty() {
 		return this.postContent;
 	}
+
 	public final String getPostContent() {
 		return this.postContentProperty().get();
 	}
+
 	public final void setPostContent(final String postContent) {
 		this.postContentProperty().set(postContent);
-	}
-	
-	public final ObjectProperty<Image> postImageProperty() {
-		return this.postImage;
-	}
-	public final Image getPostImage() {
-		return this.postImageProperty().get();
-	}
-	public final void setPostImage(final Image postImage) {
-		this.postImageProperty().set(postImage);
 	}
 
 	public final ObjectProperty<LocalDateTime> postDateProperty() {
 		return this.postDate;
 	}
+
 	public final LocalDateTime getPostDate() {
 		return this.postDateProperty().get();
 	}
+
 	public final void setPostDate(final LocalDateTime postDate) {
 		this.postDateProperty().set(postDate);
 	}
@@ -98,9 +99,11 @@ public class Post {
 	public final ListProperty<Filter> filtersProperty() {
 		return this.filters;
 	}
+
 	public final ObservableList<Filter> getFilters() {
 		return this.filtersProperty().get();
 	}
+
 	public final void setFilters(final ObservableList<Filter> filters) {
 		this.filtersProperty().set(filters);
 	}
@@ -108,11 +111,25 @@ public class Post {
 	public final ObjectProperty<DirImages> dirImageProperty() {
 		return this.dirImage;
 	}
+
 	public final DirImages getDirImage() {
 		return this.dirImageProperty().get();
 	}
+
 	public final void setDirImage(final DirImages dirImage) {
 		this.dirImageProperty().set(dirImage);
+	}
+
+	public final ListProperty<Image> postImageProperty() {
+		return this.postImage;
+	}
+
+	public final ObservableList<Image> getPostImage() {
+		return this.postImageProperty().get();
+	}
+
+	public final void setPostImage(final ObservableList<Image> postImage) {
+		this.postImageProperty().set(postImage);
 	}
 
 }

@@ -34,20 +34,20 @@ public class SigninController implements Initializable {
 	// model
 
 	private User user = new User();
-	
+
 	// view
-	
+
 	private Label noUserFound;
-	
+
 	@FXML
 	private ImageView welcomeImage;
 	@FXML
 	private Label welcomeLabel;
-	
+
 	@FXML
-    private FontIcon nicknameIcon;
-    @FXML
-    private JFXTextField nicknameText;
+	private FontIcon nicknameIcon;
+	@FXML
+	private JFXTextField nicknameText;
 
 	@FXML
 	private FontIcon usernameIcon;
@@ -68,10 +68,10 @@ public class SigninController implements Initializable {
 
 	@FXML
 	private JFXCheckBox showPasswordCheck;
-	
+
 	@FXML
 	private Hyperlink hasAccountLink;
-	
+
 	@FXML
 	private JFXButton registerButton;
 
@@ -92,9 +92,9 @@ public class SigninController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		
+
 		// bindings
-		
+
 		user.usernameProperty().bind(usernameText.textProperty());
 		user.nicknameProperty().bind(nicknameText.textProperty());
 //		user.mailProperty().bind(mailText.textProperty());
@@ -111,47 +111,48 @@ public class SigninController implements Initializable {
 		// listeners
 
 		showPasswordCheck.selectedProperty().addListener(this::onShowPasswordChanged);
-		
+
 	}
-	
+
 	private void onShowPasswordChanged(ObservableValue<? extends Boolean> o, Boolean ov, Boolean nv) {
-		
-		if(nv) {
+
+		if (nv) {
 			passwordText.setLabelFloat(true);
 		}
-		
+
 	}
-	
+
 	private void hideLabel() {
-		
-		if(noUserFound != null) {
+
+		if (noUserFound != null) {
 			noUserFound.setVisible(false);
 			noUserFound.setManaged(false);
 		}
-		
+
 	}
-	
+
 	@FXML
-    void onTextClicked(MouseEvent event) {
+	void onTextClicked(MouseEvent event) {
 		hideLabel();
-    }
-	
+	}
+
 	@FXML
 	void onHasAccountAction(ActionEvent event) {
 		App.openScene(new LoginController().getView(), 450, 500);
 	}
 
+	// TODO revisar si el nombre ya está cogido
 	@FXML
 	void onSigninAction(ActionEvent event) {
 		try {
-			if(user.userInDatabase()) {
+			if (user.userInDatabase()) {
 				noUserFound = new Label("Éste usuario ya está registrado, inténtelo de nuevo.");
 				noUserFound.setStyle("-fx-text-fill: red;");
 				noUserFound.setPadding(new Insets(0, 0, 10, 0));
 				((VBox) getView().getChildren().get(0)).getChildren().add(5, noUserFound);
 			} else {
 				user.addUsertoDB();
-				App.user = App.conexionLocal.getUserObject(this.user.getUsername(), this.user.getPassword());
+				App.user = App.conexionDB.getUserObject(this.user.getUsername(), this.user.getPassword());
 				App.openScene(new MainController().getView(), 850, 550);
 			}
 		} catch (Exception e) {

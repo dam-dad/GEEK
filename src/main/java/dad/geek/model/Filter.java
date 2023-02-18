@@ -6,28 +6,28 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 public class Filter {
-	
+
 	private LongProperty filterID = new SimpleLongProperty();
 	private StringProperty filterName = new SimpleStringProperty();
 	private StringProperty filterShortName = new SimpleStringProperty();
 	private StringProperty filterDescription = new SimpleStringProperty();
-	
+
 	public final LongProperty filterIDProperty() {
 		return this.filterID;
 	}
-	
+
 	public final long getFilterID() {
 		return this.filterIDProperty().get();
 	}
-	
+
 	public final void setFilterID(final long filterID) {
 		this.filterIDProperty().set(filterID);
 	}
-	
+
 	public final StringProperty filterNameProperty() {
 		return this.filterName;
 	}
-	
+
 	public final String getFilterName() {
 		return this.filterNameProperty().get();
 	}

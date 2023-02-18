@@ -20,44 +20,44 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
 public class NewPostDialog implements Initializable {
-	
+
 	// model
-	
+
 	private Stage stage;
 	private Image newImage;
 	private NewPostController newPostController;
-	
+
 	// view
-	
+
 	@FXML
-    private Button downButton;
+	private Button downButton;
 
-    @FXML
-    private ImageView downImage;
+	@FXML
+	private ImageView downImage;
 
-    @FXML
-    private Button emptyButton;
+	@FXML
+	private Button emptyButton;
 
-    @FXML
-    private ImageView emptyImage;
+	@FXML
+	private ImageView emptyImage;
 
-    @FXML
-    private Button leftButton;
+	@FXML
+	private Button leftButton;
 
-    @FXML
-    private ImageView leftImage;
+	@FXML
+	private ImageView leftImage;
 
-    @FXML
-    private Button rightButton;
+	@FXML
+	private Button rightButton;
 
-    @FXML
-    private ImageView rightImage;
+	@FXML
+	private ImageView rightImage;
 
-    @FXML
-    private BorderPane view;
+	@FXML
+	private BorderPane view;
 
-    public NewPostDialog() {
-    	try {
+	public NewPostDialog() {
+		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/NewPostDialog.fxml"));
 			loader.setController(this);
 			loader.load();
@@ -65,47 +65,51 @@ public class NewPostDialog implements Initializable {
 			throw new RuntimeException(e);
 		}
 	}
-    
-    @Override
+
+	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		
+
 	}
 
-    @FXML
-    void onCreatePost(ActionEvent event) {
-    	
-    	FileChooser fileChooser = new FileChooser();
+	@FXML
+	void onCreatePost(ActionEvent event) {
+
+		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("Abrir imagen");
 		fileChooser.setInitialDirectory(new File(System.getProperty("user.home") + "\\Pictures\\"));
-		fileChooser.getExtensionFilters().addAll(
-		     new FileChooser.ExtensionFilter("PNG Files", "*.png", "*.jpg")
-		);
-		
+		fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("PNG Files", "*.png", "*.jpg"));
+
 		File selectedFile = fileChooser.showOpenDialog(App.primaryStage);
-		if(selectedFile != null) {
+		if (selectedFile != null) {
 			newImage = new Image(selectedFile.toURI().toString());
 			newPostController.setPosition(((Button) event.getSource()).getId(), newImage);
 			this.stage.getOnCloseRequest().handle(new WindowEvent(this.stage, WindowEvent.WINDOW_CLOSE_REQUEST));
 		}
-    	
-    	this.stage.getScene().setOnKeyPressed(t -> {
-			if(t.getCode() == KeyCode.ESCAPE)
+
+		this.stage.getScene().setOnKeyPressed(t -> {
+			if (t.getCode() == KeyCode.ESCAPE)
 				this.stage.getOnCloseRequest().handle(new WindowEvent(this.stage, WindowEvent.WINDOW_CLOSE_REQUEST));
 		});
-    	
-    }
-    
-    public NewPostDialog setParent(NewPostController parent) {
-    	this.newPostController = parent;
-    	return this;
-    }
-    
-    public NewPostDialog setStage(Stage stage) {
+
+	}
+
+	@FXML
+	void onNoImageAction(ActionEvent event) {
+		this.stage.getOnCloseRequest().handle(new WindowEvent(this.stage, WindowEvent.WINDOW_CLOSE_REQUEST));
+		newPostController.noImages();
+	}
+
+	public NewPostDialog setParent(NewPostController parent) {
+		this.newPostController = parent;
+		return this;
+	}
+
+	public NewPostDialog setStage(Stage stage) {
 		this.stage = stage;
 		return this;
 	}
-    
-    public BorderPane getView() {
+
+	public BorderPane getView() {
 		return view;
 	}
 }

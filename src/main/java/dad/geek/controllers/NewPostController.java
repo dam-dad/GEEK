@@ -37,7 +37,7 @@ public class NewPostController implements Initializable {
 	private Post post = new Post();
 	double prefWidth;
 	double prefHeight;
-	
+
 	// view
 
 	@FXML
@@ -87,7 +87,7 @@ public class NewPostController implements Initializable {
 		post.setUserID(App.user.getUserID());
 		prefWidth = view.getPrefWidth();
 		prefHeight = view.getPrefHeight();
-		
+
 		// bindings
 
 		nicknameLabel.textProperty().bind(App.user.nicknameProperty());
@@ -109,30 +109,50 @@ public class NewPostController implements Initializable {
 		imageView.setFitWidth(200);
 		imageView.setFitHeight(200);
 		imageView.setVisible(true);
-		
+
 		switch (posicionImagen) {
 		case "leftButton":
 			contentContainer.setLeft(imageView);
-			view.setPrefWidth((view.getPrefWidth() <= prefWidth + 200) ? view.getPrefWidth() + 200:view.getPrefWidth());
+			view.setPrefWidth(
+					(view.getPrefWidth() <= prefWidth + 200) ? view.getPrefWidth() + 200 : view.getPrefWidth());
 			break;
 		case "rightButton":
 			contentContainer.setRight(imageView);
-			view.setPrefWidth((view.getPrefWidth() <= prefWidth + 200) ? view.getPrefWidth() + 200:view.getPrefWidth());
+			view.setPrefWidth(
+					(view.getPrefWidth() <= prefWidth + 200) ? view.getPrefWidth() + 200 : view.getPrefWidth());
 			break;
 		case "downButton":
 			contentContainer.setBottom(imageView);
-			view.setPrefHeight((view.getPrefHeight() == prefHeight) ? view.getPrefHeight() + 250:view.getPrefHeight());
-			break;
-		case "emptyButton":
+			view.setPrefHeight(
+					(view.getPrefHeight() == prefHeight) ? view.getPrefHeight() + 250 : view.getPrefHeight());
 			break;
 		}
-		
+
+		post.getPostImage().add(image);
+
 		stage.setMinWidth(view.getPrefWidth());
 		stage.setMinHeight(view.getPrefHeight());
 		stage.centerOnScreen();
 		BorderPane.setAlignment(imageView, Pos.CENTER);
 
 		return this;
+
+	}
+
+	public void noImages() {
+
+		view.setPrefWidth(450);
+		view.setPrefHeight(330);
+
+		stage.setWidth(view.getPrefWidth());
+		stage.setHeight(view.getPrefHeight());
+		stage.setMinWidth(view.getPrefWidth());
+		stage.setMinHeight(view.getPrefHeight());
+		contentContainer.setLeft(null);
+		contentContainer.setRight(null);
+		contentContainer.setBottom(null);
+		post.getPostImage().clear();
+		stage.centerOnScreen();
 
 	}
 
@@ -145,7 +165,7 @@ public class NewPostController implements Initializable {
 	void onSendAction(ActionEvent event) {
 		post.setPostDate(LocalDateTime.now());
 		try {
-			App.conexionLocal.sendPost(post);
+			App.conexionDB.sendPost(post);
 		} catch (Exception e) {
 			Alert errorAlert = new Alert(AlertType.ERROR);
 			errorAlert.setTitle("ERROR");
@@ -160,7 +180,7 @@ public class NewPostController implements Initializable {
 
 	@FXML
 	void onAddImage(ActionEvent event) {
-		
+
 		Stage window = new Stage();
 		window.setTitle("Nuevo Post");
 		window.setScene(new Scene(new NewPostDialog().setStage(window).setParent(this).getView()));
@@ -168,15 +188,15 @@ public class NewPostController implements Initializable {
 		window.setMinWidth(300);
 		window.initOwner(App.primaryStage);
 		window.initModality(Modality.APPLICATION_MODAL);
-		
+
 		window.getScene().setOnKeyPressed(t -> {
-			if(t.getCode() == KeyCode.ESCAPE)
+			if (t.getCode() == KeyCode.ESCAPE)
 				window.getOnCloseRequest().handle(new WindowEvent(window, WindowEvent.WINDOW_CLOSE_REQUEST));
 		});
 		window.setOnCloseRequest(e -> {
 			window.close();
 		});
-		
+
 		window.show();
 
 	}

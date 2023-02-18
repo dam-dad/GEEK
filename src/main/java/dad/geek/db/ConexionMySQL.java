@@ -6,7 +6,6 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -19,8 +18,7 @@ import javafx.scene.control.Alert.AlertType;
 public class ConexionMySQL {
 
 	private static Connection connMySQL;
-	private Statement stmtMySQL;
-	private PreparedStatement allPosts, userFromId, userFromNamePass, userFromName, createUser, sendPost, setUserImage, setNickname,
+	private PreparedStatement allPosts, userFromId, userFromNamePass, createUser, sendPost, setUserImage, setNickname,
 			userPosts;
 //	private ResultSet resultPosts, resultUser;
 
@@ -46,8 +44,6 @@ public class ConexionMySQL {
 			userFromId = connMySQL.prepareStatement("select * from usuarios where id = ?");
 			userFromNamePass = connMySQL
 					.prepareStatement("select * from usuarios where nombreUsuario = ? and password = ?");
-			userFromName = connMySQL
-					.prepareStatement("select * from usuarios where nombreUsuario = ?");
 			createUser = connMySQL
 					.prepareStatement("insert into usuarios (nombre, nombreUsuario, password) values (?, ?, ?)");
 			sendPost = connMySQL.prepareStatement("insert into posts (ID_Usuario, contenido) values (?, ?)");
@@ -69,7 +65,7 @@ public class ConexionMySQL {
 		}
 	}
 
-	private ResultSet getUserFromDB(long id) throws Exception{
+	private ResultSet getUserFromDB(long id) throws Exception {
 		try {
 			userFromId.setLong(1, id);
 			return userFromId.executeQuery();
@@ -83,16 +79,6 @@ public class ConexionMySQL {
 			userFromNamePass.setString(1, username);
 			userFromNamePass.setString(2, password);
 			return userFromNamePass.executeQuery();
-		} catch (SQLException e) {
-			throw new Exception("Hubo un error al intentar cargar al usuario" + username
-					+ " desde la base de datos (SQLException).");
-		}
-	}
-	
-	public ResultSet getUserFromDB(String username) throws Exception {
-		try {
-			userFromName.setString(1, username);
-			return userFromName.executeQuery();
 		} catch (SQLException e) {
 			throw new Exception("Hubo un error al intentar cargar al usuario" + username
 					+ " desde la base de datos (SQLException).");
@@ -176,21 +162,6 @@ public class ConexionMySQL {
 
 		return null;
 	}
-	
-	public User getUserObject(String username) throws Exception {
-
-		try {
-			ResultSet posts = getUserFromDB(username);
-			while (posts.next()) {
-				return new User(posts.getInt("ID"), posts.getString("nombre"), posts.getString("nombreUsuario"),
-						posts.getString("password"), posts.getString("imagen"));
-			}
-		} catch (SQLException e) {
-			throw new Exception("Hubo un error al intentar cargar al usuario (SQLException).");
-		}
-
-		return null;
-	}
 
 	public void sendPost(Post post) throws Exception {
 
@@ -245,8 +216,6 @@ public class ConexionMySQL {
 		try {
 			if (connMySQL != null)
 				connMySQL.close();
-			if (stmtMySQL != null)
-				stmtMySQL.close();
 		} catch (SQLException e1) {
 			throw new Exception("Hubo un error al intentar cerrar la conexión con la base de datos (SQLException).");
 		}

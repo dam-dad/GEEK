@@ -13,7 +13,7 @@
 <?import javafx.scene.text.Font?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<VBox fx:id="view" maxHeight="1.7976931348623157E308" spacing="10.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<VBox fx:id="view" maxHeight="1.7976931348623157E308" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <BorderPane>
          <right>
@@ -37,9 +37,9 @@
             <Insets />
          </VBox.margin>
       </BorderPane>
-      <HBox alignment="CENTER_LEFT" VBox.vgrow="NEVER">
+      <HBox alignment="CENTER_LEFT" minHeight="-Infinity" minWidth="-Infinity" VBox.vgrow="NEVER">
          <children>
-            <ImageView fx:id="profileImage" fitHeight="64.0" fitWidth="64.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" HBox.hgrow="ALWAYS">
+            <ImageView fx:id="profileImage" fitHeight="64.0" fitWidth="64.0" nodeOrientation="INHERIT" onMouseClicked="#onProfileImageClicked" pickOnBounds="true" preserveRatio="true" HBox.hgrow="ALWAYS">
                <image>
                   <Image url="@../images/user.png" />
                </image>
@@ -72,10 +72,13 @@
          <VBox.margin>
             <Insets />
          </VBox.margin>
+         <padding>
+            <Insets bottom="10.0" top="5.0" />
+         </padding>
       </HBox>
-      <SplitPane>
+      <SplitPane maxHeight="1.7976931348623157E308" VBox.vgrow="ALWAYS">
          <items>
-            <ScrollPane fx:id="postContainerPane" fitToWidth="true" focusTraversable="false" hmin="180.0" minWidth="200.0" pannable="true">
+            <ScrollPane fx:id="postContainerPane" fitToWidth="true" focusTraversable="false" hmin="180.0" maxHeight="1.7976931348623157E308" minWidth="200.0">
                <content>
                   <VBox fx:id="postsContainer" maxHeight="-Infinity" />
                </content>

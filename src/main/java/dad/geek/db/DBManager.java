@@ -6,15 +6,19 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
+import dad.geek.model.Post;
 import dad.geek.model.User;
 
 public class DBManager {
 
+	private int numberOfPosts = 0;
 	private Connection connPostgre;
-	private PreparedStatement allPosts, userFromId, userFromNamePass, createUser, sendPost;
-	private ResultSet resultPosts, resultUser;
+	private PreparedStatement allPosts, userFromId, userFromNamePass, createUser, sendPost, setUserImage, setNickname,
+			userPosts;
 
 	public DBManager() {
 
@@ -28,26 +32,18 @@ public class DBManager {
 
 			connPostgre = DriverManager.getConnection(urlHost, userHost, passwordHost);
 
-			// Queries relacionados con los usuaios
-			createUser = connPostgre
-					.prepareStatement("INSERT INTO usuarios(nombre, nombreusuario, password) VALUES (?,?,?)");
-			userFromId = connPostgre
-					.prepareStatement("SELECT * FROM usuarios WHERE id = ?");
-
-			userFromNamePass = connPostgre.prepareStatement("SELECT * FROM usuarios WHERE nombre = ? AND password = ?");
-
-			// Queries relacionados con los posts
-			allPosts = connPostgre
-					.prepareStatement("SELECT * FROM posts ORDER BY id DESC");
-			sendPost = connPostgre
-					.prepareStatement("INSERT INTO posts(id_usuario, titulo, contenido) VALUES (?,?)");
+			allPosts = connPostgre.prepareStatement("select * from posts order by id desc limit ?");
+			userFromId = connPostgre.prepareStatement("select * from usuarios where id = ?");
+			userFromNamePass = connPostgre.prepareStatement("select * from usuarios where nombreUsuario = ? and password = ?");
+			createUser = connPostgre.prepareStatement("insert into usuarios (nombre, nombreUsuario, password) values (?, ?, ?)");
+			sendPost = connPostgre.prepareStatement("insert into posts (ID_Usuario, contenido) values (?, ?)");
+			setUserImage = connPostgre.prepareStatement("update usuarios set imagen = ? where id = ?");
+			setNickname = connPostgre.prepareStatement("update usuarios set nombre = ? where id = ?");
+			userPosts = connPostgre.prepareStatement("select * from posts where ID_Usuario = ? order by id desc");
 
 		} catch (IOException | SQLException e) {
 			e.printStackTrace();
 		}
-
-		System.out.println("userFromNamePass= " + userFromNamePass);
-
 	}
 
 	public void createUser(String nickname, String username, String password) {
@@ -63,48 +59,36 @@ public class DBManager {
 
 	}
 
-	public ResultSet getUserFromDB(int id) {
-
+	private ResultSet getUserFromDB(long id) throws Exception {
 		try {
-			userFromId.setInt(1, id);
-			resultUser = userFromId.executeQuery();
+			userFromId.setLong(1, id);
+			return userFromId.executeQuery();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new Exception("Hubo un error al intentar cargar al usuario desde la base de datos (SQLException).");
 		}
-
-		return resultUser;
 	}
 
-	public ResultSet getUserFromDB(String username, String password) {
-		// FIXME userFromNamePass está instanciado como Null
+	public ResultSet getUserFromDB(String username, String password) throws Exception {
 		try {
 			userFromNamePass.setString(1, username);
 			userFromNamePass.setString(2, password);
-			resultUser = userFromNamePass.executeQuery();
+			return userFromNamePass.executeQuery();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new Exception("Hubo un error al intentar cargar al usuario" + username
+					+ " desde la base de datos (SQLException).");
 		}
-
-		return resultUser;
 	}
 
-	public User sendPost(int userId) throws Exception {
+	public void sendPost(Post post) throws Exception {
+
 		try {
-			ResultSet posts = getUserFromDB(userId);
-			while (posts.next()) {
-				return new User(
-						// FIXME Cambiar el tipo de dato de la ID de int a long
-						posts.getInt("ID"),
-						posts.getString("nombre"),
-						posts.getString("nombreUsuario"),
-						posts.getString("password"),
-						posts.getString("image"));
-			}
+			sendPost.setLong(1, post.getUserID());
+			sendPost.setString(2, post.getPostContent());
+			sendPost.executeUpdate();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new Exception("Hubo un error al intentar enviar un post (SQLException).");
 		}
 
-		return null;
 	}
 
 	public User getUserObject(String username, String password) throws Exception {
@@ -112,19 +96,124 @@ public class DBManager {
 		try {
 			ResultSet posts = getUserFromDB(username, password);
 			while (posts.next()) {
-				return new User(
-						// FIXME Cambiar el tipo de dato de la ID de int a long
-						posts.getInt("ID"),
-						posts.getString("nombre"),
-						posts.getString("nombreUsuario"),
-						posts.getString("password"),
-						posts.getString("image"));
+				return new User(posts.getLong("ID"), posts.getString("nombre"), posts.getString("nombreUsuario"),
+						posts.getString("password"), posts.getString("imagen"));
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new Exception("Hubo un error al intentar cargar al usuario (SQLException).");
 		}
 
 		return null;
 	}
 
+	public User getUserObject(long userId) throws Exception {
+
+		try {
+			ResultSet posts = getUserFromDB(userId);
+			while (posts.next()) {
+				return new User(posts.getLong("ID"), posts.getString("nombre"), posts.getString("nombreUsuario"),
+						posts.getString("password"), posts.getString("imagen"));
+			}
+		} catch (SQLException e) {
+			throw new Exception("Hubo un error al intentar cargar al usuario (SQLException).");
+		}
+
+		return null;
+	}
+
+	public List<Post> getAllPosts(boolean reload) throws Exception {
+
+		List<Post> result = new ArrayList<>();
+		ResultSet posts = allPostsFromDB(reload);
+
+		try {
+			while (posts.next()) {
+
+				result.add(new Post(
+					posts.getLong("ID"), 
+					posts.getLong("ID_Usuario"), 
+					posts.getString("titulo"),
+					posts.getString("contenido")
+				));
+				
+			}
+			
+		} catch (SQLException e) {
+			throw new Exception("Hubo un error al intentar cargar todos los posts (SQLException).");
+		}
+
+		return result;
+	}
+
+	private ResultSet allPostsFromDB(boolean reload) throws Exception {
+		try {
+			numberOfPosts = reload ? 10 : numberOfPosts + 10;
+			allPosts.setInt(1, numberOfPosts);
+			return allPosts.executeQuery();
+		} catch (SQLException e) {
+			throw new Exception("Hubo un error al cargar los posts desde la base de datos (SQLException).");
+		}
+	}
+
+	public List<Post> getUserPosts(User user) throws Exception {
+		List<Post> result = new ArrayList<>();
+		ResultSet posts = getUserPostsFromDB(user);
+
+		try {
+			while (posts.next()) {
+
+				result.add(new Post(posts.getLong("ID"), posts.getLong("ID_Usuario"), posts.getString("titulo"),
+						posts.getString("contenido")));
+
+			}
+		} catch (SQLException e) {
+			throw new Exception("Hubo un error al intentar cargar los posts del usuario " + user.getUsername()
+					+ " (SQLException).");
+		}
+
+		return result;
+	}
+
+	public ResultSet getUserPostsFromDB(User user) throws Exception {
+		try {
+			userPosts.setLong(1, user.getUserID());
+			return userPosts.executeQuery();
+		} catch (SQLException e) {
+			throw new Exception("Hubo un error al intentar cargar los posts del usuario " + user.getUsername()
+					+ " desde la base de datos (SQLException).");
+		}
+	}
+
+	public void setNickname(long id, String nickname) throws Exception {
+
+		try {
+			setNickname.setString(1, nickname);
+			setNickname.setLong(2, id);
+			setNickname.executeUpdate();
+		} catch (SQLException e) {
+			throw new Exception("Hubo un error al intentar actualizar el apodo de usuario (SQLException).");
+		}
+
+	}
+
+	public void setUserImage(long id, String url) throws Exception {
+
+		try {
+			setUserImage.setString(1, url);
+			setUserImage.setLong(2, id);
+			setUserImage.executeUpdate();
+		} catch (SQLException e) {
+			throw new Exception("Hubo un error al intentar actualizar la imagen de usuario (SQLException).");
+		}
+
+	}
+
+	public void close() throws Exception {
+		try {
+			if (connPostgre != null)
+				connPostgre.close();
+		} catch (SQLException e1) {
+			throw new Exception("Hubo un error al intentar cerrar la conexión con la base de datos (SQLException).");
+		}
+	}
 }
