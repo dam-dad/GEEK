@@ -36,7 +36,7 @@
             <Insets />
          </VBox.margin>
       </BorderPane>
-      <HBox alignment="CENTER_LEFT" minHeight="-Infinity" minWidth="-Infinity" VBox.vgrow="NEVER">
+      <HBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" VBox.vgrow="NEVER">
          <children>
             <ImageView fx:id="profileImage" fitHeight="64.0" fitWidth="64.0" nodeOrientation="INHERIT" onMouseClicked="#onProfileImageClicked" pickOnBounds="true" preserveRatio="true" HBox.hgrow="ALWAYS">
                <image>
