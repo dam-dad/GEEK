@@ -40,10 +40,11 @@ public class MainController implements Initializable {
 
 	@FXML
 	private VBox postsContainer;
-
 	@FXML
 	private SplitPane containerPane;
-
+	@FXML
+    private VBox searchContainer;
+	
 	@FXML
 	private FontIcon darkModeIcon;
 
@@ -94,7 +95,8 @@ public class MainController implements Initializable {
 		// load data
 
 		userContainer.getChildren().add(userSectionController.getView());
-		containerPane.getItems().add(searchSectionController.getView());
+//		containerPane.getItems().add(searchSectionController.getView());
+		searchContainer.getChildren().add(searchSectionController.getView());
 		userContainer.setVgrow(userContainer.getChildren().get(0), Priority.ALWAYS);
 		containerPane.setDividerPositions(0.1, 0.9);
 

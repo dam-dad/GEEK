@@ -27,6 +27,7 @@ import javafx.stage.Modality;
 public class SearchSectionController implements Initializable {
 	
 	//model
+	
 	Filter filter1 = new Filter();
 	Filter filter2 = new Filter();
 	Filter filter3 = new Filter();

@@ -19,7 +19,7 @@
 
 <BorderPane fx:id="view" maxWidth="1.7976931348623157E308" minHeight="500.0" minWidth="800.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
    <center>
-      <SplitPane fx:id="containerPane" dividerPositions="0.25" maxHeight="1.7976931348623157E308" BorderPane.alignment="CENTER">
+      <SplitPane fx:id="containerPane" dividerPositions="0.1, 0.9" maxHeight="1.7976931348623157E308" BorderPane.alignment="CENTER">
          <items>
             <VBox fx:id="userContainer" alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" />
             <ScrollPane fx:id="postContainerPane" fitToWidth="true" hmin="180.0" maxWidth="1.7976931348623157E308" minWidth="200.0" pannable="true">
@@ -36,6 +36,7 @@
                      </bottom>
                   </BorderPane>
                </content></ScrollPane>
+            <VBox fx:id="searchContainer" alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" />
          </items>
          <BorderPane.margin>
             <Insets />

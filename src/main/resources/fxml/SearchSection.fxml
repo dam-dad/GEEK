@@ -5,12 +5,11 @@
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<VBox fx:id="view" maxHeight="10000.0" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" spacing="5.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<VBox fx:id="view" maxHeight="1.7976931348623157E308" spacing="5.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <HBox alignment="CENTER" prefWidth="200.0" spacing="5.0">
          <children>
@@ -26,13 +25,9 @@
          </VBox.margin>
       </HBox>
       <JFXComboBox fx:id="searchFiltersComboBox" maxWidth="1.7976931348623157E308" promptText="Selecciona un filtro" />
-      <ScrollPane fx:id="searchResultContainerPane">
+      <ScrollPane fx:id="searchResultContainerPane" fitToWidth="true" focusTraversable="false" hmin="180.0" maxHeight="1.7976931348623157E308" minWidth="200.0">
         <content>
-            <BorderPane>
-               <center>
-                  <VBox fx:id="searchResultContainer" maxWidth="500.0" />
-               </center>
-            </BorderPane>
+            <VBox fx:id="searchResultContainer" maxHeight="1.7976931348623157E308" />
         </content>
       </ScrollPane>
    </children>
