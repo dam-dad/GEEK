@@ -159,6 +159,25 @@ public class NewPostController implements Initializable {
 	@FXML
 	void onAddFilterAction(ActionEvent event) {
 
+		Stage window = new Stage();
+		window.setTitle("Añadir filtro");
+		window.setScene(new Scene(new AddFilterController().setStage(window).getView()));
+		window.setMinWidth(268);
+		window.setMinHeight(472);
+		window.initOwner(App.primaryStage);
+		window.initModality(Modality.APPLICATION_MODAL);
+
+		window.getScene().setOnKeyPressed(t -> {
+			if (t.getCode() == KeyCode.ESCAPE)
+				window.getOnCloseRequest().handle(new WindowEvent(window, WindowEvent.WINDOW_CLOSE_REQUEST));
+		});
+		window.setOnCloseRequest(e -> {
+//			reloadPosts();
+			window.close();
+		});
+
+		window.show();
+
 	}
 
 	@FXML
