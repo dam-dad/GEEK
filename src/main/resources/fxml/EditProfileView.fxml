@@ -11,7 +11,7 @@
 <?import javafx.scene.text.Font?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<BorderPane fx:id="view" minHeight="350.0" minWidth="350.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane fx:id="view" minHeight="350.0" minWidth="350.0" styleClass="background" stylesheets="@../css/styles.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
    <center>
       <HBox alignment="TOP_CENTER" spacing="5.0" BorderPane.alignment="CENTER">
          <children>
@@ -22,28 +22,28 @@
                         <Image url="@../images/user.png" />
                      </image>
                   </ImageView>
-                  <JFXButton fx:id="editImageButton" contentDisplay="RIGHT" minWidth="-Infinity" onAction="#onEditImageAction" text="Cambiar la imagen">
+                  <JFXButton fx:id="editImageButton" contentDisplay="RIGHT" minWidth="-Infinity" onAction="#onEditImageAction" styleClass="text" stylesheets="@../css/styles.css" text="Cambiar la imagen">
                      <graphic>
-                        <FontIcon iconLiteral="mdi2i-image-edit" iconSize="20" />
+                        <FontIcon iconColor="#2f3e46" iconLiteral="mdi2i-image-edit" iconSize="20" />
                      </graphic>
                   </JFXButton>
                </children>
             </VBox>
             <VBox HBox.hgrow="ALWAYS">
                <children>
-                  <Label fx:id="nicknameLabel" contentDisplay="RIGHT" text="Nombre de Usuario">
+                  <Label fx:id="nicknameLabel" contentDisplay="RIGHT" styleClass="text" stylesheets="@../css/styles.css" text="Nombre de Usuario">
                      <font>
                         <Font size="16.0" />
                      </font>
                      <graphic>
                         <JFXButton fx:id="editNicknameButton" contentDisplay="RIGHT" onAction="#onEditNicknameAction" text="Editar">
                            <graphic>
-                              <FontIcon iconLiteral="mdi2l-lead-pencil" iconSize="16" />
+                              <FontIcon iconColor="#2f3e46" iconLiteral="mdi2l-lead-pencil" iconSize="16" />
                            </graphic>
                         </JFXButton>
                      </graphic>
                   </Label>
-                  <Label fx:id="usernameLabel" contentDisplay="RIGHT" maxWidth="1.7976931348623157E308" text="Código de Usuario">
+                  <Label fx:id="usernameLabel" contentDisplay="RIGHT" maxWidth="1.7976931348623157E308" styleClass="text" stylesheets="@../css/styles.css" text="Código de Usuario">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -59,8 +59,8 @@
    <bottom>
       <HBox alignment="CENTER_RIGHT" spacing="5.0" BorderPane.alignment="CENTER_RIGHT">
          <children>
-            <JFXButton defaultButton="true" onAction="#onAcceptAction" text="Aceptar" />
-            <JFXButton cancelButton="true" onAction="#onCancelAction" text="Cancelar" />
+            <JFXButton defaultButton="true" onAction="#onAcceptAction" styleClass="access-button" stylesheets="@../css/styles.css" text="Aceptar" />
+            <JFXButton cancelButton="true" onAction="#onCancelAction" styleClass="access-button" stylesheets="@../css/styles.css" text="Cancelar" />
          </children>
       </HBox>
    </bottom>

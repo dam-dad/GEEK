@@ -5,8 +5,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-
-<BorderPane fx:id="view" style="-fx-border-color: black; -fx-border-width: 2;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane fx:id="view" style="-fx-border-color: #2F3E46; -fx-border-width: 2;" styleClass="background" stylesheets="@../css/styles.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
    <right>
       <JFXButton contentDisplay="GRAPHIC_ONLY" onAction="#onCloseAction" BorderPane.alignment="CENTER">
          <graphic>

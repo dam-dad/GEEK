@@ -1,0 +1,64 @@
+.background {
+	-fx-background-color: #F6FFF8;
+}
+
+.link {
+	-fx-text-fill: #52796F;
+}
+
+.link:hover {
+	-fx-text-fill: #2F3E46;
+}
+
+.access-button {
+	-fx-text-fill: #F6FFF8;
+	-fx-background-color: #2F3E46;
+}
+
+.text {
+	-fx-text-fill: #2F3E46;
+}
+
+.link-see-more {
+	-fx-text-fill: #52796F;
+}
+
+.link-see-more:hover {
+	-fx-text-fill: #2F3E46;
+	-fx-underline: true;
+}
+
+.separator .line {
+    -fx-background-color: #CAD2C5;
+    -fx-pref-height: 1;
+    -fx-border-color: null ;
+}
+
+.scroll-pane {
+    -fx-background-color: #F6FFF8;
+}
+
+.scroll-pane .scroll-bar:vertical {
+    -fx-background-color: #CCE3DE;
+}
+
+.scroll-pane .scroll-bar:vertical .track {
+	-fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-background-radius: 0em;
+}
+
+.scroll-pane .scroll-bar:vertical .thumb {
+    -fx-background-color: #52796F;
+    -fx-background-radius: 2em;
+}
+
+.scroll-bar > .increment-button > .increment-arrow,
+.scroll-bar > .decrement-button > .decrement-arrow {
+    -fx-background-color: #52796F;
+}
+
+.scroll-bar > .increment-button > .increment-button,
+.scroll-bar > .decrement-button > .decrement-button {
+    -fx-background-color: #CCE3DE;
+}
