@@ -13,6 +13,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 
+import dad.geek.model.Filter;
 import dad.geek.model.Post;
 import dad.geek.model.User;
 
@@ -47,7 +48,7 @@ public class DBManager {
 			allFilters = connPostgre.prepareStatement("SELECT * FROM filtros ORDER BY id DESC");
 			userFilters = connPostgre.prepareStatement("SELECT * FROM filtrosusuario WHERE id_usuario = ?");
 			postFilters = connPostgre.prepareStatement("SELECT * FROM filtrospost WHERE id_post = ?");
-			createFilter = connPostgre.prepareStatement("INSER INTO filtros (nombre, shortname, descripcion) values (?, ?, ?)");
+			createFilter = connPostgre.prepareStatement("insert into filtros (nombre, shortname, descripcion) values (?, ?, ?)");
 
 		} catch (IOException | SQLException e) {
 			e.printStackTrace();
@@ -255,9 +256,36 @@ public class DBManager {
 
 	}
 
-	public void getAllFiltros() {
-		// TODO Implementar
+	public ResultSet allFiltersFromDB() throws Exception {
+		try {
+			return allFilters.executeQuery();
+		} catch (SQLException e) {
+			throw new Exception("Hubo un error al cargar los filtros desde la base de datos (SQLException).");
+		}
+	}
+	
+	public List<Filter> getAllFilters() throws Exception {
 
+		List<Filter> result = new ArrayList<>();
+		ResultSet filters = allFiltersFromDB();
+
+		try {
+			while (filters.next()) {
+
+				result.add(new Filter(
+						filters.getLong("id"), 
+						filters.getString("nombre"),
+						filters.getString("shortname"),
+						filters.getString("descripcion")
+				));
+				
+			}
+			
+		} catch (SQLException e) {
+			throw new Exception("Hubo un error al intentar cargar todos los posts (SQLException).");
+		}
+
+		return result;
 	}
 
 	public void getFiltrosPost() {
@@ -268,11 +296,6 @@ public class DBManager {
 	public void getFiltrosUsuario() {
 		// TODO Implementar
 
-	}
-
-	public void createFiltro() {
-		// TODO Implementar
-		
 	}
 
 	public void close() throws Exception {

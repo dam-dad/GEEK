@@ -13,6 +13,16 @@ public class Filter {
 	private StringProperty filterShortName = new SimpleStringProperty();
 	private StringProperty filterDescription = new SimpleStringProperty();
 	
+	public Filter() {
+	}
+	
+	public Filter(long filterID, String filterName, String filterShortName, String filterDescription) {
+		setFilterID(filterID);
+		setFilterName(filterName);
+		setFilterShortName(filterShortName);
+		setFilterDescription(filterDescription);
+	}
+	
 	public void addFiltertoDB() throws Exception {
 		App.conexionDB.createFilter(getFilterName(), getFilterShortName(), getFilterDescription());
 	}

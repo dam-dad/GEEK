@@ -191,7 +191,7 @@ public class NewPostController implements Initializable {
 			filterFlow.getChildren().add(label);
 			label.setText(AddFilterController.getSelectedFilterName());
 			label.setOnMouseClicked(MouseEvent  -> {
-				Alert deleteAlert = new Alert(AlertType.WARNING);
+				Alert deleteAlert = new Alert(AlertType.CONFIRMATION);
 				deleteAlert.setTitle("¿BORRAR?");
 				deleteAlert.setHeaderText("¿Desea borrar este filtro?");
 				deleteAlert.initOwner(App.primaryStage);
@@ -199,6 +199,8 @@ public class NewPostController implements Initializable {
 				Optional<ButtonType> result = deleteAlert.showAndWait();
 				if (result.get() == ButtonType.OK){
 					filterFlow.getChildren().remove(label);
+				}else {
+					deleteAlert.close();
 				}
 			});
 		} catch (Exception e) {

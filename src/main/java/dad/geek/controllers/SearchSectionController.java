@@ -27,14 +27,7 @@ import javafx.stage.Modality;
 public class SearchSectionController implements Initializable {
 	
 	//model
-	
-	Filter filter1 = new Filter();
-	Filter filter2 = new Filter();
-	Filter filter3 = new Filter();
-	Filter filter4 = new Filter();
-	
 	User user = new User();
-
 	
 	//view
     @FXML
@@ -64,7 +57,11 @@ public class SearchSectionController implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		//bindings
 		user.usernameProperty().bind(searchUserText.textProperty());
-		
+		try {
+			searchFiltersComboBox.getItems().addAll(App.conexionDB.getAllFilters());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		searchButton.disableProperty().bind(Bindings.isEmpty(searchUserText.textProperty()).and(Bindings.isNull(searchFiltersComboBox.getSelectionModel().selectedItemProperty())));
 	}
 	
