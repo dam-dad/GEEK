@@ -144,6 +144,7 @@ public class LoginController implements Initializable {
 				((VBox) getView().getChildren().get(0)).getChildren().add(4, noUserFound);
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
 			Alert errorAlert = new Alert(AlertType.ERROR);
 			errorAlert.setTitle("ERROR");
 			errorAlert.setHeaderText("Hubo un error");

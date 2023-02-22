@@ -21,6 +21,7 @@ public class App extends Application {
 //	public static ConexionMySQL conexionLocal;
 	public static DBManager conexionDB;
 //	public static DBManager conexionRemota = new DBManager();
+
 	public static User user = new User();
 
 //	private MainController controller = new MainController();

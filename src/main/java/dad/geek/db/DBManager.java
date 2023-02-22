@@ -1,5 +1,7 @@
 package dad.geek.db;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -7,6 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 
@@ -18,7 +21,7 @@ public class DBManager {
 	private int numberOfPosts = 0;
 	private Connection connPostgre;
 	private PreparedStatement allPosts, userFromId, userFromNamePass, userFromName, createUser, sendPost, setUserImage, setNickname,
-			userPosts;
+			userPosts, allFilters, userFilters, postFilters, createFilter;
 
 	public DBManager() {
 
@@ -41,6 +44,10 @@ public class DBManager {
 			setUserImage = connPostgre.prepareStatement("update usuarios set imagen = ? where id = ?");
 			setNickname = connPostgre.prepareStatement("update usuarios set nombre = ? where id = ?");
 			userPosts = connPostgre.prepareStatement("select * from posts where ID_Usuario = ? order by id desc");
+			allFilters = connPostgre.prepareStatement("SELECT * FROM filtros ORDER BY id DESC");
+			userFilters = connPostgre.prepareStatement("SELECT * FROM filtrosusuario WHERE id_usuario = ?");
+			postFilters = connPostgre.prepareStatement("SELECT * FROM filtrospost WHERE id_post = ?");
+			createFilter = connPostgre.prepareStatement("INSER INTO filtros");
 
 		} catch (IOException | SQLException e) {
 			e.printStackTrace();
@@ -70,6 +77,7 @@ public class DBManager {
 	}
 
 	public ResultSet getUserFromDB(String username, String password) throws Exception {
+
 		try {
 			userFromNamePass.setString(1, username);
 			userFromNamePass.setString(2, password);
@@ -234,6 +242,26 @@ public class DBManager {
 
 	}
 
+	public void getAllFiltros() {
+		// TODO Implementar
+
+	}
+
+	public void getFiltrosPost() {
+		// TODO Implementar
+
+	}
+
+	public void getFiltrosUsuario() {
+		// TODO Implementar
+
+	}
+
+	public void createFiltro() {
+		// TODO Implementar
+		
+	}
+
 	public void close() throws Exception {
 		try {
 			if (connPostgre != null)
@@ -242,4 +270,28 @@ public class DBManager {
 			throw new Exception("Hubo un error al intentar cerrar la conexión con la base de datos (SQLException).");
 		}
 	}
+
+	private byte[] transformarImagen(File file) {
+		byte[] bytea = null;
+		try (FileInputStream fis = new FileInputStream(file)) {
+			ArrayList<Byte> byteArrayList = new ArrayList<>();
+
+			int valor;
+			while((valor = fis.read()) != -1) {
+				byteArrayList.add((byte) valor);
+			}
+
+			bytea = new byte[byteArrayList.size()];
+
+			for(int i = 0; i < byteArrayList.size(); i++) {
+				bytea[i] = byteArrayList.get(i);
+			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return bytea;
+	}
+
 }

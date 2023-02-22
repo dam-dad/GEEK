@@ -14,7 +14,6 @@ import javafx.collections.ObservableList;
 import javafx.scene.image.Image;
 
 public class User {
-
 	private LongProperty userID = new SimpleLongProperty();
 	private StringProperty nickname = new SimpleStringProperty();
 	private StringProperty username = new SimpleStringProperty();
@@ -50,17 +49,17 @@ public class User {
 
 	public boolean userInDatabase() throws Exception {
 		return App.conexionDB.getUserFromDB(getUsername(), getPassword()).next();
-//		return App.conexionRemota.getUserFromDB(getUsername(), getPassword()).next();
+		// return App.conexionRemota.getUserFromDB(getUsername(), getPassword()).next();
 	}
-	
+
 	public boolean userInDatabase2() throws Exception {
 		return App.conexionDB.getUserFromDB(getUsername()).next();
-//		return App.conexionRemota.getUserFromDB(getUsername()).next();
+		// return App.conexionRemota.getUserFromDB(getUsername()).next();
 	}
 
 	public void addUsertoDB() throws Exception {
 		App.conexionDB.createUser(getNickname(), getUsername(), getPassword());
-//		App.conexionRemota.createUser(getNickname(), getUsername(), getPassword());
+		// App.conexionRemota.createUser(getNickname(), getUsername(), getPassword());
 	}
 
 	public final LongProperty userIDProperty() {
