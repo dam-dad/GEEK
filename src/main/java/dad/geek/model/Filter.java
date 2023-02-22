@@ -59,5 +59,10 @@ public class Filter {
 	public final void setFilterDescription(final String filterDescription) {
 		this.filterDescriptionProperty().set(filterDescription);
 	}
+	
+	@Override
+	public String toString() {
+		return getFilterName();
+	}
 
 }
