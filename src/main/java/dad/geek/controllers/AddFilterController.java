@@ -9,6 +9,8 @@ import com.jfoenix.controls.JFXListView;
 
 import dad.geek.model.Filter;
 import dad.geek.model.Post;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -22,6 +24,7 @@ public class AddFilterController implements Initializable {
 	
 	private Stage stage;
 	private Post post = new Post();
+	private IntegerProperty selectedFilter = new SimpleIntegerProperty();
 	
 	
 	//view
@@ -48,6 +51,7 @@ public class AddFilterController implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		//listeners
 		filterList.itemsProperty().bind(post.filtersProperty());
+    	selectedFilter.bind(filterList.getSelectionModel().selectedIndexProperty());
 		
 		//filtros
 		Filter programacion = new Filter();
@@ -111,12 +115,19 @@ public class AddFilterController implements Initializable {
 		Filter nintendo = new Filter();
 		nintendo.setFilterName("Nintendo");
 
+		//añadir los filtros a la lista
 		post.filtersProperty().addAll(programacion, videojuegos, musica, edicion, hardware, java, css, javascript, c, cplusplus, python, html, sistoperativos, windows, linux, macos, 
 									android, seriestv, peliculas, consolas, telmoviles, tablets, tv, monitores, ratones, teclados, nintendo, playstation, xbox, ios);
 	}
 	
 	public VBox getView() {
 		return view;
+	}
+	
+	public String getSelectedFilterName() {
+		System.out.println(filterList.getSelectionModel().getSelectedItem().getFilterName());
+		return filterList.getSelectionModel().getSelectedItem().getFilterName();
+		
 	}
 	
 	public AddFilterController setStage(Stage stage) {
