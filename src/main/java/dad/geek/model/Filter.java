@@ -1,5 +1,6 @@
 package dad.geek.model;
 
+import dad.geek.App;
 import javafx.beans.property.LongProperty;
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -11,6 +12,10 @@ public class Filter {
 	private StringProperty filterName = new SimpleStringProperty();
 	private StringProperty filterShortName = new SimpleStringProperty();
 	private StringProperty filterDescription = new SimpleStringProperty();
+	
+	public void addFiltertoDB() throws Exception {
+		App.conexionDB.createFilter(getFilterName(), getFilterShortName(), getFilterDescription());
+	}
 
 	public final LongProperty filterIDProperty() {
 		return this.filterID;

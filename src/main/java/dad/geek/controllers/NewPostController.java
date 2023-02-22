@@ -3,13 +3,13 @@ package dad.geek.controllers;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDateTime;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextArea;
 
 import dad.geek.App;
-import dad.geek.model.Filter;
 import dad.geek.model.Post;
 import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
@@ -21,14 +21,13 @@ import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
-import javafx.scene.control.SplitPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -39,7 +38,6 @@ public class NewPostController implements Initializable {
 
 	private Stage stage;
 	private Post post = new Post();
-	private AddFilterController afc = new AddFilterController();
 	double prefWidth;
 	double prefHeight;
 
@@ -189,11 +187,20 @@ public class NewPostController implements Initializable {
 		
 		App.primaryStage.getScene().setCursor(Cursor.WAIT);
 		try {
-//			filterFlow.getChildren().clear();
-//			for (Filter f : App.conexionDB.getAllPosts(reload)) {
-				filterFlow.getChildren().add(new Label(AddFilterController.getSelectedFilterName()));
-//				postsContainer.getChildren().add(new SplitPane());
-//			}
+			Label label = new Label();
+			filterFlow.getChildren().add(label);
+			label.setText(AddFilterController.getSelectedFilterName());
+			label.setOnMouseClicked(MouseEvent  -> {
+				Alert deleteAlert = new Alert(AlertType.WARNING);
+				deleteAlert.setTitle("¿BORRAR?");
+				deleteAlert.setHeaderText("¿Desea borrar este filtro?");
+				deleteAlert.initOwner(App.primaryStage);
+				deleteAlert.initModality(Modality.APPLICATION_MODAL);
+				Optional<ButtonType> result = deleteAlert.showAndWait();
+				if (result.get() == ButtonType.OK){
+					filterFlow.getChildren().remove(label);
+				}
+			});
 		} catch (Exception e) {
 			Alert errorAlert = new Alert(AlertType.ERROR);
 			errorAlert.setTitle("ERROR");

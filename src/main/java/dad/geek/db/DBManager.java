@@ -47,7 +47,7 @@ public class DBManager {
 			allFilters = connPostgre.prepareStatement("SELECT * FROM filtros ORDER BY id DESC");
 			userFilters = connPostgre.prepareStatement("SELECT * FROM filtrosusuario WHERE id_usuario = ?");
 			postFilters = connPostgre.prepareStatement("SELECT * FROM filtrospost WHERE id_post = ?");
-			createFilter = connPostgre.prepareStatement("INSER INTO filtros");
+			createFilter = connPostgre.prepareStatement("INSER INTO filtros (nombre, shortname, descripcion) values (?, ?, ?)");
 
 		} catch (IOException | SQLException e) {
 			e.printStackTrace();
@@ -61,6 +61,19 @@ public class DBManager {
 			createUser.setString(2, username);
 			createUser.setString(3, password);
 			createUser.execute();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+	}
+	
+	public void createFilter(String nombre, String shortname, String descripcion) {
+
+		try {
+			createFilter.setString(1, nombre);
+			createFilter.setString(2, shortname);
+			createFilter.setString(3, descripcion);
+			createFilter.execute();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

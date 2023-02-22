@@ -55,11 +55,32 @@ public class AddFilterController implements Initializable {
 		
 		//filtros
 		Filter programacion = new Filter();
-		programacion.setFilterName("Programación");		
+		programacion.setFilterName("Programación");	
+		programacion.setFilterShortName("prog");		
+		programacion.setFilterDescription("Filtro dedicado a la programación de software");		
+		try {
+			programacion.addFiltertoDB();
+		} catch (Exception e) {
+		}
+
 		Filter videojuegos = new Filter();
-		videojuegos.setFilterName("Videojuegos");		
+		videojuegos.setFilterName("Videojuegos");	
+		videojuegos.setFilterShortName("games");		
+		videojuegos.setFilterDescription("Filtro dedicado a los videojuegos");		
+		try {
+			videojuegos.addFiltertoDB();
+		} catch (Exception e) {
+		}
+
 		Filter musica = new Filter();
-		musica.setFilterName("Música");		
+		musica.setFilterName("Música");	
+		musica.setFilterShortName("mus");		
+		musica.setFilterDescription("Filtro dedicado a la música");		
+		try {
+			musica.addFiltertoDB();
+		} catch (Exception e) {
+		}
+		
 		Filter edicion = new Filter();
 		edicion.setFilterName("Edición");		
 		Filter hardware = new Filter();
@@ -126,7 +147,6 @@ public class AddFilterController implements Initializable {
 	}
 	
 	public static String getSelectedFilterName() {
-		System.out.println(selectedFilter.get());
 		Filter filter = new Filter();
 		filter = post.filtersProperty().get(selectedFilter.get());
 		return filter.getFilterName();
@@ -140,7 +160,6 @@ public class AddFilterController implements Initializable {
 
     @FXML
     void onCloseButtonAction(ActionEvent event) {
-    	getSelectedFilterName();
 		this.stage.getOnCloseRequest().handle(new WindowEvent(this.stage, WindowEvent.WINDOW_CLOSE_REQUEST));
     }
 
