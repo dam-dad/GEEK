@@ -21,7 +21,7 @@ public class DBManager {
 	private int numberOfPosts = 0;
 	private Connection connPostgre;
 	private PreparedStatement allPosts, userFromId, userFromNamePass, userFromName, createUser, sendPost, setUserImage, setNickname,
-			userPosts;
+			userPosts, allFilters, userFilters, postFilters, createFilter;
 
 	public DBManager() {
 
@@ -44,6 +44,10 @@ public class DBManager {
 			setUserImage = connPostgre.prepareStatement("update usuarios set imagen = ? where id = ?");
 			setNickname = connPostgre.prepareStatement("update usuarios set nombre = ? where id = ?");
 			userPosts = connPostgre.prepareStatement("select * from posts where ID_Usuario = ? order by id desc");
+			allFilters = connPostgre.prepareStatement("SELECT * FROM filtros ORDER BY id DESC");
+			userFilters = connPostgre.prepareStatement("SELECT * FROM filtrosusuario WHERE id_usuario = ?");
+			postFilters = connPostgre.prepareStatement("SELECT * FROM filtrospost WHERE id_post = ?");
+			createFilter = connPostgre.prepareStatement("INSER INTO filtros");
 
 		} catch (IOException | SQLException e) {
 			e.printStackTrace();
@@ -236,6 +240,26 @@ public class DBManager {
 			throw new Exception("Hubo un error al intentar actualizar la imagen de usuario (SQLException).");
 		}
 
+	}
+
+	public void getAllFiltros() {
+		// TODO Implementar
+
+	}
+
+	public void getFiltrosPost() {
+		// TODO Implementar
+
+	}
+
+	public void getFiltrosUsuario() {
+		// TODO Implementar
+
+	}
+
+	public void createFiltro() {
+		// TODO Implementar
+		
 	}
 
 	public void close() throws Exception {
