@@ -12,20 +12,20 @@
 <?import javafx.scene.text.Font?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<VBox fx:id="view" maxHeight="1.7976931348623157E308" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<VBox fx:id="view" maxHeight="1.7976931348623157E308" styleClass="background" stylesheets="@../css/styles.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <BorderPane>
          <right>
-            <JFXButton fx:id="editButton" alignment="CENTER_RIGHT" contentDisplay="RIGHT" onAction="#onEditAction" text="Editar" BorderPane.alignment="CENTER">
+            <JFXButton fx:id="editButton" alignment="CENTER_RIGHT" contentDisplay="RIGHT" onAction="#onEditAction" styleClass="link-see-more" text="Editar" BorderPane.alignment="CENTER">
                <graphic>
-                  <FontIcon iconLiteral="mdi2l-lead-pencil" iconSize="16" />
+                  <FontIcon iconColor="#2f3e46" iconLiteral="mdi2l-lead-pencil" iconSize="16" text="󰙏" />
                </graphic>
             </JFXButton>
          </right>
          <left>
             <JFXButton fx:id="backButton" contentDisplay="GRAPHIC_ONLY" onAction="#onBackAction" text="Button" BorderPane.alignment="CENTER">
                <graphic>
-                  <FontIcon iconLiteral="mdi2a-arrow-left" iconSize="24" />
+                  <FontIcon iconColor="#2f3e46" iconLiteral="mdi2a-arrow-left" iconSize="24" />
                </graphic>
                <BorderPane.margin>
                   <Insets left="5.0" />
@@ -45,12 +45,12 @@
             </ImageView>
             <VBox alignment="CENTER_LEFT" HBox.hgrow="NEVER">
                <children>
-                  <Label fx:id="nicknameLabel" text="Nombre de Usuario">
+                  <Label fx:id="nicknameLabel" styleClass="text" text="Nombre de Usuario">
                      <font>
                         <Font size="16.0" />
                      </font>
                   </Label>
-                  <Label fx:id="usernameLabel" text="Código de Usuario">
+                  <Label fx:id="usernameLabel" styleClass="text" text="Código de Usuario">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -64,9 +64,9 @@
       </HBox>
       <HBox alignment="CENTER" spacing="5.0" VBox.vgrow="NEVER">
          <children>
-            <Label text="Filtros seguidos:" />
-            <Label fx:id="filterNumberLabel" text="0" />
-            <JFXButton fx:id="verMasButton" onAction="#onShowMoreAction" text="Ver más" />
+            <Label styleClass="text" text="Filtros seguidos:" />
+            <Label fx:id="filterNumberLabel" styleClass="text" text="0" />
+            <JFXButton fx:id="verMasButton" onAction="#onShowMoreAction" styleClass="link-see-more" text="Ver más" />
          </children>
          <VBox.margin>
             <Insets />
@@ -75,7 +75,7 @@
             <Insets bottom="10.0" top="5.0" />
          </padding>
       </HBox>
-      <ScrollPane fx:id="postContainerPane" fitToWidth="true" focusTraversable="false" hmin="180.0" maxHeight="1.7976931348623157E308" minWidth="200.0">
+      <ScrollPane fx:id="postContainerPane" fitToWidth="true" focusTraversable="false" hmin="180.0" maxHeight="1.7976931348623157E308" minWidth="200.0" stylesheets="@../css/styles.css">
          <content>
             <VBox fx:id="postsContainer" maxHeight="1.7976931348623157E308" />
          </content>

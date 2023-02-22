@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane fx:id="view" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="180.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane fx:id="view" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="180.0" styleClass="background" stylesheets="@../css/styles.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
    <center>
       <VBox focusTraversable="true" BorderPane.alignment="CENTER">
          <children>
@@ -21,7 +21,7 @@
             <Separator />
             <StackPane fx:id="contentPane">
                <children>
-                  <Label fx:id="contentLabel" text="texto de ejemplo" wrapText="true" StackPane.alignment="CENTER_LEFT" />
+                  <Label fx:id="contentLabel" styleClass="text" text="texto de ejemplo" wrapText="true" StackPane.alignment="CENTER_LEFT" />
                </children>
             </StackPane>
          </children>
@@ -44,8 +44,8 @@
             </JFXButton>
             <VBox minHeight="-Infinity" minWidth="-Infinity">
                <children>
-                  <Label fx:id="nicknameLabel" text="Nombre de Usuario" />
-                  <Label fx:id="usernameLabel" text="\@Arroba usuario" />
+                  <Label fx:id="nicknameLabel" styleClass="text" text="Nombre de Usuario" />
+                  <Label fx:id="usernameLabel" styleClass="text" text="\@Arroba usuario" />
                </children>
             </VBox>
          </children>
