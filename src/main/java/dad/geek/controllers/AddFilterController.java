@@ -9,7 +9,6 @@ import com.jfoenix.controls.JFXListView;
 
 import dad.geek.App;
 import dad.geek.model.Filter;
-import dad.geek.model.Post;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.event.ActionEvent;
@@ -24,7 +23,6 @@ public class AddFilterController implements Initializable {
 
 	//model
 	private Stage stage;
-	private static Post post = new Post();
 	private static IntegerProperty selectedFilter = new SimpleIntegerProperty();
 
 	//view
