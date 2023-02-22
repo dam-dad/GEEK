@@ -16,10 +16,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitPane;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Priority;
@@ -39,10 +40,11 @@ public class MainController implements Initializable {
 
 	@FXML
 	private VBox postsContainer;
-
 	@FXML
 	private SplitPane containerPane;
-
+	@FXML
+    private VBox searchContainer;
+	
 	@FXML
 	private FontIcon darkModeIcon;
 
@@ -68,6 +70,9 @@ public class MainController implements Initializable {
 	private ScrollPane postContainerPane;
 
 	@FXML
+    private Hyperlink showMoreLink;
+	
+	@FXML
 	private VBox userContainer;
 
 	@FXML
@@ -90,12 +95,17 @@ public class MainController implements Initializable {
 		// load data
 
 		userContainer.getChildren().add(userSectionController.getView());
-		containerPane.getItems().add(searchSectionController.getView());
+//		containerPane.getItems().add(searchSectionController.getView());
+		searchContainer.getChildren().add(searchSectionController.getView());
 		userContainer.setVgrow(userContainer.getChildren().get(0), Priority.ALWAYS);
 		containerPane.setDividerPositions(0.1, 0.9);
 
-		postContainerPane.setContent(laodPosts());
-
+		laodPosts(false);
+		
+//		AutoUpdateThread thread = new AutoUpdateThread(this);
+//		ScheduledExecutorService exec = Executors.newSingleThreadScheduledExecutor();
+//		exec.scheduleAtFixedRate(thread, 3, 1000, TimeUnit.SECONDS);
+		
 		// listeners
 
 		darkModeSwitch.selectedProperty().addListener((observable, oldValue, newValue) -> {
@@ -116,16 +126,19 @@ public class MainController implements Initializable {
 
 		App.primaryStage.setOnCloseRequest(e -> {
 			e.consume();
+//			thread.interrupt();
 			App.salir();
 		});
 
 	}
 
 	//TODO Los post no se extienden a la máxima
-	private VBox laodPosts() {
+	private VBox laodPosts(boolean reload) {
+		
+		App.primaryStage.getScene().setCursor(Cursor.WAIT);
 		try {
 			postsContainer.getChildren().clear();
-			for (Post p : App.conexionLocal.getAllPosts()) {
+			for (Post p : App.conexionDB.getAllPosts(reload)) {
 				postsContainer.getChildren().add(new PostController(p).setMainController(this).getView());
 				postsContainer.getChildren().add(new SplitPane());
 			}
@@ -139,6 +152,7 @@ public class MainController implements Initializable {
 			errorAlert.show();
 			return null;
 		}
+		App.primaryStage.getScene().setCursor(Cursor.DEFAULT);
 		return postsContainer;
 	}
 
@@ -174,9 +188,7 @@ public class MainController implements Initializable {
 	}
 
 	private void reloadPosts() {
-		App.primaryStage.getScene().setCursor(Cursor.WAIT);
-		postContainerPane.setContent(laodPosts());
-		App.primaryStage.getScene().setCursor(Cursor.DEFAULT);
+		laodPosts(true);
 	}
 
 	@FXML
@@ -197,6 +209,11 @@ public class MainController implements Initializable {
 	void onExitAction(ActionEvent event) {
 		App.salir();
 	}
+	
+	@FXML
+    void onShowMoreAction(ActionEvent event) {
+		laodPosts(false);
+    }
 
 	@FXML
 	void onGenerateInformeAction(ActionEvent event) {

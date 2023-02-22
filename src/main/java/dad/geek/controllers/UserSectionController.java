@@ -144,8 +144,8 @@ public class UserSectionController implements Initializable {
 		Stage window = new Stage();
 		window.setTitle("Editar usuario");
 		window.setScene(new Scene(new EditProfileController().setStage(window).getView()));
-		window.setMinWidth(300);
-		window.setMinHeight(435);
+		window.setMinWidth(350);
+		window.setMinHeight(370);
 		window.initOwner(App.primaryStage);
 		window.initModality(Modality.APPLICATION_MODAL);
 
@@ -215,7 +215,7 @@ public class UserSectionController implements Initializable {
 	private VBox laodPosts() {
 		try {
 			postsContainer.getChildren().clear();
-			for (Post p : App.conexionLocal.getUserPosts(currentUser.get())) {
+			for (Post p : App.conexionDB.getUserPosts(currentUser.get())) {
 				postsContainer.getChildren().add(new PostController(p).getView());
 				postsContainer.getChildren().add(new SplitPane());
 			}

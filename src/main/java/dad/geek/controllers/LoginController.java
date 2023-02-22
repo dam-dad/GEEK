@@ -133,9 +133,8 @@ public class LoginController implements Initializable {
 		try {
 			hideLabel();
 			if (user.userInDatabase()) {
-//				System.out.println(this.user.getUsername() + " " + this.user.getPassword());
-				App.user = App.conexionLocal.getUserObject(this.user.getUsername(), this.user.getPassword());
-				// App.user = App.conexionRemota.getUserObject(this.user.getUsername(), this.user.getPassword());
+				App.user = App.conexionDB.getUserObject(this.user.getUsername(), this.user.getPassword());
+//				App.user = App.conexionRemota.getUserObject(this.user.getUsername(), this.user.getPassword());
 				App.openScene(new MainController().getView(), 850, 550);
 
 			} else {

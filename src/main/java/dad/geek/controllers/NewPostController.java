@@ -165,7 +165,7 @@ public class NewPostController implements Initializable {
 	void onSendAction(ActionEvent event) {
 		post.setPostDate(LocalDateTime.now());
 		try {
-			App.conexionLocal.sendPost(post);
+			App.conexionDB.sendPost(post);
 		} catch (Exception e) {
 			Alert errorAlert = new Alert(AlertType.ERROR);
 			errorAlert.setTitle("ERROR");
