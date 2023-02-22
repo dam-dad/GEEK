@@ -21,10 +21,10 @@ import javafx.stage.WindowEvent;
 
 public class AddFilterController implements Initializable {
 
-	
+	//model
 	private Stage stage;
-	private Post post = new Post();
-	private IntegerProperty selectedFilter = new SimpleIntegerProperty();
+	private static Post post = new Post();
+	private static IntegerProperty selectedFilter = new SimpleIntegerProperty();
 	
 	
 	//view
@@ -116,17 +116,20 @@ public class AddFilterController implements Initializable {
 		nintendo.setFilterName("Nintendo");
 
 		//añadir los filtros a la lista
-		post.filtersProperty().addAll(programacion, videojuegos, musica, edicion, hardware, java, css, javascript, c, cplusplus, python, html, sistoperativos, windows, linux, macos, 
-									android, seriestv, peliculas, consolas, telmoviles, tablets, tv, monitores, ratones, teclados, nintendo, playstation, xbox, ios);
+		post.filtersProperty().addAll(  programacion, videojuegos, musica, edicion, hardware, java, css, javascript, c, cplusplus, 
+										python, html, sistoperativos, windows, linux, macos, android, seriestv, peliculas, consolas, 
+										telmoviles, tablets, tv, monitores, ratones, teclados, nintendo, playstation, xbox, ios);
 	}
 	
 	public VBox getView() {
 		return view;
 	}
 	
-	public String getSelectedFilterName() {
-		System.out.println(filterList.getSelectionModel().getSelectedItem().getFilterName());
-		return filterList.getSelectionModel().getSelectedItem().getFilterName();
+	public static String getSelectedFilterName() {
+		System.out.println(selectedFilter.get());
+		Filter filter = new Filter();
+		filter = post.filtersProperty().get(selectedFilter.get());
+		return filter.getFilterName();
 		
 	}
 	
@@ -137,6 +140,7 @@ public class AddFilterController implements Initializable {
 
     @FXML
     void onCloseButtonAction(ActionEvent event) {
+    	getSelectedFilterName();
 		this.stage.getOnCloseRequest().handle(new WindowEvent(this.stage, WindowEvent.WINDOW_CLOSE_REQUEST));
     }
 

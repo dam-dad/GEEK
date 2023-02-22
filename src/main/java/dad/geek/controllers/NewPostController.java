@@ -189,9 +189,9 @@ public class NewPostController implements Initializable {
 		
 		App.primaryStage.getScene().setCursor(Cursor.WAIT);
 		try {
-			filterFlow.getChildren().clear();
+//			filterFlow.getChildren().clear();
 //			for (Filter f : App.conexionDB.getAllPosts(reload)) {
-				filterFlow.getChildren().add(new Label(afc.getSelectedFilterName()));
+				filterFlow.getChildren().add(new Label(AddFilterController.getSelectedFilterName()));
 //				postsContainer.getChildren().add(new SplitPane());
 //			}
 		} catch (Exception e) {
