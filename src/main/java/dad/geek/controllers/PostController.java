@@ -20,11 +20,16 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Modality;
 
+/**
+ * Controlador de los posts.
+ *
+ */
 public class PostController implements Initializable {
 
 	// model
@@ -62,11 +67,14 @@ public class PostController implements Initializable {
 	@FXML
 	private BorderPane view;
 
+	/**
+	 * Constructor de la clase PostController, carga el fxml.
+	 */
 	public PostController(Post post) {
 		this.post = post;
 
 		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/PostView_Karim.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/PostView.fxml"));
 			loader.setController(this);
 			loader.load();
 		} catch (IOException e) {
@@ -75,6 +83,9 @@ public class PostController implements Initializable {
 
 	}
 
+	/**
+	 * 
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
@@ -103,50 +114,83 @@ public class PostController implements Initializable {
 		
 		// listeners 
 		
-		contentLabel.setOnMouseClicked(mouseEvent -> {
-			
-            if(mouseEvent.getButton().equals(MouseButton.PRIMARY)){
-            	
-                if(mouseEvent.getClickCount() == 2){
-                	contentLabel.setVisible(false);
-                    TextArea textarea = new TextArea(contentLabel.getText());
-                    textarea.setPrefHeight(contentLabel.getHeight() + 10);
-                    textarea.setEditable(false);
-                    contentPane.getChildren().add(textarea);
-
-                    textarea.setOnKeyPressed(event ->{
-                        if(event.getCode().toString().equals("ENTER")) {
-                        	contentPane.getChildren().remove(textarea);
-                        	contentLabel.setVisible(true);
-                        }
-                    });
-                    
-                    textarea.focusedProperty().addListener((o,ov,nv) -> {
-                    	
-                    	if(nv != null && nv == false) {
-                    		contentPane.getChildren().remove(textarea);
-                        	contentLabel.setVisible(true);
-                    	}
-                    	
-                    });
-                }
-            }
-            
-        });
+		contentLabel.setOnMouseClicked(this::onMouseClicked);
 
 	}
 
+	/**
+	 * Encargado de detectar si se hace doble click en un {@code Label}, si es el caso cambiamos a {@code TextArea}
+	 * @param mouseEvent
+	 */
+	private void onMouseClicked(MouseEvent mouseEvent) {
+		
+		if(mouseEvent.getButton().equals(MouseButton.PRIMARY)){
+            if(mouseEvent.getClickCount() == 2){
+            	contentLabel.setVisible(false);
+                TextArea textarea = new TextArea(contentLabel.getText());
+                textarea.setPrefHeight(contentLabel.getHeight() + 10);
+                textarea.setEditable(false);
+                contentPane.getChildren().add(textarea);
+
+                textarea.setOnKeyPressed(event ->{
+                    if(event.getCode().toString().equals("ENTER")) {
+                    	contentPane.getChildren().remove(textarea);
+                    	contentLabel.setVisible(true);
+                    }
+                });
+                
+                textarea.focusedProperty().addListener((o,ov,nv) -> {
+                	if(nv != null && nv == false) {
+                		contentPane.getChildren().remove(textarea);
+                    	contentLabel.setVisible(true);
+                	}
+                });
+            }
+        }
+		
+	}
+
+	/**
+	 * Se ejecuta cada vez que se presione la imagen.<br/>
+	 * Llama a la función {@link PostController#openUser()}.
+	 * @param event
+	 */
 	@FXML
 	void onOpenUserAction(ActionEvent event) {
+		openUser();
+	}
+	
+	/**
+	 * Se ejecuta cada vez que se presione el área cercana al nickname o el username.<br/>
+	 * Llama a la función {@link PostController#openUser()}.
+	 * @param event
+	 */
+	@FXML
+    void onOpenUserCkick(MouseEvent event) {
+		openUser();
+    }
+	
+	/**
+	 * Llama a la función {@link UserSectionController#changeUser(User)}.
+	 */
+	private void openUser() {
 		main.getUserSectionController().changeUser(user);
 	}
 
+	/**
+	 * Recibe el controlador padre {@link MainController}.
+	 * @param parent
+	 * @return A sí mismo: {@link PostController}.
+	 */
 	public PostController setMainController(MainController parent) {
 		this.main = parent;
 		userButton.setMouseTransparent(false);
 		return this;
 	}
 
+	/**
+	 * @return
+	 */
 	public BorderPane getView() {
 		return view;
 	}

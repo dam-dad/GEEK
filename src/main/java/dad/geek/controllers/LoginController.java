@@ -28,6 +28,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 
+/**
+ * Controlador de la ventana Login 
+ *
+ */
 public class LoginController implements Initializable {
 
 	// model
@@ -67,6 +71,9 @@ public class LoginController implements Initializable {
 	@FXML
 	private BorderPane view;
 
+	/**
+	 * Constructor de la clase LoginController, carga el fxml.
+	 */
 	public LoginController() {
 
 		try {
@@ -79,6 +86,9 @@ public class LoginController implements Initializable {
 
 	}
 
+	/**
+	 * 
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
@@ -101,6 +111,12 @@ public class LoginController implements Initializable {
 
 	}
 
+	/**
+	 * Se ejecuta cada vez que cambie el estado de selectedProperty del componente showPasswordCheck, si esta seleccionado modifica la propiedad labelFloat de passwordText.
+	 * @param o
+	 * @param ov
+	 * @param nv
+	 */
 	private void onShowPasswordChanged(ObservableValue<? extends Boolean> o, Boolean ov, Boolean nv) {
 
 		if (nv) {
@@ -109,6 +125,9 @@ public class LoginController implements Initializable {
 
 	}
 
+	/**
+	 * Esconde el label "No existe este usuario, inténtelo de nuevo.".
+	 */
 	private void hideLabel() {
 
 		if (noUserFound != null) {
@@ -117,31 +136,49 @@ public class LoginController implements Initializable {
 		}
 
 	}
+	
+	/**
+	 * Muestra el label "No existe este usuario, inténtelo de nuevo.".
+	 */
+	private void showLabel() {
+		noUserFound = new Label("No existe este usuario, inténtelo de nuevo.");
+		noUserFound.setStyle("-fx-text-fill: red;");
+		noUserFound.setPadding(new Insets(0, 0, 10, 0));
+		((VBox) getView().getChildren().get(0)).getChildren().add(4, noUserFound);
+	}
 
+	/**
+	 * Se ejecuta cada vez que haces click en cualquier TextField, llama al método {@link LoginController #hideLabel()}.
+	 * @param event
+	 */
 	@FXML
 	void onTextClicked(MouseEvent event) {
 		hideLabel();
 	}
 
+	/**
+	 * Se ejecuta cada vez que hace click en el {@code Hyperlink} "¿No tiene cuenta?, regístrese".
+	 * @param event
+	 */
 	@FXML
 	void hasNoAccountAction(ActionEvent event) {
 		App.openScene(new SigninController().getView(), 450, 550);
 	}
 
+	/**
+	 * Se ejecuta cada vez que le das al {@code JFXButton}, coteja con la base de datos si el usuario introducido existe en la base de datos, 
+	 * si es el caso ejecuta el método {@link App #openScene(javafx.scene.Parent, double, double)}. Si no es el caso ejecuta el método {@link LoginController #showLabel()}
+	 * @param event
+	 */
 	@FXML
 	void onLoginAction(ActionEvent event) {
 		try {
 			hideLabel();
 			if (user.userInDatabase()) {
 				App.user = App.conexionDB.getUserObject(this.user.getUsername(), this.user.getPassword());
-//				App.user = App.conexionRemota.getUserObject(this.user.getUsername(), this.user.getPassword());
 				App.openScene(new MainController().getView(), 850, 550);
-
 			} else {
-				noUserFound = new Label("No existe este usuario, inténtelo de nuevo.");
-				noUserFound.setStyle("-fx-text-fill: red;");
-				noUserFound.setPadding(new Insets(0, 0, 10, 0));
-				((VBox) getView().getChildren().get(0)).getChildren().add(4, noUserFound);
+				showLabel();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -155,6 +192,9 @@ public class LoginController implements Initializable {
 		App.primaryStage.centerOnScreen();
 	}
 
+	/**
+	 * @return
+	 */
 	public BorderPane getView() {
 		return view;
 	}

@@ -3,6 +3,7 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
 <BorderPane fx:id="view" style="-fx-border-color: #2F3E46; -fx-border-width: 2;" styleClass="background" stylesheets="@../css/styles.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
@@ -16,4 +17,7 @@
    <bottom>
       <ImageView fx:id="imageView" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
    </bottom>
+   <center>
+      <HBox onMouseDragged="#onMouseDragged" onMousePressed="#onMousePressed" BorderPane.alignment="CENTER" />
+   </center>
 </BorderPane>

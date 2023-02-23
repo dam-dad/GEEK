@@ -19,6 +19,10 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
+/**
+ * Controlador de la ventana Añadir filtros
+ *
+ */
 public class AddFilterController implements Initializable {
 
 	//model
@@ -35,6 +39,9 @@ public class AddFilterController implements Initializable {
     @FXML
     private VBox view;
     
+    /**
+	 * Constructor de la clase AddFilterController, carga el fxml.
+	 */
     public AddFilterController() {
     	try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/AddFilterView.fxml"));
@@ -45,6 +52,9 @@ public class AddFilterController implements Initializable {
 		}
     }
     
+    /**
+     * 
+     */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		//listeners
@@ -56,26 +66,41 @@ public class AddFilterController implements Initializable {
 		}
 	}
 	
-	public VBox getView() {
-		return view;
-	}
-	
+	/**
+	 * @return El nombre del filtro seleccionado.
+	 * @throws Exception
+	 */
 	public static String getSelectedFilterName() throws Exception {
 		Filter filter = new Filter();
 		filter = App.conexionDB.getAllFilters().get(selectedFilter.get());
 		return filter.getFilterName();	
 	}
 	
+	/**
+	 * Recibe el stage y lo guarda para manipularlo.
+	 * @param stage
+	 * @return
+	 */
 	public AddFilterController setStage(Stage stage) {
 		this.stage = stage;
 		return this;
 	}
 
+	/**
+	 * Se ejecuta cada vez que se le de al botón "Aceptar".<br/>
+	 * Se encarga de pedir el cierre de la ventana.
+	 * @param event
+	 */
     @FXML
     void onCloseButtonAction(ActionEvent event) {
 		this.stage.getOnCloseRequest().handle(new WindowEvent(this.stage, WindowEvent.WINDOW_CLOSE_REQUEST));
     }
-
-
+    
+    /**
+     * @return
+     */
+    public VBox getView() {
+    	return view;
+    }
 
 }

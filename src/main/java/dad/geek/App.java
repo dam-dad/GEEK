@@ -12,28 +12,25 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
+import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+/**
+ * Clase que se encarga de ejecutar la aplicación.
+ */
 public class App extends Application {
 
 	public static Stage primaryStage;
-//	public static ConexionMySQL conexionLocal;
 	public static DBManager conexionDB;
-//	public static DBManager conexionRemota = new DBManager();
 
 	public static User user = new User();
 
-//	private MainController controller = new MainController();
 	private LoginController controller = new LoginController();
 
-//	@Override
-//	public void init() throws Exception {
-//		super.init();
-//
-//		DBManager.conectarDB();
-//	}
-
+	/**
+	 * Se ejecuta al comienzo, crea la primera ventana {@link LoginController} y conecta con la base de datos
+	 */
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 
@@ -42,12 +39,12 @@ public class App extends Application {
 		primaryStage.setTitle("GEEK");
 		primaryStage.setScene(new Scene(controller.getView()));
 		primaryStage.show();
+		primaryStage.getIcons().add(new Image(getClass().getResource("/images/iconooficia.png").toString()));
 		primaryStage.setMinWidth(450);
 		primaryStage.setMinHeight(500);
 		primaryStage.centerOnScreen();
 
 		try {
-//			conexionLocal = new ConexionMySQL();
 			conexionDB = new DBManager();
 		} catch (Exception e1) {
 			Alert errorAlert = new Alert(AlertType.ERROR);
@@ -60,7 +57,16 @@ public class App extends Application {
 		}
 
 	}
-
+	
+	/**
+	 * Se encarga de crear una escena en una nueva ventana
+	 * @param parent
+	 * - El componente que lo llama
+	 * @param width
+	 * - El ancho deseado
+	 * @param height
+	 * - La altura deseada
+	 */
 	public static void openScene(Parent parent, double width, double height) {
 
 		Stage stage = App.primaryStage;
@@ -76,6 +82,9 @@ public class App extends Application {
 
 	}
 
+	/**
+	 * Se ejecuta cada vez que se desee salir de la aplicación principal(no se ejecuta ni en {@link LoginController} ni en {@link SigninController}
+	 */
 	public static void salir() {
 		Alert alerta = new Alert(AlertType.CONFIRMATION);
 		alerta.setTitle("Exit");

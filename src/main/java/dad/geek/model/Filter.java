@@ -1,11 +1,16 @@
 package dad.geek.model;
 
 import dad.geek.App;
+import dad.geek.db.DBManager;
 import javafx.beans.property.LongProperty;
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
+/**
+ * Clase Filter, contiene todos los datos del filtro.
+ *
+ */
 public class Filter {
 
 	private LongProperty filterID = new SimpleLongProperty();
@@ -13,9 +18,19 @@ public class Filter {
 	private StringProperty filterShortName = new SimpleStringProperty();
 	private StringProperty filterDescription = new SimpleStringProperty();
 	
+	/**
+	 * Constructor genérico de la clase {@link Filter}
+	 */
 	public Filter() {
 	}
 	
+	/**
+	 * Constructor de la clase {@link Filter}
+	 * @param filterID
+	 * @param filterName
+	 * @param filterShortName
+	 * @param filterDescription
+	 */
 	public Filter(long filterID, String filterName, String filterShortName, String filterDescription) {
 		setFilterID(filterID);
 		setFilterName(filterName);
@@ -23,8 +38,12 @@ public class Filter {
 		setFilterDescription(filterDescription);
 	}
 	
+	/**
+	 * Llama a la función {@link DBManager#createFilter(Filter)}.
+	 * @throws Exception
+	 */
 	public void addFiltertoDB() throws Exception {
-		App.conexionDB.createFilter(getFilterName(), getFilterShortName(), getFilterDescription());
+		App.conexionDB.createFilter(this);
 	}
 
 	public final LongProperty filterIDProperty() {

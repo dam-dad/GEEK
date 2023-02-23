@@ -10,6 +10,7 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextArea;
 
 import dad.geek.App;
+import dad.geek.db.DBManager;
 import dad.geek.model.Post;
 import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
@@ -34,6 +35,10 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
+/**
+ * Controlador de la ventana de nuevo post. 
+ *
+ */
 public class NewPostController implements Initializable {
 
 	// model
@@ -72,6 +77,9 @@ public class NewPostController implements Initializable {
 	@FXML
 	private BorderPane view;
 
+	/**
+	 * Constructor de la clase NewPostController, carga el fxml.
+	 */
 	public NewPostController() {
 
 		try {
@@ -84,6 +92,9 @@ public class NewPostController implements Initializable {
 
 	}
 
+	/**
+	 * 
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
@@ -102,12 +113,23 @@ public class NewPostController implements Initializable {
 
 	}
 
+	/**
+	 * Recibe un {@code Stage} y lo asigna al {@code Stage} local estableciendo la anchura mínima a 450. 
+	 * @param stage
+	 * @return A si mismo: {@link NewPostController}.
+	 */
 	public NewPostController setStage(Stage stage) {
 		this.stage = stage;
 		this.stage.setMinWidth(450);
 		return this;
 	}
 
+	/**
+	 * Recibe un {@code String} con la posición de la imagen y un {@code Image} que se desea poner en el post.
+	 * @param posicionImagen
+	 * @param image
+	 * @return A si mismo: {@link NewPostController}.
+	 */
 	public NewPostController setPosition(String posicionImagen, Image image) {
 
 		ImageView imageView = new ImageView(image);
@@ -144,6 +166,9 @@ public class NewPostController implements Initializable {
 
 	}
 
+	/**
+	 * Quita todas las imagenes que se han subido al post que se está creando.
+	 */
 	public void noImages() {
 
 		view.setPrefWidth(450);
@@ -161,6 +186,11 @@ public class NewPostController implements Initializable {
 
 	}
 
+	/**
+	 * Se ejecuta cada vez que le des al botón superior derecho, 
+	 * abre una ventana controlada por {@link AddFilterController} con los filtros posibles que se pueden seleccionar.
+	 * @param event
+	 */
 	@FXML
 	void onAddFilterAction(ActionEvent event) {
 
@@ -185,6 +215,11 @@ public class NewPostController implements Initializable {
 
 	}
 	
+	/**
+	 * Se ejecuta cada vez que se cierre la ventana de "Añadir filtro".<br/>
+	 * Crea el {@code Label} y lo añade al {@code FlowPane} con un listener que al hacer click sobre el filtro salga una ventana de alerta preguntando si lo quieres eliminal.
+	 * @return
+	 */
 	private FlowPane getFiltersFlowPane() {
 		
 		App.primaryStage.getScene().setCursor(Cursor.WAIT);
@@ -195,7 +230,7 @@ public class NewPostController implements Initializable {
 			label.setOnMouseClicked(MouseEvent  -> {
 				Alert deleteAlert = new Alert(AlertType.CONFIRMATION);
 				deleteAlert.setTitle("¿BORRAR?");
-				deleteAlert.setHeaderText("¿Desea borrar este filtro?");
+				deleteAlert.setHeaderText("¿Desea borrar el filtro " + label.getText() + "?");
 				deleteAlert.initOwner(App.primaryStage);
 				deleteAlert.initModality(Modality.APPLICATION_MODAL);
 				Optional<ButtonType> result = deleteAlert.showAndWait();
@@ -228,6 +263,10 @@ public class NewPostController implements Initializable {
 	}
 
 
+	/**
+	 * Se ejecuta cuando se presiona el {@code JFXButton} "Enviar". Ejecuta la función {@link DBManager#sendPost(Post)}.
+	 * @param event
+	 */
 	@FXML
 	void onSendAction(ActionEvent event) {
 		post.setPostDate(LocalDateTime.now());
@@ -245,6 +284,10 @@ public class NewPostController implements Initializable {
 		this.stage.getOnCloseRequest().handle(new WindowEvent(this.stage, WindowEvent.WINDOW_CLOSE_REQUEST));
 	}
 
+	/**
+	 * Crea una ventana controlada por {@link NewPostDialog}.
+	 * @param event
+	 */
 	@FXML
 	void onAddImage(ActionEvent event) {
 
@@ -268,6 +311,9 @@ public class NewPostController implements Initializable {
 
 	}
 
+	/**
+	 * @return
+	 */
 	public BorderPane getView() {
 		return view;
 	}

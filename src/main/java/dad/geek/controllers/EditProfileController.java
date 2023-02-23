@@ -31,6 +31,10 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
+/**
+ * Controlador de la ventana Editar Perfil.
+ *
+ */
 public class EditProfileController implements Initializable {
 
 	// model
@@ -60,6 +64,9 @@ public class EditProfileController implements Initializable {
 	@FXML
 	private BorderPane view;
 
+	/**
+	 * Constructor de la clase EditProfileController, carga el fxml.
+	 */
 	public EditProfileController() {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/EditProfileView.fxml"));
@@ -70,6 +77,9 @@ public class EditProfileController implements Initializable {
 		}
 	}
 
+	/**
+	 * 
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
@@ -83,6 +93,11 @@ public class EditProfileController implements Initializable {
 
 	}
 
+	/**
+	 * Se ejecuta al pulsar el botón "editImageButton", abre una ventana FileChooser(solo puedes seleccionar *.png y *.jpg).
+	 * Recibe la imagen de este FileChooser y la añade de forma provisional.
+	 * @param event
+	 */
 	@FXML
 	void onEditImageAction(ActionEvent event) {
 		FileChooser fileChooser = new FileChooser();
@@ -97,6 +112,10 @@ public class EditProfileController implements Initializable {
 
 	}
 
+	/**
+	 * Se ejecuta cada vez que le das al botón "aceptar", guarda cualquier cambio que se haya realizado.
+	 * @param event
+	 */
 	//TODO Problemas al seleccionar la imagen del usuario (No se guarda en la base de datos)
 	@FXML
 	void onAcceptAction(ActionEvent event) {
@@ -117,11 +136,21 @@ public class EditProfileController implements Initializable {
 		stage.getOnCloseRequest().handle(new WindowEvent(stage, WindowEvent.WINDOW_CLOSE_REQUEST));
 	}
 
+	/**
+	 * Se ejecuta cada vez que le das al botón "cancelar", pide que se cierre la ventana sin guardar ningún cambio.
+	 * @param event
+	 */
 	@FXML
 	void onCancelAction(ActionEvent event) {
 		stage.getOnCloseRequest().handle(new WindowEvent(stage, WindowEvent.WINDOW_CLOSE_REQUEST));
 	}
 
+	/**
+	 * Se ejecuta cada vez qu le das al botón editNicknameButton, abre un TextInputDialog donde introduces tu nuevo nombre.
+	 * El botón aceptar sólo estará habilitado si el nombre es válido(entre 4 y 40 carácteres), una vez pulsade se guarda el nombre de forma provisional.
+	 * El botón cancelar sólo cierra la ventana, no guarda el nombre.
+	 * @param event
+	 */
 	@FXML
 	void onEditNicknameAction(ActionEvent event) {
 		isValidName.set(true);
@@ -132,7 +161,7 @@ public class EditProfileController implements Initializable {
 				String.format("Tu nombre actual es \"%s\".\nIntroduzca su nuevo nombre.", App.user.getNickname()));
 		dialog.setContentText("Nuevo nombre:");
 		dialog.getEditor().textProperty().addListener((o, ov, nv) -> {
-			if (nv != null && nv.length() > 0 && nv.length() <= 40)
+			if (nv != null && nv.length() > 3 && nv.length() <= 40)
 				isValidName.set(false);
 			else
 				isValidName.set(true);
@@ -146,11 +175,19 @@ public class EditProfileController implements Initializable {
 		});
 	}
 
+	/**
+	 * Recibe el stage para poder modificar la ventana o ejecutar un WINDOW_CLOSE_REQUEST.
+	 * @param stage
+	 * @return
+	 */
 	public EditProfileController setStage(Stage stage) {
 		this.stage = stage;
 		return this;
 	}
 
+	/**
+	 * @return
+	 */
 	public BorderPane getView() {
 		return view;
 	}

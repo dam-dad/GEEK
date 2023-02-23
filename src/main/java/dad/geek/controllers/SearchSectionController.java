@@ -24,12 +24,17 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 
+/**
+ * Controlador del apartado de búsqueda de posts
+ *
+ */
 public class SearchSectionController implements Initializable {
 	
 	//model
 	User user = new User();
 	
 	//view
+	
     @FXML
     private ScrollPane searchResultContainerPane;
     @FXML
@@ -43,6 +48,9 @@ public class SearchSectionController implements Initializable {
     @FXML
     private VBox view;
     
+    /**
+	 * Constructor de la clase SearchSectionController, carga el fxml.
+	 */
     public SearchSectionController() {
     	try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/SearchSection.fxml"));
@@ -53,6 +61,9 @@ public class SearchSectionController implements Initializable {
 		}
     }
 
+    /**
+     * 
+     */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		//bindings
@@ -66,6 +77,11 @@ public class SearchSectionController implements Initializable {
 	}
 	
 
+	/**
+	 * Busca los posts que coincidan con los filtros seleccionados.
+	 * @param event
+	 * @throws Exception
+	 */
     @FXML
     void onSearchAction(ActionEvent event) throws Exception {
     	//si hay texto pero no hay ningún filtro seleccionado
@@ -84,6 +100,11 @@ public class SearchSectionController implements Initializable {
     	}
     }
     
+    /**
+     * Carga los posts si no tienen ningún filtro seleccionado.
+     * @return El {@code VBox} con todos los posts cargados.
+     * @throws Exception
+     */
     private VBox loadPostNoFilter() throws Exception {
 		try {
 			searchResultContainer.getChildren().clear();
@@ -116,43 +137,67 @@ public class SearchSectionController implements Initializable {
 		}
     }
     
+    /**
+     * @return
+     */
 	public VBox getView() {
 		return view;
 	}
 
+	/**
+	 * @return
+	 */
 	public ScrollPane getsearchResultContainerPane() {
 		return searchResultContainerPane;
 	}
 
+	/**
+	 * @param searchResultContainerPane
+	 */
 	public void setsearchResultContainerPane(ScrollPane searchResultContainerPane) {
 		this.searchResultContainerPane = searchResultContainerPane;
 	}
 
+	/**
+	 * @return
+	 */
 	public JFXButton getSearchButton() {
 		return searchButton;
 	}
 
+	/**
+	 * @param searchButton
+	 */
 	public void setSearchButton(JFXButton searchButton) {
 		this.searchButton = searchButton;
 	}
 
+	/**
+	 * @return
+	 */
 	public JFXComboBox<Filter> getSearchFiltersComboBox() {
 		return searchFiltersComboBox;
 	}
 
+	/**
+	 * @param searchFiltersComboBox
+	 */
 	public void setSearchFiltersComboBox(JFXComboBox<Filter> searchFiltersComboBox) {
 		this.searchFiltersComboBox = searchFiltersComboBox;
 	}
 
+	/**
+	 * @return
+	 */
 	public JFXTextField getSearchUserText() {
 		return searchUserText;
 	}
 
+	/**
+	 * @param searchUserText
+	 */
 	public void setSearchUserText(JFXTextField searchUserText) {
 		this.searchUserText = searchUserText;
 	}
 	
-	
-    
-
 }

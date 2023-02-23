@@ -38,6 +38,10 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
 
+/**
+ * Controlador del apartado de usuario. 
+ *
+ */
 public class UserSectionController implements Initializable {
 
 	// model
@@ -78,6 +82,9 @@ public class UserSectionController implements Initializable {
 	@FXML
 	private VBox view;
 
+	/**
+	 * Constructor de la clase UserSectionController, carga el fxml.
+	 */
 	public UserSectionController() {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/UserSectionView.fxml"));
@@ -88,6 +95,9 @@ public class UserSectionController implements Initializable {
 		}
 	}
 
+	/**
+	 * 
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
@@ -107,13 +117,21 @@ public class UserSectionController implements Initializable {
 
 	}
 
+	/**
+	 * Se ejecuta cada vez que se le de al {@code JFXButton} "Editar".
+	 * Llama a la función {@link #openEditWindow()}
+	 * @param event
+	 */
 	@FXML
 	void onEditAction(ActionEvent event) {
-
 		openEditWindow();
-
 	}
 
+	/**
+	 * Se ejecuta cada vez que se presione la imagen de perfil en la sección de usuario.
+	 * Abre una nueva ventana {@code UNDECORATED} y le damos su controlador ({@link ShowImageController}).
+	 * @param event
+	 */
 	//TODO Añadir tamaño máximo a la imagen
 	@FXML
 	void onProfileImageClicked(MouseEvent event) {
@@ -121,8 +139,7 @@ public class UserSectionController implements Initializable {
 		Stage window = new Stage();
 		window.initStyle(StageStyle.UNDECORATED);
 		window.setTitle("Imagen de perfil");
-		window.setScene(
-				new Scene(new ShowImageController().setImageView(profileImage.getImage()).setStage(window).getView()));
+		window.setScene(new Scene(new ShowImageController().setImageView(profileImage.getImage()).setStage(window).getView()));
 
 		window.initOwner(App.primaryStage);
 		window.initModality(Modality.APPLICATION_MODAL);
@@ -139,6 +156,10 @@ public class UserSectionController implements Initializable {
 
 	}
 
+	/**
+	 * Se ejecuta cada vez que se presione el {@code JFXButton} "Editar".
+	 * Abre la ventana de edición de usuario con el controlador {@link EditProfileController}.
+	 */
 	public void openEditWindow() {
 
 		Stage window = new Stage();
@@ -161,27 +182,42 @@ public class UserSectionController implements Initializable {
 
 	}
 
+	//TODO quitar
 	@FXML
 	void onShowMoreAction(ActionEvent event) {
 
 	}
 
+	/**
+	 * Sólo posible si está viendo otro usuario, al darle al botón te manda al anterior usuario que estabas viendo.
+	 * @param event
+	 */
 	@FXML
 	void onBackAction(ActionEvent event) {
-
 		users.remove(users.size() - 1);
 		if (currentUser.get().equals(App.user))
 			goback.set(false);
-
 	}
 
+	/**
+	 * Se ejecuta cada vez que se modifica el tamaño del {@code ListProperty<}{@link User}{@code >} "users".
+	 * Establece el usuario que se está viendo al último de la lista "users".
+	 * @param o
+	 * @param ov
+	 * @param nv
+	 */
 	private void onUsersSizeModified(ObservableValue<? extends Number> o, Number ov, Number nv) {
-
 		if (nv != null && nv.intValue() >= 1)
 			currentUser.set(users.get(nv.intValue() - 1));
-
 	}
 
+	/**
+	 * Se ejecuta cada vez que se modifique el {@code ObjectProperty<}{@link User}{@code >} "currentUser".
+	 * Quita anteriores bindings y realiza los bindings con el nuevo usuario.
+	 * @param o
+	 * @param ov
+	 * @param nv
+	 */
 	private void onCurrentUserChanged(ObservableValue<? extends User> o, User ov, User nv) {
 
 		if (ov != null) {
@@ -195,11 +231,15 @@ public class UserSectionController implements Initializable {
 			usernameLabel.textProperty().bind(Bindings.concat("@").concat(nv.usernameProperty()));
 			profileImage.imageProperty().bind(nv.profileImageProperty());
 
-			postContainerPane.setContent(laodPosts());
+			postContainerPane.setContent(loadPosts());
 		}
 
 	}
 
+	/**
+	 * Recibe nuevo usuario y cambia el anterior al nuevo.
+	 * @param user
+	 */
 	public void changeUser(User user) {
 
 		if (user.equals(App.user))
@@ -212,7 +252,11 @@ public class UserSectionController implements Initializable {
 
 	}
 
-	private VBox laodPosts() {
+	/**
+	 * Hace lo mismo que {@link MainController#loadPosts(boolean)} pero en el user section.
+	 * @return
+	 */
+	public VBox loadPosts() {
 		try {
 			postsContainer.getChildren().clear();
 			for (Post p : App.conexionDB.getUserPosts(currentUser.get())) {
@@ -232,12 +276,18 @@ public class UserSectionController implements Initializable {
 		return postsContainer;
 	}
 
+	/**
+	 * Ejecuta la función {@link #loadPosts()}.
+	 */
 	public void refreshPosts() {
 		App.primaryStage.getScene().setCursor(Cursor.WAIT);
-		postContainerPane.setContent(laodPosts());
+		postContainerPane.setContent(loadPosts());
 		App.primaryStage.getScene().setCursor(Cursor.DEFAULT);
 	}
 
+	/**
+	 * @return
+	 */
 	public VBox getView() {
 		return view;
 	}
