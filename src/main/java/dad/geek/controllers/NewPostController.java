@@ -28,6 +28,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -202,6 +204,14 @@ public class NewPostController implements Initializable {
 				}else {
 					deleteAlert.close();
 				}
+			});
+			label.setOnMouseEntered(MouseEvent -> {
+				label.setFont(Font.font("System", FontWeight.BOLD, 12));
+				label.setUnderline(true);
+			});
+			label.setOnMouseExited(MouseEvent -> {
+				label.setFont(Font.font("System", FontWeight.NORMAL, 12));
+				label.setUnderline(false);
 			});
 		} catch (Exception e) {
 			Alert errorAlert = new Alert(AlertType.ERROR);
