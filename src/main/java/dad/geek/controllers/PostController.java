@@ -74,7 +74,7 @@ public class PostController implements Initializable {
 		this.post = post;
 
 		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/PostView_Karim.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/PostView.fxml"));
 			loader.setController(this);
 			loader.load();
 		} catch (IOException e) {
@@ -148,12 +148,29 @@ public class PostController implements Initializable {
 	}
 
 	/**
-	 * Se ejecuta cada vez que se presione la imagen o el nickname o el username.<br/>
-	 * Llama a la función {@link UserSectionController#changeUser(User)}.
+	 * Se ejecuta cada vez que se presione la imagen.<br/>
+	 * Llama a la función {@link PostController#openUser()}.
 	 * @param event
 	 */
 	@FXML
 	void onOpenUserAction(ActionEvent event) {
+		openUser();
+	}
+	
+	/**
+	 * Se ejecuta cada vez que se presione el área cercana al nickname o el username.<br/>
+	 * Llama a la función {@link PostController#openUser()}.
+	 * @param event
+	 */
+	@FXML
+    void onOpenUserCkick(MouseEvent event) {
+		openUser();
+    }
+	
+	/**
+	 * Llama a la función {@link UserSectionController#changeUser(User)}.
+	 */
+	private void openUser() {
 		main.getUserSectionController().changeUser(user);
 	}
 

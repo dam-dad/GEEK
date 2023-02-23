@@ -9,7 +9,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 
@@ -28,6 +27,9 @@ public class DBManager {
 	private PreparedStatement allPosts, userFromId, userFromNamePass, userFromName, createUser, sendPost, setUserImage, setNickname,
 			userPosts, allFilters, userFilters, postFilters, createFilter, totalNumberOfPosts;
 
+	/**
+	 * Constructor de la clase LoginController, carga el fxml.
+	 */
 	public DBManager() {
 
 		try {
@@ -79,12 +81,18 @@ public class DBManager {
 
 	}
 	
-	public void createFilter(String nombre, String shortname, String descripcion) {
+	/**
+	 * Inserta el {@link Filter} a la base de datos.
+	 * @param nombre
+	 * @param shortname
+	 * @param descripcion
+	 */
+	public void createFilter(Filter filter) {
 
 		try {
-			createFilter.setString(1, nombre);
-			createFilter.setString(2, shortname);
-			createFilter.setString(3, descripcion);
+			createFilter.setString(1, filter.getFilterName());
+			createFilter.setString(2, filter.getFilterShortName());
+			createFilter.setString(3, filter.getFilterDescription());
 			createFilter.execute();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -210,6 +218,11 @@ public class DBManager {
 		return null;
 	}
 
+	/**
+	 * @param userId
+	 * @return Un objeto {@link User} con los datos que recibe de la función {@link #getUserFromDB(long)}
+	 * @throws Exception
+	 */
 	public User getUserObject(long userId) throws Exception {
 
 		try {
@@ -362,6 +375,10 @@ public class DBManager {
 
 	}
 
+	/**
+	 * @return {@code ResultSet} con todos los filtros que están en la base de datos.
+	 * @throws Exception
+	 */
 	public ResultSet allFiltersFromDB() throws Exception {
 		try {
 			return allFilters.executeQuery();
@@ -370,6 +387,10 @@ public class DBManager {
 		}
 	}
 	
+	/**
+	 * @return Una {@code List<}{@link Filter}{@code>} que contiene todos los filtos que le devuelve la función {@link #allFiltersFromDB()}.
+	 * @throws Exception
+	 */
 	public List<Filter> getAllFilters() throws Exception {
 
 		List<Filter> result = new ArrayList<>();
@@ -391,11 +412,13 @@ public class DBManager {
 		return result;
 	}
 
+	// TODO comentar cuando esté implementado
 	public void getFiltrosPost() {
 		// TODO Implementar
 
 	}
 
+	// TODO comentar cuando esté implementado
 	public void getFiltrosUsuario() {
 		// TODO Implementar
 
@@ -414,6 +437,11 @@ public class DBManager {
 		}
 	}
 
+	/**
+	 * Transforma una imagen a un array de bytes.
+	 * @param file
+	 * @return El array de bytes de la imagen facilitada.
+	 */
 	private byte[] transformarImagen(File file) {
 		byte[] bytea = null;
 		try (FileInputStream fis = new FileInputStream(file)) {

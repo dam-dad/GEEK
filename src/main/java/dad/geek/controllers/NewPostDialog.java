@@ -78,8 +78,12 @@ public class NewPostDialog implements Initializable {
 
 	}
 
+	/**
+	 * Se ejecuta cada vez que se seleccione una opcion que no sea "Sin imagen"
+	 * @param event
+	 */
 	@FXML
-	void onCreatePost(ActionEvent event) {
+	void onSelectImage(ActionEvent event) {
 
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("Abrir imagen");

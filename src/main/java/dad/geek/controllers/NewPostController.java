@@ -181,6 +181,11 @@ public class NewPostController implements Initializable {
 
 	}
 
+	/**
+	 * Se ejecuta cada vez que le des al botón superior derecho, 
+	 * abre una ventana controlada por {@link AddFilterController} con los filtros posibles que se pueden seleccionar.
+	 * @param event
+	 */
 	@FXML
 	void onAddFilterAction(ActionEvent event) {
 
@@ -205,6 +210,11 @@ public class NewPostController implements Initializable {
 
 	}
 	
+	/**
+	 * Se ejecuta cada vez que se cierre la ventana de "Añadir filtro".<br/>
+	 * Crea el {@code Label} y lo añade al {@code FlowPane} con un listener que al hacer click sobre el filtro salga una ventana de alerta preguntando si lo quieres eliminal.
+	 * @return
+	 */
 	private FlowPane getFiltersFlowPane() {
 		
 		App.primaryStage.getScene().setCursor(Cursor.WAIT);
@@ -215,7 +225,7 @@ public class NewPostController implements Initializable {
 			label.setOnMouseClicked(MouseEvent  -> {
 				Alert deleteAlert = new Alert(AlertType.CONFIRMATION);
 				deleteAlert.setTitle("¿BORRAR?");
-				deleteAlert.setHeaderText("¿Desea borrar este filtro?");
+				deleteAlert.setHeaderText("¿Desea borrar el filtro " + label.getText() + "?");
 				deleteAlert.initOwner(App.primaryStage);
 				deleteAlert.initModality(Modality.APPLICATION_MODAL);
 				Optional<ButtonType> result = deleteAlert.showAndWait();

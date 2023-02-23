@@ -74,6 +74,11 @@ public class SearchSectionController implements Initializable {
 	}
 	
 
+	/**
+	 * Busca los posts que coincidan con los filtros seleccionados.
+	 * @param event
+	 * @throws Exception
+	 */
     @FXML
     void onSearchAction(ActionEvent event) throws Exception {
     	//si hay texto pero no hay ningún filtro seleccionado
@@ -92,6 +97,11 @@ public class SearchSectionController implements Initializable {
     	}
     }
     
+    /**
+     * Carga los posts si no tienen ningún filtro seleccionado.
+     * @return El {@code VBox} con todos los posts cargados.
+     * @throws Exception
+     */
     private VBox loadPostNoFilter() throws Exception {
 		try {
 			searchResultContainer.getChildren().clear();

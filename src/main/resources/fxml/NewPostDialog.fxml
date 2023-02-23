@@ -27,19 +27,19 @@
         </rowConstraints>
          <children>
             <Label text="Imagen a la izquierda" />
-            <Button fx:id="leftButton" mnemonicParsing="false" onAction="#onCreatePost" GridPane.rowIndex="1">
+            <Button fx:id="leftButton" mnemonicParsing="false" onAction="#onSelectImage" GridPane.rowIndex="1">
                <graphic>
                   <ImageView fx:id="leftImage" pickOnBounds="true" preserveRatio="true" />
                </graphic>
             </Button>
             <Label text="Imagen a la derecha" GridPane.columnIndex="1" />
-            <Button fx:id="rightButton" mnemonicParsing="false" onAction="#onCreatePost" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <Button fx:id="rightButton" mnemonicParsing="false" onAction="#onSelectImage" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <graphic>
                   <ImageView fx:id="rightImage" pickOnBounds="true" preserveRatio="true" />
                </graphic>
             </Button>
             <Label text="Imagen Abajo" GridPane.rowIndex="2" />
-            <Button fx:id="downButton" mnemonicParsing="false" onAction="#onCreatePost" GridPane.rowIndex="3">
+            <Button fx:id="downButton" mnemonicParsing="false" onAction="#onSelectImage" GridPane.rowIndex="3">
                <graphic>
                   <ImageView fx:id="downImage" pickOnBounds="true" preserveRatio="true" />
                </graphic>
