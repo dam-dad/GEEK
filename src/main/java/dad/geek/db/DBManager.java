@@ -102,6 +102,7 @@ public class DBManager {
 
 	}
 	
+	// TODO comentar cuando este acabado
 	public void createPostFilter(long id_post, long id_filtro) {
 
 		try {
@@ -114,6 +115,7 @@ public class DBManager {
 
 	}
 	
+	// TODO comentar cuando este acabado
 	public void createUserFilter(long id_usuario, long id_filtro) {
 
 		try {

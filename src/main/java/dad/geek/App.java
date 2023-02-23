@@ -16,12 +16,13 @@ import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+/**
+ * Clase que se encarga de ejecutar la aplicación.
+ */
 public class App extends Application {
 
 	public static Stage primaryStage;
-//	public static ConexionMySQL conexionLocal;
 	public static DBManager conexionDB;
-//	public static DBManager conexionRemota = new DBManager();
 
 	public static User user = new User();
 

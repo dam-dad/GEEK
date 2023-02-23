@@ -97,6 +97,9 @@ public class SigninController implements Initializable {
 
 	}
 
+	/**
+	 * 
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
@@ -201,6 +204,9 @@ public class SigninController implements Initializable {
 		}
 	}
 
+	/**
+	 * @return
+	 */
 	public BorderPane getView() {
 		return view;
 	}

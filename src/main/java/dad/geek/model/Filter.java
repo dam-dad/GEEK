@@ -18,9 +18,19 @@ public class Filter {
 	private StringProperty filterShortName = new SimpleStringProperty();
 	private StringProperty filterDescription = new SimpleStringProperty();
 	
+	/**
+	 * Constructor genérico de la clase {@link Filter}
+	 */
 	public Filter() {
 	}
 	
+	/**
+	 * Constructor de la clase {@link Filter}
+	 * @param filterID
+	 * @param filterName
+	 * @param filterShortName
+	 * @param filterDescription
+	 */
 	public Filter(long filterID, String filterName, String filterShortName, String filterDescription) {
 		setFilterID(filterID);
 		setFilterName(filterName);

@@ -95,6 +95,9 @@ public class MainController implements Initializable {
 		}
 	}
 
+	/**
+	 * 
+	 */
 	@SuppressWarnings("static-access")
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -287,6 +290,9 @@ public class MainController implements Initializable {
 		return userSectionController;
 	}
 
+	/**
+	 * @return
+	 */
 	public BorderPane getView() {
 		return view;
 	}

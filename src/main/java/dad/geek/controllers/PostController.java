@@ -83,6 +83,9 @@ public class PostController implements Initializable {
 
 	}
 
+	/**
+	 * 
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
@@ -185,6 +188,9 @@ public class PostController implements Initializable {
 		return this;
 	}
 
+	/**
+	 * @return
+	 */
 	public BorderPane getView() {
 		return view;
 	}

@@ -52,6 +52,9 @@ public class AddFilterController implements Initializable {
 		}
     }
     
+    /**
+     * 
+     */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		//listeners
@@ -73,6 +76,11 @@ public class AddFilterController implements Initializable {
 		return filter.getFilterName();	
 	}
 	
+	/**
+	 * Recibe el stage y lo guarda para manipularlo.
+	 * @param stage
+	 * @return
+	 */
 	public AddFilterController setStage(Stage stage) {
 		this.stage = stage;
 		return this;
@@ -88,6 +96,9 @@ public class AddFilterController implements Initializable {
 		this.stage.getOnCloseRequest().handle(new WindowEvent(this.stage, WindowEvent.WINDOW_CLOSE_REQUEST));
     }
     
+    /**
+     * @return
+     */
     public VBox getView() {
     	return view;
     }

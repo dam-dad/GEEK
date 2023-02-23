@@ -86,6 +86,9 @@ public class LoginController implements Initializable {
 
 	}
 
+	/**
+	 * 
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
@@ -189,6 +192,9 @@ public class LoginController implements Initializable {
 		App.primaryStage.centerOnScreen();
 	}
 
+	/**
+	 * @return
+	 */
 	public BorderPane getView() {
 		return view;
 	}

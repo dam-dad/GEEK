@@ -61,6 +61,9 @@ public class SearchSectionController implements Initializable {
 		}
     }
 
+    /**
+     * 
+     */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		//bindings
@@ -134,43 +137,67 @@ public class SearchSectionController implements Initializable {
 		}
     }
     
+    /**
+     * @return
+     */
 	public VBox getView() {
 		return view;
 	}
 
+	/**
+	 * @return
+	 */
 	public ScrollPane getsearchResultContainerPane() {
 		return searchResultContainerPane;
 	}
 
+	/**
+	 * @param searchResultContainerPane
+	 */
 	public void setsearchResultContainerPane(ScrollPane searchResultContainerPane) {
 		this.searchResultContainerPane = searchResultContainerPane;
 	}
 
+	/**
+	 * @return
+	 */
 	public JFXButton getSearchButton() {
 		return searchButton;
 	}
 
+	/**
+	 * @param searchButton
+	 */
 	public void setSearchButton(JFXButton searchButton) {
 		this.searchButton = searchButton;
 	}
 
+	/**
+	 * @return
+	 */
 	public JFXComboBox<Filter> getSearchFiltersComboBox() {
 		return searchFiltersComboBox;
 	}
 
+	/**
+	 * @param searchFiltersComboBox
+	 */
 	public void setSearchFiltersComboBox(JFXComboBox<Filter> searchFiltersComboBox) {
 		this.searchFiltersComboBox = searchFiltersComboBox;
 	}
 
+	/**
+	 * @return
+	 */
 	public JFXTextField getSearchUserText() {
 		return searchUserText;
 	}
 
+	/**
+	 * @param searchUserText
+	 */
 	public void setSearchUserText(JFXTextField searchUserText) {
 		this.searchUserText = searchUserText;
 	}
 	
-	
-    
-
 }

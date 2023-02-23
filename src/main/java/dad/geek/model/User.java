@@ -22,7 +22,6 @@ public class User {
 	private StringProperty nickname = new SimpleStringProperty();
 	private StringProperty username = new SimpleStringProperty();
 	private StringProperty password = new SimpleStringProperty();
-	private StringProperty mail = new SimpleStringProperty(); // TODO lo implementamos con mail al final????????????
 	private ObjectProperty<Image> profileImage = new SimpleObjectProperty<>();
 	private ListProperty<Post> posts = new SimpleListProperty<>(FXCollections.observableArrayList());
 
@@ -70,7 +69,6 @@ public class User {
 	 */
 	public boolean userInDatabase() throws Exception {
 		return App.conexionDB.getUserFromDB(getUsername(), getPassword()).next();
-		// return App.conexionRemota.getUserFromDB(getUsername(), getPassword()).next();
 	}
 	
 	/**
@@ -80,7 +78,6 @@ public class User {
 	 */
 	public boolean userInDatabase2() throws Exception {
 		return App.conexionDB.getUserFromDB(getUsername()).next();
-		// return App.conexionRemota.getUserFromDB(getUsername()).next();
 	}
 
 	/**
@@ -89,7 +86,6 @@ public class User {
 	 */
 	public void addUsertoDB() throws Exception {
 		App.conexionDB.createUser(this);
-//		App.conexionRemota.createUser(getNickname(), getUsername(), getPassword());
 	}
 
 	public final LongProperty userIDProperty() {
@@ -126,18 +122,6 @@ public class User {
 
 	public final void setPassword(final String password) {
 		this.passwordProperty().set(password);
-	}
-
-	public final StringProperty mailProperty() {
-		return this.mail;
-	}
-
-	public final String getMail() {
-		return this.mailProperty().get();
-	}
-
-	public final void setMail(final String mail) {
-		this.mailProperty().set(mail);
 	}
 
 	public final StringProperty nicknameProperty() {

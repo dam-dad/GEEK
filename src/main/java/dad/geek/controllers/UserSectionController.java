@@ -95,6 +95,9 @@ public class UserSectionController implements Initializable {
 		}
 	}
 
+	/**
+	 * 
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
@@ -282,6 +285,9 @@ public class UserSectionController implements Initializable {
 		App.primaryStage.getScene().setCursor(Cursor.DEFAULT);
 	}
 
+	/**
+	 * @return
+	 */
 	public VBox getView() {
 		return view;
 	}
