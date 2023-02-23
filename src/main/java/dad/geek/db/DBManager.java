@@ -25,7 +25,7 @@ public class DBManager {
 	private int numberOfPosts = 0;
 	private Connection connPostgre;
 	private PreparedStatement allPosts, userFromId, userFromNamePass, userFromName, createUser, sendPost, setUserImage, setNickname,
-			userPosts, allFilters, userFilters, postFilters, createFilter, totalNumberOfPosts;
+			userPosts, allFilters, userFilters, postFilters, createFilter, totalNumberOfPosts, createPostFilter, createUserFilter;
 
 	/**
 	 * Constructor de la clase LoginController, carga el fxml.
@@ -54,6 +54,8 @@ public class DBManager {
 			allFilters = connPostgre.prepareStatement("SELECT * FROM filtros ORDER BY id DESC");
 			userFilters = connPostgre.prepareStatement("SELECT * FROM filtrosusuario WHERE id_usuario = ?");
 			postFilters = connPostgre.prepareStatement("SELECT * FROM filtrospost WHERE id_post = ?");
+			createPostFilter = connPostgre.prepareStatement("insert into filtrospost (id_post, id_filtro) values (?, ?)");
+			createUserFilter = connPostgre.prepareStatement("insert into filtrosusuario (id_usuario, id_filtro) values (?, ?)");
 			createFilter = connPostgre.prepareStatement("insert into filtros (nombre, shortname, descripcion) values (?, ?, ?)");
 			totalNumberOfPosts = connPostgre.prepareStatement("select count(*) from posts");
 			
@@ -94,6 +96,30 @@ public class DBManager {
 			createFilter.setString(2, filter.getFilterShortName());
 			createFilter.setString(3, filter.getFilterDescription());
 			createFilter.execute();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+	}
+	
+	public void createPostFilter(long id_post, long id_filtro) {
+
+		try {
+			createPostFilter.setLong(1, id_post);
+			createPostFilter.setLong(2, id_filtro);
+			createPostFilter.execute();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+	}
+	
+	public void createUserFilter(long id_usuario, long id_filtro) {
+
+		try {
+			createUserFilter.setLong(1, id_usuario);
+			createUserFilter.setLong(2, id_filtro);
+			createUserFilter.execute();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
