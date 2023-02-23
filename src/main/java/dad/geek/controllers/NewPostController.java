@@ -11,8 +11,12 @@ import com.jfoenix.controls.JFXTextArea;
 
 import dad.geek.App;
 import dad.geek.db.DBManager;
+import dad.geek.model.Filter;
 import dad.geek.model.Post;
 import javafx.beans.binding.Bindings;
+import javafx.beans.property.ListProperty;
+import javafx.beans.property.SimpleListProperty;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -47,7 +51,7 @@ public class NewPostController implements Initializable {
 	private Post post = new Post();
 	double prefWidth;
 	double prefHeight;
-
+	
 	// view
 
 	@FXML
@@ -227,6 +231,10 @@ public class NewPostController implements Initializable {
 			Label label = new Label();
 			filterFlow.getChildren().add(label);
 			label.setText(AddFilterController.getSelectedFilterName());
+			post.filtersProperty().add(AddFilterController.getSelectedFilter());
+			Filter filter = new Filter(AddFilterController.getSelectedFilterID(), AddFilterController.getSelectedFilterName(), 
+										AddFilterController.getSelectedFilterShortName(), AddFilterController.getSelectedFilterDescription());
+			
 			label.setOnMouseClicked(MouseEvent  -> {
 				Alert deleteAlert = new Alert(AlertType.CONFIRMATION);
 				deleteAlert.setTitle("¿BORRAR?");
@@ -236,18 +244,22 @@ public class NewPostController implements Initializable {
 				Optional<ButtonType> result = deleteAlert.showAndWait();
 				if (result.get() == ButtonType.OK){
 					filterFlow.getChildren().remove(label);
+					post.filtersProperty().remove(filter);
 				}else {
 					deleteAlert.close();
 				}
 			});
+			
 			label.setOnMouseEntered(MouseEvent -> {
 				label.setFont(Font.font("System", FontWeight.BOLD, 12));
 				label.setUnderline(true);
 			});
+			
 			label.setOnMouseExited(MouseEvent -> {
 				label.setFont(Font.font("System", FontWeight.NORMAL, 12));
 				label.setUnderline(false);
 			});
+			
 		} catch (Exception e) {
 			Alert errorAlert = new Alert(AlertType.ERROR);
 			errorAlert.setTitle("ERROR");
@@ -271,6 +283,9 @@ public class NewPostController implements Initializable {
 	void onSendAction(ActionEvent event) {
 		post.setPostDate(LocalDateTime.now());
 		try {
+			for (int i = 0; i <= post.filtersProperty().size(); i++) {
+				App.conexionDB.createPostFilter(post.getPostID(), post.filtersProperty().get(i).getFilterID());
+			}
 			App.conexionDB.sendPost(post);
 		} catch (Exception e) {
 			Alert errorAlert = new Alert(AlertType.ERROR);
