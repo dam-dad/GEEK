@@ -10,6 +10,7 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextArea;
 
 import dad.geek.App;
+import dad.geek.db.DBManager;
 import dad.geek.model.Post;
 import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
@@ -32,6 +33,10 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
+/**
+ * Controlador de la ventana de nuevo post. 
+ *
+ */
 public class NewPostController implements Initializable {
 
 	// model
@@ -70,6 +75,9 @@ public class NewPostController implements Initializable {
 	@FXML
 	private BorderPane view;
 
+	/**
+	 * Constructor de la clase NewPostController, carga el fxml.
+	 */
 	public NewPostController() {
 
 		try {
@@ -100,12 +108,23 @@ public class NewPostController implements Initializable {
 
 	}
 
+	/**
+	 * Recibe un {@code Stage} y lo asigna al {@code Stage} local estableciendo la anchura mínima a 450. 
+	 * @param stage
+	 * @return A si mismo: {@link NewPostController}.
+	 */
 	public NewPostController setStage(Stage stage) {
 		this.stage = stage;
 		this.stage.setMinWidth(450);
 		return this;
 	}
 
+	/**
+	 * Recibe un {@code String} con la posición de la imagen y un {@code Image} que se desea poner en el post.
+	 * @param posicionImagen
+	 * @param image
+	 * @return A si mismo: {@link NewPostController}.
+	 */
 	public NewPostController setPosition(String posicionImagen, Image image) {
 
 		ImageView imageView = new ImageView(image);
@@ -142,6 +161,9 @@ public class NewPostController implements Initializable {
 
 	}
 
+	/**
+	 * Quita todas las imagenes que se han subido al post que se está creando.
+	 */
 	public void noImages() {
 
 		view.setPrefWidth(450);
@@ -218,6 +240,10 @@ public class NewPostController implements Initializable {
 	}
 
 
+	/**
+	 * Se ejecuta cuando se presiona el {@code JFXButton} "Enviar". Ejecuta la función {@link DBManager#sendPost(Post)}.
+	 * @param event
+	 */
 	@FXML
 	void onSendAction(ActionEvent event) {
 		post.setPostDate(LocalDateTime.now());
@@ -235,6 +261,10 @@ public class NewPostController implements Initializable {
 		this.stage.getOnCloseRequest().handle(new WindowEvent(this.stage, WindowEvent.WINDOW_CLOSE_REQUEST));
 	}
 
+	/**
+	 * Crea una ventana controlada por {@link NewPostDialog}.
+	 * @param event
+	 */
 	@FXML
 	void onAddImage(ActionEvent event) {
 

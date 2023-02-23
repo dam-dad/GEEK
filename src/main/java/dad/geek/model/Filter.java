@@ -6,6 +6,10 @@ import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
+/**
+ * Clase Filter, contiene todos los datos del filtro.
+ *
+ */
 public class Filter {
 
 	private LongProperty filterID = new SimpleLongProperty();

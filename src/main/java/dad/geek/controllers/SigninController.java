@@ -29,6 +29,10 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 
+/**
+ * Controlador de la ventana de signin.
+ *
+ */
 public class SigninController implements Initializable {
 
 	// model
@@ -77,7 +81,10 @@ public class SigninController implements Initializable {
 
 	@FXML
 	private BorderPane view;
-
+	
+	/**
+	 * Constructor de la clase SigninController, carga el fxml.
+	 */
 	public SigninController() {
 
 		try {
@@ -114,6 +121,12 @@ public class SigninController implements Initializable {
 
 	}
 
+	/**
+	 * Se ejecuta cada vez que cambie el estado de la propiedad selected del componente {@code JFXCheckBox} si esta seleccionado modifica la propiedad float del {@code Label} passwordText.
+	 * @param o
+	 * @param ov
+	 * @param nv
+	 */
 	private void onShowPasswordChanged(ObservableValue<? extends Boolean> o, Boolean ov, Boolean nv) {
 
 		if (nv) {
@@ -122,6 +135,9 @@ public class SigninController implements Initializable {
 
 	}
 
+	/**
+	 * Esconde el label "Este usuario ya está registrado, inténtelo de nuevo.".
+	 */
 	private void hideLabel() {
 
 		if (noUserFound != null) {
@@ -130,26 +146,45 @@ public class SigninController implements Initializable {
 		}
 
 	}
+	
+	/**
+	 * Muestra el label "Este usuario ya está registrado, inténtelo de nuevo.".
+	 */
+	private void showLabel() {
+		noUserFound = new Label("Este usuario ya está registrado, inténtelo de nuevo.");
+		noUserFound.setStyle("-fx-text-fill: red;");
+		noUserFound.setPadding(new Insets(0, 0, 10, 0));
+		((VBox) getView().getChildren().get(0)).getChildren().add(5, noUserFound);
+	}
 
+	/**
+	 * Se ejecuta cada vez que haces click en cualquier TextField, llama al método {@link LoginController #hideLabel()}.
+	 * @param event
+	 */
 	@FXML
 	void onTextClicked(MouseEvent event) {
 		hideLabel();
 	}
 
+	/**
+	 * Se ejecuta cada vez que hace click en el {@code Hyperlink} "¿Ya tiene una cuenta?, acceda aquí.".
+	 * @param event
+	 */
 	@FXML
 	void onHasAccountAction(ActionEvent event) {
 		App.openScene(new LoginController().getView(), 450, 500);
 	}
 
-	// TODO revisar si el nombre ya está cogido
+	/**
+	 * Se ejecuta cada vez que le das al {@code JFXButton}, coteja con la base de datos si el usuario introducido existe en la base de datos, 
+	 * si es el caso ejecuta el método {@link SigninController#showLabel()}. Si no es el caso ejecuta el método {@link App #openScene(javafx.scene.Parent, double, double)}.
+	 * @param event
+	 */
 	@FXML
 	void onSigninAction(ActionEvent event) {
 		try {
 			if (user.userInDatabase()) {
-				noUserFound = new Label("Éste usuario ya está registrado, inténtelo de nuevo.");
-				noUserFound.setStyle("-fx-text-fill: red;");
-				noUserFound.setPadding(new Insets(0, 0, 10, 0));
-				((VBox) getView().getChildren().get(0)).getChildren().add(5, noUserFound);
+				showLabel();
 			} else {
 				user.addUsertoDB();
 				App.user = App.conexionDB.getUserObject(this.user.getUsername(), this.user.getPassword());

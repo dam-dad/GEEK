@@ -13,6 +13,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.image.Image;
 
+/**
+ * Clase User, contiene todos los datos del usuario. 
+ *
+ */
 public class User {
 	private LongProperty userID = new SimpleLongProperty();
 	private StringProperty nickname = new SimpleStringProperty();
@@ -22,9 +26,21 @@ public class User {
 	private ObjectProperty<Image> profileImage = new SimpleObjectProperty<>();
 	private ListProperty<Post> posts = new SimpleListProperty<>(FXCollections.observableArrayList());
 
+	/**
+	 * Construcor genérico de la clase {@link User}.
+	 */
 	public User() {
 	}
 
+	/**
+	 * Construcor de la clase {@link User}.
+	 * @param userID
+	 * @param nickname
+	 * @param username
+	 * @param password
+	 * @param image
+	 * @throws Exception
+	 */
 	public User(long userID, String nickname, String username, String password, String image) throws Exception {
 
 		try {
@@ -47,19 +63,33 @@ public class User {
 		setPassword(password);
 	}
 
+	/**
+	 * Comprueba si el usuario y contraseña está en la base de datos
+	 * @return
+	 * @throws Exception
+	 */
 	public boolean userInDatabase() throws Exception {
 		return App.conexionDB.getUserFromDB(getUsername(), getPassword()).next();
 		// return App.conexionRemota.getUserFromDB(getUsername(), getPassword()).next();
 	}
-
+	
+	/**
+	 * Hace lo mismo que {@link User #userInDatabase()} pero sólo con el nombre de usuario.
+	 * @return
+	 * @throws Exception
+	 */
 	public boolean userInDatabase2() throws Exception {
 		return App.conexionDB.getUserFromDB(getUsername()).next();
 		// return App.conexionRemota.getUserFromDB(getUsername()).next();
 	}
 
+	/**
+	 * Añade un usuario a la base de datos.
+	 * @throws Exception
+	 */
 	public void addUsertoDB() throws Exception {
-		App.conexionDB.createUser(getNickname(), getUsername(), getPassword());
-		// App.conexionRemota.createUser(getNickname(), getUsername(), getPassword());
+		App.conexionDB.createUser(this);
+//		App.conexionRemota.createUser(getNickname(), getUsername(), getPassword());
 	}
 
 	public final LongProperty userIDProperty() {
@@ -118,6 +148,11 @@ public class User {
 		return this.nicknameProperty().get();
 	}
 
+	/**
+	 * Añade el nickname a la base de datos.
+	 * @param nickname
+	 * @throws Exception
+	 */
 	public final void setNickname(final String nickname) throws Exception {
 		this.nicknameProperty().set(nickname);
 		App.conexionDB.setNickname(getUserID(), nickname);
@@ -131,6 +166,11 @@ public class User {
 		return this.profileImageProperty().get();
 	}
 
+	/**
+	 * Añade la imagen de perfil a la base de datos.
+	 * @param profileImage
+	 * @throws Exception
+	 */
 	public final void setProfileImage(final Image profileImage) throws Exception {
 		this.profileImageProperty().set(profileImage);
 		App.conexionDB.setUserImage(getUserID(), profileImage.getUrl());

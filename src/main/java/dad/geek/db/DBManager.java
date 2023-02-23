@@ -17,12 +17,16 @@ import dad.geek.model.Filter;
 import dad.geek.model.Post;
 import dad.geek.model.User;
 
+/**
+ * Clase que se encarga de gestionar la conexión con la base de datos. 
+ *
+ */
 public class DBManager {
 
 	private int numberOfPosts = 0;
 	private Connection connPostgre;
 	private PreparedStatement allPosts, userFromId, userFromNamePass, userFromName, createUser, sendPost, setUserImage, setNickname,
-			userPosts, allFilters, userFilters, postFilters, createFilter;
+			userPosts, allFilters, userFilters, postFilters, createFilter, totalNumberOfPosts;
 
 	public DBManager() {
 
@@ -49,18 +53,25 @@ public class DBManager {
 			userFilters = connPostgre.prepareStatement("SELECT * FROM filtrosusuario WHERE id_usuario = ?");
 			postFilters = connPostgre.prepareStatement("SELECT * FROM filtrospost WHERE id_post = ?");
 			createFilter = connPostgre.prepareStatement("insert into filtros (nombre, shortname, descripcion) values (?, ?, ?)");
-
+			totalNumberOfPosts = connPostgre.prepareStatement("select count(*) from posts");
+			
 		} catch (IOException | SQLException e) {
 			e.printStackTrace();
 		}
 	}
 
-	public void createUser(String nickname, String username, String password) {
+	/**
+	 * Sube a la base de datos los datos del objeto {@link User} pasado por parámetro.
+	 * @param nickname
+	 * @param username
+	 * @param password
+	 */
+	public void createUser(User user) {
 
 		try {
-			createUser.setString(1, nickname);
-			createUser.setString(2, username);
-			createUser.setString(3, password);
+			createUser.setString(1, user.getNickname());
+			createUser.setString(2, user.getUsername());
+			createUser.setString(3, user.getPassword());
 			createUser.execute();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -81,6 +92,11 @@ public class DBManager {
 
 	}
 
+	/**
+	 * @param id
+	 * @return Un {@code ResultSet} del usuario con el id facilitados por parámetro.
+	 * @throws Exception
+	 */
 	private ResultSet getUserFromDB(long id) throws Exception {
 		try {
 			userFromId.setLong(1, id);
@@ -90,6 +106,13 @@ public class DBManager {
 		}
 	}
 
+	/**
+	 * 
+	 * @param username
+	 * @param password
+	 * @return Un {@code ResultSet} del usuario con el nombre de usuario y la contraseña facilitados por parámetro.
+	 * @throws Exception
+	 */
 	public ResultSet getUserFromDB(String username, String password) throws Exception {
 
 		try {
@@ -102,6 +125,11 @@ public class DBManager {
 		}
 	}
 	
+	/**
+	 * @param username
+	 * @return Un {@code ResultSet} del usuario con el nombre de usuario facilitado por parámetro.
+	 * @throws Exception
+	 */
 	public ResultSet getUserFromDB(String username) throws Exception {
 		try {
 			userFromName.setString(1, username);
@@ -112,6 +140,11 @@ public class DBManager {
 		}
 	}
 
+	/**
+	 * Sube a la base de datos los datos del objeto {@link Post} pasado por parámetro.
+	 * @param post
+	 * @throws Exception
+	 */
 	public void sendPost(Post post) throws Exception {
 
 		try {
@@ -124,13 +157,25 @@ public class DBManager {
 
 	}
 
+	/**
+	 * 
+	 * @param username
+	 * @param password
+	 * @return Un objeto {@link User} con los datos recibidos de la función {@link #getUserFromDB(String, String)}, siendo los parámetros por orden el nombre de usuario y la contraseña.
+	 * @throws Exception
+	 */
 	public User getUserObject(String username, String password) throws Exception {
 
 		try {
 			ResultSet posts = getUserFromDB(username, password);
 			while (posts.next()) {
-				return new User(posts.getLong("ID"), posts.getString("nombre"), posts.getString("nombreUsuario"),
-						posts.getString("password"), posts.getString("imagen"));
+				return new User(
+					posts.getLong("ID"),
+					posts.getString("nombre"), 
+					posts.getString("nombreUsuario"),
+					posts.getString("password"), 
+					posts.getString("imagen")
+				);
 			}
 		} catch (SQLException e) {
 			throw new Exception("Hubo un error al intentar cargar al usuario (SQLException).");
@@ -139,13 +184,24 @@ public class DBManager {
 		return null;
 	}
 	
+	/**
+	 * 
+	 * @param username
+	 * @return Un objeto {@link User} con los datos recibidos de la función {@link #getUserFromDB(String)}, siendo {@code String} el nombre de usuario especificado por parámetro.
+	 * @throws Exception
+	 */
 	public User getUserObject(String username) throws Exception {
 
 		try {
 			ResultSet posts = getUserFromDB(username);
 			while (posts.next()) {
-				return new User(posts.getLong("ID"), posts.getString("nombre"), posts.getString("nombreUsuario"),
-						posts.getString("password"), posts.getString("imagen"));
+				return new User(
+					posts.getLong("ID"), 
+					posts.getString("nombre"), 
+					posts.getString("nombreUsuario"),
+					posts.getString("password"), 
+					posts.getString("imagen")
+				);
 			}
 		} catch (SQLException e) {
 			throw new Exception("Hubo un error al intentar cargar al usuario (SQLException).");
@@ -159,8 +215,13 @@ public class DBManager {
 		try {
 			ResultSet posts = getUserFromDB(userId);
 			while (posts.next()) {
-				return new User(posts.getLong("ID"), posts.getString("nombre"), posts.getString("nombreUsuario"),
-						posts.getString("password"), posts.getString("imagen"));
+				return new User(
+					posts.getLong("ID"),
+					posts.getString("nombre"), 
+					posts.getString("nombreUsuario"),
+					posts.getString("password"), 
+					posts.getString("imagen")
+				);
 			}
 		} catch (SQLException e) {
 			throw new Exception("Hubo un error al intentar cargar al usuario (SQLException).");
@@ -169,23 +230,24 @@ public class DBManager {
 		return null;
 	}
 
-	public List<Post> getAllPosts(boolean reload) throws Exception {
+	/**
+	 * @param reload
+	 * @return Una {@code List<}{@link Post}{@code >} con los posts recibidos de la función {@link #allPostsFromDB}.
+	 * @throws Exception
+	 */
+	public List<Post> getPosts(boolean reload) throws Exception {
 
 		List<Post> result = new ArrayList<>();
 		ResultSet posts = allPostsFromDB(reload);
-
 		try {
 			while (posts.next()) {
-
 				result.add(new Post(
 					posts.getLong("ID"), 
 					posts.getLong("ID_Usuario"), 
 					posts.getString("titulo"),
 					posts.getString("contenido")
 				));
-				
 			}
-			
 		} catch (SQLException e) {
 			throw new Exception("Hubo un error al intentar cargar todos los posts (SQLException).");
 		}
@@ -193,6 +255,11 @@ public class DBManager {
 		return result;
 	}
 
+	/**
+	 * @param reload
+	 * @return {@code ResultSet} con posts (si reload es true 10, si reload es false "numberOfPosts + 10").
+	 * @throws Exception
+	 */
 	private ResultSet allPostsFromDB(boolean reload) throws Exception {
 		try {
 			numberOfPosts = reload ? 10 : numberOfPosts + 10;
@@ -203,16 +270,23 @@ public class DBManager {
 		}
 	}
 
+	/**
+	 * @param user
+	 * @return Una {@code List<}{@link Post}{@code >} con los posts recibidos de la función {@link #getUserPostsFromDB(User)}, siendo User el usuario facilitado por parámetro.
+	 * @throws Exception
+	 */
 	public List<Post> getUserPosts(User user) throws Exception {
 		List<Post> result = new ArrayList<>();
 		ResultSet posts = getUserPostsFromDB(user);
 
 		try {
 			while (posts.next()) {
-
-				result.add(new Post(posts.getLong("ID"), posts.getLong("ID_Usuario"), posts.getString("titulo"),
-						posts.getString("contenido")));
-
+				result.add(new Post(
+					posts.getLong("ID"),
+					posts.getLong("ID_Usuario"),
+					posts.getString("titulo"),
+					posts.getString("contenido"))
+				);
 			}
 		} catch (SQLException e) {
 			throw new Exception("Hubo un error al intentar cargar los posts del usuario " + user.getUsername()
@@ -222,6 +296,11 @@ public class DBManager {
 		return result;
 	}
 
+	/**
+	 * @param user
+	 * @return {@code ResultSet} con todos los posts del usuario indicado por parámetro.
+	 * @throws Exception
+	 */
 	public ResultSet getUserPostsFromDB(User user) throws Exception {
 		try {
 			userPosts.setLong(1, user.getUserID());
@@ -231,7 +310,28 @@ public class DBManager {
 					+ " desde la base de datos (SQLException).");
 		}
 	}
+	
+	/**
+	 * Indica si "numberOfPosts" ha superado el número total de post en la base de datos.
+	 * @return
+	 * @throws Exception
+	 */
+	public boolean isAllPostLoaded() throws Exception {
+		try {
+			ResultSet tempTotalNumberOfPosts = totalNumberOfPosts.executeQuery();
+			tempTotalNumberOfPosts.next();
+			return tempTotalNumberOfPosts.getInt(1) <= numberOfPosts;
+		} catch (SQLException e) {
+			throw new Exception("Hubo un error al intentar obtener el numero de post totales. Desde la base de datos (SQLException).");
+		}
+	}
 
+	/**
+	 * Establece el nickname del usuario.
+	 * @param id
+	 * @param nickname
+	 * @throws Exception
+	 */
 	public void setNickname(long id, String nickname) throws Exception {
 
 		try {
@@ -244,6 +344,12 @@ public class DBManager {
 
 	}
 
+	/**
+	 * Establece la imagen del usuario.
+	 * @param id
+	 * @param url
+	 * @throws Exception
+	 */
 	public void setUserImage(long id, String url) throws Exception {
 
 		try {
@@ -271,16 +377,13 @@ public class DBManager {
 
 		try {
 			while (filters.next()) {
-
 				result.add(new Filter(
-						filters.getLong("id"), 
-						filters.getString("nombre"),
-						filters.getString("shortname"),
-						filters.getString("descripcion")
+					filters.getLong("id"), 
+					filters.getString("nombre"),
+					filters.getString("shortname"),
+					filters.getString("descripcion")
 				));
-				
 			}
-			
 		} catch (SQLException e) {
 			throw new Exception("Hubo un error al intentar cargar todos los posts (SQLException).");
 		}
@@ -298,6 +401,10 @@ public class DBManager {
 
 	}
 
+	/**
+	 * Cierra las conexiones de la base de datos.
+	 * @throws Exception
+	 */
 	public void close() throws Exception {
 		try {
 			if (connPostgre != null)

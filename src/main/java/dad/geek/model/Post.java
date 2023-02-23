@@ -15,6 +15,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.image.Image;
 
+/**
+ * Clase Post, contiene todos los datos del post.
+ *
+ */
 public class Post {
 
 	private LongProperty postID = new SimpleLongProperty();
@@ -26,9 +30,19 @@ public class Post {
 	private ObjectProperty<DirImages> dirImage = new SimpleObjectProperty<>();
 	private ListProperty<Filter> filters = new SimpleListProperty<>(FXCollections.observableArrayList());
 
+	/**
+	 * Constructor genérico de la clase {@link Post}.
+	 */
 	public Post() {
 	}
 
+	/**
+	 * Constructor de la clase {@link Post}.
+	 * @param postID
+	 * @param userID
+	 * @param postTitle
+	 * @param postContent
+	 */
 	public Post(long postID, long userID, String postTitle, String postContent) {
 		setPostID(postID);
 		setUserID(userID);

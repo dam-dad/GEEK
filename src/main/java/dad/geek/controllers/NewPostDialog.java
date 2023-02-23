@@ -19,6 +19,10 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
+/**
+ * Controlador de la ventana para elegir la posicion de imagen.
+ *
+ */
 public class NewPostDialog implements Initializable {
 
 	// model
@@ -56,6 +60,9 @@ public class NewPostDialog implements Initializable {
 	@FXML
 	private BorderPane view;
 
+	/**
+	 * Constructor de la clase NewPostDialog, carga el fxml.
+	 */
 	public NewPostDialog() {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/NewPostDialog.fxml"));
@@ -93,17 +100,31 @@ public class NewPostDialog implements Initializable {
 
 	}
 
+	/**
+	 * Si se selecciona la opción de "Sin imagen" pedimos que se cierre la ventana y llamamos a la función {@link NewPostController#noImages()}.
+	 * @param event
+	 */
 	@FXML
 	void onNoImageAction(ActionEvent event) {
 		this.stage.getOnCloseRequest().handle(new WindowEvent(this.stage, WindowEvent.WINDOW_CLOSE_REQUEST));
 		newPostController.noImages();
 	}
 
+	/**
+	 * Recibe el controlador padre {@link NewPostController} y lo guarda.
+	 * @param parent
+	 * @return A si mismo: {@link NewPostDialog}.
+	 */
 	public NewPostDialog setParent(NewPostController parent) {
 		this.newPostController = parent;
 		return this;
 	}
 
+	/**
+	 * Recibe el {@code Stage} de la ventana que controla éste controlador ({@link NewPostDialog}
+	 * @param stage
+	 * @return A si mismo: {@link NewPostDialog}
+	 */
 	public NewPostDialog setStage(Stage stage) {
 		this.stage = stage;
 		return this;

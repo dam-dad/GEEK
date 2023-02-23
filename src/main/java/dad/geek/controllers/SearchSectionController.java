@@ -24,12 +24,17 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 
+/**
+ * Controlador del apartado de búsqueda de posts
+ *
+ */
 public class SearchSectionController implements Initializable {
 	
 	//model
 	User user = new User();
 	
 	//view
+	
     @FXML
     private ScrollPane searchResultContainerPane;
     @FXML
@@ -43,6 +48,9 @@ public class SearchSectionController implements Initializable {
     @FXML
     private VBox view;
     
+    /**
+	 * Constructor de la clase SearchSectionController, carga el fxml.
+	 */
     public SearchSectionController() {
     	try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/SearchSection.fxml"));
