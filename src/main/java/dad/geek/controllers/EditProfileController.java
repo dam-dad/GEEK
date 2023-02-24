@@ -40,6 +40,7 @@ public class EditProfileController implements Initializable {
 	// model
 
 	private Image newImage;
+	private File imageFile;
 	private Stage stage;
 	private StringProperty newName = new SimpleStringProperty();
 	private BooleanProperty isValidName = new SimpleBooleanProperty(true);
@@ -104,10 +105,11 @@ public class EditProfileController implements Initializable {
 		fileChooser.setTitle("Abrir imagen");
 		fileChooser.setInitialDirectory(new File(System.getProperty("user.home") + "\\Pictures\\"));
 		fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("PNG Files", "*.png", "*.jpg"));
-		File selectedFile = fileChooser.showOpenDialog(App.primaryStage);
-		if (selectedFile != null) {
-			newImage = new Image(selectedFile.toURI().toString());
+		imageFile = fileChooser.showOpenDialog(App.primaryStage);
+		if (imageFile != null) {
+			newImage = new Image(imageFile.toURI().toString());
 			profileImage.setImage(newImage);
+			App.user.setProfileImageFile(imageFile);
 		}
 
 	}
