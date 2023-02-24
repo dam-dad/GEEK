@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 
 import dad.geek.App;
+import dad.geek.db.DBManager;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.LongProperty;
 import javafx.beans.property.ObjectProperty;
@@ -168,7 +169,7 @@ public class User {
 	}
 
 	/**
-	 * Añade la imagen de perfil a la base de datos.
+	 * Añade la imagen de perfil y llama al método {@link DBManager#setUserImage(long, File)}.
 	 * @param profileImage
 	 * @throws Exception
 	 */
