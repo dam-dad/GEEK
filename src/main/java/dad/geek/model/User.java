@@ -23,8 +23,6 @@ import javafx.scene.image.Image;
  */
 public class User {
 	
-	private final String TEMP_PATH = System.getProperty("user.dir").toString() + "\\src\\main\\resources\\temp\\";
-	
 	private LongProperty userID = new SimpleLongProperty();
 	private StringProperty nickname = new SimpleStringProperty();
 	private StringProperty username = new SimpleStringProperty();
@@ -54,7 +52,7 @@ public class User {
 		setProfileImageFile(f);
 		try {
 			if (image != null && image.length > 0) {
-				f = new File(TEMP_PATH + username + ".png");
+				f = new File(App.TEMP_PATH + username + ".png");
 				try (FileOutputStream outputStream = new FileOutputStream(f)) {
 				    outputStream.write(image);
 				}
