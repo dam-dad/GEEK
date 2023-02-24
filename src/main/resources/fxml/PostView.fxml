@@ -42,7 +42,7 @@
                   </ImageView>
                </graphic>
             </JFXButton>
-            <VBox minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#onOpenUserCkick">
+            <VBox focusTraversable="true" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#onOpenUserCkick" styleClass="textInfo">
                <children>
                   <Label fx:id="nicknameLabel" styleClass="text" text="Nombre de Usuario" />
                   <Label fx:id="usernameLabel" styleClass="text" text="\@Arroba usuario" />

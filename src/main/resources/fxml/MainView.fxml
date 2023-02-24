@@ -19,7 +19,7 @@
 
 <BorderPane fx:id="view" maxWidth="1.7976931348623157E308" minHeight="500.0" minWidth="800.0" styleClass="background" stylesheets="@../css/styles.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
    <center>
-      <SplitPane fx:id="containerPane" dividerPositions="0.1, 0.9" maxHeight="1.7976931348623157E308" styleClass="background" BorderPane.alignment="CENTER">
+      <SplitPane fx:id="containerPane" dividerPositions="0.1, 0.9" maxHeight="1.7976931348623157E308" styleClass="split" BorderPane.alignment="CENTER">
          <items>
             <VBox fx:id="userContainer" alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" />
             <ScrollPane fx:id="postContainerPane" fitToWidth="true" hmin="180.0" maxWidth="1.7976931348623157E308" minWidth="200.0" pannable="true" styleClass="background" stylesheets="@../css/styles.css">
@@ -56,43 +56,43 @@
          <children>
             <HBox alignment="CENTER" spacing="5.0">
                <children>
-                  <MenuButton mnemonicParsing="false" text="Usuario">
+                  <MenuButton contentDisplay="TEXT_ONLY" mnemonicParsing="false" styleClass="boton-menu" text="Usuario" textFill="#2f3e46">
                      <items>
-                        <MenuItem fx:id="informeItem" mnemonicParsing="false" onAction="#onGenerateInformeAction" text="Generar Informe">
+                        <MenuItem fx:id="informeItem" mnemonicParsing="false" onAction="#onGenerateInformeAction" styleClass="elemento-menu" text="Generar Informe">
                            <accelerator>
                               <KeyCodeCombination alt="UP" code="P" control="DOWN" meta="UP" shift="DOWN" shortcut="UP" />
                            </accelerator>
                         </MenuItem>
-                        <MenuItem fx:id="editUserItem" mnemonicParsing="false" onAction="#onEditUserAction" text="Editar usuario">
+                        <MenuItem fx:id="editUserItem" mnemonicParsing="false" onAction="#onEditUserAction" styleClass="elemento-menu" text="Editar usuario">
                            <accelerator>
                               <KeyCodeCombination alt="UP" code="E" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                            </accelerator>
                         </MenuItem>
                         <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem fx:id="exitItem" mnemonicParsing="false" onAction="#onExitAction" text="Salir">
+                        <MenuItem fx:id="exitItem" mnemonicParsing="false" onAction="#onExitAction" styleClass="elemento-menu" text="Salir">
                            <accelerator>
                               <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="DOWN" shortcut="UP" />
                            </accelerator>
                         </MenuItem>
                      </items>
                   </MenuButton>
-                  <MenuButton mnemonicParsing="false" text="Posts">
+                  <MenuButton mnemonicParsing="false" styleClass="boton-menu" text="Posts" textFill="#2f3e46">
                      <items>
-                        <MenuItem fx:id="newPostItem" mnemonicParsing="false" onAction="#onCreatePostAction" text="Nuevo Post">
+                        <MenuItem fx:id="newPostItem" mnemonicParsing="false" onAction="#onCreatePostAction" styleClass="elemento-menu" text="Nuevo Post">
                            <accelerator>
                               <KeyCodeCombination alt="UP" code="N" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                            </accelerator>
                         </MenuItem>
-                        <MenuItem fx:id="reloadPostItem" mnemonicParsing="false" onAction="#onReloadPostAction" text="Recargar Posts">
+                        <MenuItem fx:id="reloadPostItem" mnemonicParsing="false" onAction="#onReloadPostAction" styleClass="elemento-menu" text="Recargar Posts">
                            <accelerator>
                               <KeyCodeCombination alt="UP" code="F5" control="UP" meta="UP" shift="UP" shortcut="UP" />
                            </accelerator>
                         </MenuItem>
                      </items>
                   </MenuButton>
-                  <MenuButton mnemonicParsing="false" text="Vista">
+                  <MenuButton mnemonicParsing="false" styleClass="boton-menu" text="Vista" textFill="#2f3e46">
                      <items>
-                        <MenuItem fx:id="darkModeItem" mnemonicParsing="false" onAction="#onDarkModeAction" text="Cambiar Claro / Oscuro">
+                        <MenuItem fx:id="darkModeItem" mnemonicParsing="false" onAction="#onDarkModeAction" styleClass="elemento-menu" text="Cambiar Claro / Oscuro">
                            <accelerator>
                               <KeyCodeCombination alt="UP" code="D" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                            </accelerator>
@@ -103,8 +103,8 @@
             </HBox>
             <HBox alignment="CENTER_LEFT" spacing="5.0" GridPane.columnIndex="2">
                <children>
-                  <ToggleSwitch fx:id="darkModeSwitch" />
-                  <FontIcon fx:id="darkModeIcon" iconLiteral="mdi2w-white-balance-sunny" iconSize="24" text="󰖨" />
+                  <ToggleSwitch fx:id="darkModeSwitch" styleClass="slider" />
+                  <FontIcon fx:id="darkModeIcon" iconColor="#2f3e46" iconLiteral="mdi2w-white-balance-sunny" iconSize="24" text="󰖨" />
                </children>
             </HBox>
          </children>

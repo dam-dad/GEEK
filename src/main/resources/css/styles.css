@@ -34,21 +34,25 @@
     -fx-border-color: null ;
 }
 
+.scroll-pane > .viewport {
+    -fx-background-color: transparent;
+ }
+
 .scroll-pane {
     -fx-background-color: #F6FFF8;
 }
 
-.scroll-pane .scroll-bar:vertical {
+.scroll-bar:vertical {
     -fx-background-color: #CCE3DE;
 }
 
-.scroll-pane .scroll-bar:vertical .track {
+.scroll-bar:vertical .track {
 	-fx-background-color: transparent;
     -fx-border-color: transparent;
     -fx-background-radius: 0em;
 }
 
-.scroll-pane .scroll-bar:vertical .thumb {
+.scroll-bar:vertical .thumb {
     -fx-background-color: #52796F;
     -fx-background-radius: 2em;
 }
@@ -61,4 +65,72 @@
 .scroll-bar > .increment-button > .increment-button,
 .scroll-bar > .decrement-button > .decrement-button {
     -fx-background-color: #CCE3DE;
+}
+
+.textInfo:hover .label {
+    -fx-underline: true;
+}
+
+.split {
+    -fx-background-color: #F6FFF8;
+    -fx-border-color: #CAD2C5;
+    -fx-border-width: 1;
+}
+
+.split-pane:horizontal > .split-pane-divider {
+    -fx-background-color: #CAD2C5;
+    -fx-pref-width: 3;
+ }
+
+ .boton-menu {
+    -fx-text-fill: #2F3E46;
+    -fx-background-color: #F6FFF8;
+ }
+
+ .boton-menu:hover, .boton-menu:focused, .boton-menu:showing {
+    -fx-background-color: #CAD2C5;
+ }
+
+ .elemento-menu {
+    -fx-background-color: #F6FFF8;
+    -fx-text-fill: #2F3E46;
+ }
+
+ .elemento-menu:focused {
+    -fx-background-color: #CAD2C5;
+    -fx-text-fill: #2F3E46;
+ }
+
+ .slider {
+    -fx-text-fill: #CAD2C5;
+ }
+
+ .slider .track-area  {
+    -fx-background-color: #CAD2C5;
+}
+
+ .slider .thumb-area {
+    -fx-background-color: #CAD2C5;
+}
+
+ .slider:selected .thumb-area {
+    -fx-background-color: #52796F;
+}
+
+.lista {
+    -fx-background-color: #F6FFF8;
+    -fx-text-fill: #2F3E46;
+    -fx-control-inner-background: #F6FFF8;
+    -fx-selection-bar:#52796F ;
+    -fx-selection-bar-non-focused: #CAD2C5 ;
+ }
+
+ .combo-box .cell{
+    -fx-background-color: #F6FFF8;
+    -fx-text-fill: #2F3E46;
+}
+
+.combo-box .cell:focused{
+    -fx-background-color: #CAD2C5;
+    -fx-text-fill: #2F3E46;
 }
