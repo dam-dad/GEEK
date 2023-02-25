@@ -1,6 +1,10 @@
 package dad.geek.model;
 
+import java.io.File;
+import java.io.FileOutputStream;
+
 import dad.geek.App;
+import dad.geek.db.DBManager;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.LongProperty;
 import javafx.beans.property.ObjectProperty;
@@ -18,11 +22,15 @@ import javafx.scene.image.Image;
  *
  */
 public class User {
+	
+	private final String TEMP_PATH = System.getProperty("user.dir").toString() + "\\src\\main\\resources\\temp\\";
+	
 	private LongProperty userID = new SimpleLongProperty();
 	private StringProperty nickname = new SimpleStringProperty();
 	private StringProperty username = new SimpleStringProperty();
 	private StringProperty password = new SimpleStringProperty();
 	private ObjectProperty<Image> profileImage = new SimpleObjectProperty<>();
+	private ObjectProperty<File> profileImageFile = new SimpleObjectProperty<>();
 	private ListProperty<Post> posts = new SimpleListProperty<>(FXCollections.observableArrayList());
 
 	/**
@@ -40,17 +48,27 @@ public class User {
 	 * @param image
 	 * @throws Exception
 	 */
-	public User(long userID, String nickname, String username, String password, String image) throws Exception {
+	public User(long userID, String nickname, String username, String password, byte[] image) throws Exception {
 
+		File f = new File(getClass().getResource("/images/user.png").toURI());
+		setProfileImageFile(f);
 		try {
-			if (image != null && !image.trim().equals(""))
-				setProfileImage(new Image(image));
-			else {
-				setProfileImage(new Image(getClass().getResource("/images/user.png").toURI().toString()));
+			if (image != null && image.length > 0) {
+				f = new File(TEMP_PATH + username + ".png");
+				try (FileOutputStream outputStream = new FileOutputStream(f)) {
+				    outputStream.write(image);
+				}
+				setProfileImageFile(f);
+				setProfileImage(new Image(f.toURI().toString()));
+				
+			} else {
+				setProfileImage(new Image(f.toURI().toString()));
 			}
 		} catch (Exception e) {
 			try {
+				
 				setProfileImage(new Image(getClass().getResource("/images/user.png").toURI().toString()));
+				e.printStackTrace();
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
@@ -151,13 +169,13 @@ public class User {
 	}
 
 	/**
-	 * Añade la imagen de perfil a la base de datos.
+	 * Añade la imagen de perfil y llama al método {@link DBManager#setUserImage(long, File)}.
 	 * @param profileImage
 	 * @throws Exception
 	 */
 	public final void setProfileImage(final Image profileImage) throws Exception {
 		this.profileImageProperty().set(profileImage);
-		App.conexionDB.setUserImage(getUserID(), profileImage.getUrl());
+		App.conexionDB.setUserImage(getUserID(), getProfileImageFile());
 	}
 
 	public final ListProperty<Post> postsProperty() {
@@ -172,6 +190,18 @@ public class User {
 		this.postsProperty().set(posts);
 	}
 
+	public final ObjectProperty<File> profileImageFileProperty() {
+		return this.profileImageFile;
+	}
+
+	public final File getProfileImageFile() {
+		return this.profileImageFileProperty().get();
+	}
+	
+	public final void setProfileImageFile(final File profileImageFile) {
+		this.profileImageFileProperty().set(profileImageFile);
+	}
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

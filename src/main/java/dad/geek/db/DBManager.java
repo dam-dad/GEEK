@@ -210,7 +210,7 @@ public class DBManager {
 					posts.getString("nombre"), 
 					posts.getString("nombreUsuario"),
 					posts.getString("password"), 
-					posts.getString("imagen")
+					posts.getBytes("imagen")
 				);
 			}
 		} catch (SQLException e) {
@@ -236,7 +236,7 @@ public class DBManager {
 					posts.getString("nombre"), 
 					posts.getString("nombreUsuario"),
 					posts.getString("password"), 
-					posts.getString("imagen")
+					posts.getBytes("imagen")
 				);
 			}
 		} catch (SQLException e) {
@@ -261,7 +261,7 @@ public class DBManager {
 					posts.getString("nombre"), 
 					posts.getString("nombreUsuario"),
 					posts.getString("password"), 
-					posts.getString("imagen")
+					posts.getBytes("imagen")
 				);
 			}
 		} catch (SQLException e) {
@@ -391,10 +391,10 @@ public class DBManager {
 	 * @param url
 	 * @throws Exception
 	 */
-	public void setUserImage(long id, String url) throws Exception {
+	public void setUserImage(long id, File file) throws Exception {
 
 		try {
-			setUserImage.setString(1, url);
+			setUserImage.setBytes(1, transformarImagen(file));
 			setUserImage.setLong(2, id);
 			setUserImage.executeUpdate();
 		} catch (SQLException e) {
@@ -492,5 +492,15 @@ public class DBManager {
 
 		return bytea;
 	}
+	
+//	private byte[] imageToBytea(Image image) {
+//		
+//		int w = (int)image.getWidth();
+//		int h = (int)image.getHeight();
+//		byte[] buf = new byte[w * h * 4];
+//		image.getPixelReader().getPixels(0, 0, w, h, PixelFormat.getByteBgraInstance(), buf, 0, w * 4);
+//		
+//		return buf;
+//	}
 
 }

@@ -14,17 +14,23 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import javafx.stage.WindowEvent;
 
 /**
  * Controlador de los posts.
@@ -64,6 +70,9 @@ public class PostController implements Initializable {
 	@FXML
     private StackPane contentPane;
 
+	@FXML
+    private VBox nameContainer;
+	
 	@FXML
 	private BorderPane view;
 
@@ -115,6 +124,7 @@ public class PostController implements Initializable {
 		// listeners 
 		
 		contentLabel.setOnMouseClicked(this::onMouseClicked);
+		nameContainer.setOnMouseClicked(null);
 
 	}
 
@@ -151,7 +161,7 @@ public class PostController implements Initializable {
 	}
 
 	/**
-	 * Se ejecuta cada vez que se presione la imagen.<br/>
+	 * Se ejecuta cada vez que se presione la imagen mientras no esté ni en {@link UserSectionController} o en {@link SearchSectionController}.<br/>
 	 * Llama a la función {@link PostController#openUser()}.
 	 * @param event
 	 */
@@ -161,12 +171,11 @@ public class PostController implements Initializable {
 	}
 	
 	/**
-	 * Se ejecuta cada vez que se presione el área cercana al nickname o el username.<br/>
+	 * Se ejecuta cada vez que se presione el área cercana al nickname o el username mientras no esté ni en {@link UserSectionController} o en {@link SearchSectionController}.<br/>
 	 * Llama a la función {@link PostController#openUser()}.
 	 * @param event
 	 */
-	@FXML
-    void onOpenUserCkick(MouseEvent event) {
+    void onOpenUserClick(MouseEvent event) {
 		openUser();
     }
 	
@@ -185,6 +194,7 @@ public class PostController implements Initializable {
 	public PostController setMainController(MainController parent) {
 		this.main = parent;
 		userButton.setMouseTransparent(false);
+		nameContainer.setOnMouseClicked(this::onOpenUserClick);
 		return this;
 	}
 
