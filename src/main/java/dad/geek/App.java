@@ -31,7 +31,13 @@ public class App extends Application {
 	public static User user = new User();
 
 	private LoginController controller = new LoginController();
-
+	
+	@Override
+	public void init() throws Exception {
+		super.init();
+		deleteFolder(new File(TEMP_PATH));
+	}
+	
 	/**
 	 * Se ejecuta al comienzo, crea la primera ventana {@link LoginController} y conecta con la base de datos
 	 */
@@ -106,6 +112,10 @@ public class App extends Application {
 	}
 	
 	private static void deleteFolder(File folder) {
+
+		if(!folder.exists())
+			folder.mkdir();
+		
 	    File[] files = folder.listFiles();
 	    if(files!=null) { //some JVMs return null for empty dirs
 	        for(File f: files) {
@@ -116,6 +126,8 @@ public class App extends Application {
 	            }
 	        }
 	    }
+	    
+	    
 	}
 
 }
