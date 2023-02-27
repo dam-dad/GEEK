@@ -12,13 +12,13 @@
 <?import javafx.scene.layout.VBox?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<BorderPane fx:id="view" prefHeight="300.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane fx:id="view" prefHeight="300.0" prefWidth="450.0" styleClass="background" stylesheets="@../css/styles.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
    <center>
       <BorderPane fx:id="contentContainer" minWidth="180.0" prefWidth="180.0">
          <center>
             <VBox focusTraversable="true" spacing="15.0" BorderPane.alignment="CENTER">
                <children>
-                  <JFXTextArea fx:id="contentTextArea" promptText="Texto de ejemplo." />
+                  <JFXTextArea fx:id="contentTextArea" focusColor="#52796f" promptText="Texto de ejemplo." unFocusColor="#2f3e46" />
                </children>
                <padding>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
@@ -35,14 +35,14 @@
                   </ImageView>
                   <VBox alignment="CENTER_LEFT" minHeight="-Infinity" minWidth="-Infinity">
                      <children>
-                        <Label fx:id="nicknameLabel" text="Nombre de Usuario" />
-                        <Label fx:id="usernameLabel" text="\@Arroba usuario" />
+                        <Label fx:id="nicknameLabel" styleClass="text" text="Nombre de Usuario" />
+                        <Label fx:id="usernameLabel" styleClass="text" text="\@Arroba usuario" />
                      </children>
                   </VBox>
                   <FlowPane fx:id="filterFlow" focusTraversable="true" hgap="5.0" maxWidth="1.7976931348623157E308" prefWrapLength="0.0" vgap="5.0" HBox.hgrow="ALWAYS" />
                   <JFXButton fx:id="addFilterButton" contentDisplay="GRAPHIC_ONLY" onAction="#onAddFilterAction">
                      <graphic>
-                        <FontIcon iconLiteral="mdi2f-filter-plus" iconSize="20" />
+                        <FontIcon iconColor="#2f3e46" iconLiteral="mdi2f-filter-plus" iconSize="20" />
                      </graphic>
                   </JFXButton>
                </children>
@@ -59,12 +59,12 @@
    <bottom>
       <BorderPane BorderPane.alignment="CENTER">
          <right>
-            <JFXButton fx:id="sendButton" onAction="#onSendAction" text="Enviar" BorderPane.alignment="CENTER" />
+            <JFXButton fx:id="sendButton" onAction="#onSendAction" styleClass="text" text="Enviar" BorderPane.alignment="CENTER" />
          </right>
          <left>
             <JFXButton contentDisplay="GRAPHIC_ONLY" onAction="#onAddImage" BorderPane.alignment="CENTER">
                <graphic>
-                  <FontIcon iconLiteral="mdi2i-image-plus" iconSize="20" />
+                  <FontIcon iconColor="#2f3e46" iconLiteral="mdi2i-image-plus" iconSize="20" />
                </graphic>
             </JFXButton>
          </left>

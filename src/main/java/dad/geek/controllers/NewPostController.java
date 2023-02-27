@@ -47,6 +47,7 @@ public class NewPostController implements Initializable {
 	private Post post = new Post();
 	double prefWidth;
 	double prefHeight;
+	private MainController parent;
 
 	// view
 
@@ -80,9 +81,11 @@ public class NewPostController implements Initializable {
 	/**
 	 * Constructor de la clase NewPostController, carga el fxml.
 	 */
-	public NewPostController() {
+	public NewPostController(MainController parent) {
 
 		try {
+			this.parent = parent;
+			
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/NewPostView.fxml"));
 			loader.setController(this);
 			loader.load();
@@ -278,6 +281,7 @@ public class NewPostController implements Initializable {
 	void onSendAction(ActionEvent event) {
 		post.setPostDate(LocalDateTime.now());
 		try {
+			parent.onReloadPostAction(event);
 			App.conexionDB.sendPost(post);
 		} catch (Exception e) {
 			Alert errorAlert = new Alert(AlertType.ERROR);

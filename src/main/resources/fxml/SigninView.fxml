@@ -21,7 +21,7 @@
          <children>
             <ImageView fx:id="welcomeImage" fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../images/user.png" />
+                  <Image url="@../images/iconooficia.png" />
                </image>
                <VBox.margin>
                   <Insets />
