@@ -202,7 +202,7 @@ public class NewPostController implements Initializable {
 		window.initOwner(App.primaryStage);
 		window.initModality(Modality.APPLICATION_MODAL);
 
-		window.getScene().setOnKeyPressed(t -> {
+		window.getScene().setOnKeyPressed(t -> { // TODO no funciona
 			if (t.getCode() == KeyCode.ESCAPE)
 				window.getOnCloseRequest().handle(new WindowEvent(window, WindowEvent.WINDOW_CLOSE_REQUEST));
 		});
@@ -225,8 +225,10 @@ public class NewPostController implements Initializable {
 		App.primaryStage.getScene().setCursor(Cursor.WAIT);
 		try {
 			Label label = new Label();
-			filterFlow.getChildren().add(label);
 			label.setText(AddFilterController.getSelectedFilterName());
+			
+			// listeners
+			
 			label.setOnMouseClicked(MouseEvent  -> {
 				Alert deleteAlert = new Alert(AlertType.CONFIRMATION);
 				deleteAlert.setTitle("¿BORRAR?");
@@ -234,21 +236,26 @@ public class NewPostController implements Initializable {
 				deleteAlert.initOwner(App.primaryStage);
 				deleteAlert.initModality(Modality.APPLICATION_MODAL);
 				Optional<ButtonType> result = deleteAlert.showAndWait();
-				if (result.get() == ButtonType.OK){
+				if (result.get() == ButtonType.OK) {
 					filterFlow.getChildren().remove(label);
-				}else {
+				} else {
 					deleteAlert.close();
 				}
 			});
+			
 			label.setOnMouseEntered(MouseEvent -> {
 				label.setFont(Font.font("System", FontWeight.BOLD, 12));
 				label.setUnderline(true);
 			});
+			
 			label.setOnMouseExited(MouseEvent -> {
 				label.setFont(Font.font("System", FontWeight.NORMAL, 12));
 				label.setUnderline(false);
 			});
-		} catch (Exception e) {
+			
+			filterFlow.getChildren().add(label);
+			
+		} catch (Exception e) { // TODO si no seleccionas nada salta error
 			Alert errorAlert = new Alert(AlertType.ERROR);
 			errorAlert.setTitle("ERROR");
 			errorAlert.setHeaderText("Hubo un error");

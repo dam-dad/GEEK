@@ -2,6 +2,12 @@ package dad.geek.controllers;
 
 import java.io.IOException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import org.controlsfx.control.ToggleSwitch;
@@ -10,6 +16,7 @@ import org.kordamp.ikonli.javafx.FontIcon;
 import dad.geek.App;
 import dad.geek.db.DBManager;
 import dad.geek.model.Post;
+import dad.geek.model.User;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.ActionEvent;
@@ -31,12 +38,21 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
- * Controlador de la ventana principal. 
+ * Controlador de la ventana principal.
  *
  */
 public class MainController implements Initializable {
+
+	// model
+	public static final String JRXML_FILE = "/reports/informe.jrxml";
 
 	// controllers
 
@@ -50,14 +66,14 @@ public class MainController implements Initializable {
 	private SplitPane containerPane;
 	@FXML
 	private ScrollPane postContainerPane;
-	
+
 	@FXML
 	private VBox userContainer;
 	@FXML
 	private VBox postsContainer;
 	@FXML
-    private VBox searchContainer;
-	
+	private VBox searchContainer;
+
 	@FXML
 	private FontIcon darkModeIcon;
 	@FXML
@@ -75,10 +91,9 @@ public class MainController implements Initializable {
 	@FXML
 	private MenuItem newPostItem;
 
-
 	@FXML
-    private Hyperlink showMoreLink;
-	
+	private Hyperlink showMoreLink;
+
 	@FXML
 	private BorderPane view;
 
@@ -110,11 +125,11 @@ public class MainController implements Initializable {
 		containerPane.setDividerPositions(0.1, 0.9);
 
 		loadPosts(false);
-		
+
 //		AutoUpdateThread thread = new AutoUpdateThread(this);
 //		ScheduledExecutorService exec = Executors.newSingleThreadScheduledExecutor();
 //		exec.scheduleAtFixedRate(thread, 3, 1000, TimeUnit.SECONDS);
-		
+
 		// listeners
 
 		darkModeSwitch.selectedProperty().addListener((observable, oldValue, newValue) -> {
@@ -138,21 +153,23 @@ public class MainController implements Initializable {
 //			thread.interrupt();
 			App.salir();
 		});
-		
+
 		// bindings
-		
+
 		showMoreLink.managedProperty().bind(isShowMoreEnabled);
 		showMoreLink.visibleProperty().bind(isShowMoreEnabled);
 
 	}
 
 	/**
-	 * Carga los posts recibidos de la función {@link DBManager#getPosts(boolean)} de la base de datos y los mete dentro de un {@code VBox}.
+	 * Carga los posts recibidos de la función {@link DBManager#getPosts(boolean)}
+	 * de la base de datos y los mete dentro de un {@code VBox}.
+	 * 
 	 * @param reload
 	 * @return
 	 */
 	public VBox loadPosts(boolean reload) {
-		
+
 		App.primaryStage.getScene().setCursor(Cursor.WAIT);
 		try {
 			postsContainer.getChildren().clear();
@@ -176,8 +193,10 @@ public class MainController implements Initializable {
 	}
 
 	/**
-	 * Se ejecuta cada vez que se pulse al {@code MenuItem} "Nuevo Post" o se pulse la combinacion de teclas Cntr + N.<br/>
+	 * Se ejecuta cada vez que se pulse al {@code MenuItem} "Nuevo Post" o se pulse
+	 * la combinacion de teclas Cntr + N.<br/>
 	 * Muestra una ventana controlada por {@link NewPostController}.
+	 * 
 	 * @param event
 	 */
 	@FXML
@@ -196,7 +215,8 @@ public class MainController implements Initializable {
 				window.getOnCloseRequest().handle(new WindowEvent(window, WindowEvent.WINDOW_CLOSE_REQUEST));
 		});
 		window.setOnCloseRequest(e -> {
-			reloadPosts(); //TODO no me gusta esto, sales sin crear un nuevo post y lo recarga todo por la cara
+			reloadPosts(); // TODO no me gusta esto, sales sin crear un nuevo post y lo recarga todo por la
+							// cara
 			window.close();
 		});
 
@@ -205,8 +225,11 @@ public class MainController implements Initializable {
 	}
 
 	/**
-	 * Se ejecuta cada vez que se pulse el {@code JFXButton} "Editar" el {@code MenuItem} "Editar usuario" o se pulse la combinacion de teclas Cntr + E.<br/>
+	 * Se ejecuta cada vez que se pulse el {@code JFXButton} "Editar" el
+	 * {@code MenuItem} "Editar usuario" o se pulse la combinacion de teclas Cntr +
+	 * E.<br/>
 	 * Llama al método {@link UserSectionController #openEditWindow()}
+	 * 
 	 * @param event
 	 */
 	@FXML
@@ -222,8 +245,11 @@ public class MainController implements Initializable {
 	}
 
 	/**
-	 * Se ejecuta cada vez que se pulse el {@code MenuItem} "Recargar Posts" o se presione la combinacion de teclas F5.<br/>
-	 * Llama a la función {@link MainController#reloadPosts()} y a la función {@link UserSectionController#refreshPosts()}.
+	 * Se ejecuta cada vez que se pulse el {@code MenuItem} "Recargar Posts" o se
+	 * presione la combinacion de teclas F5.<br/>
+	 * Llama a la función {@link MainController#reloadPosts()} y a la función
+	 * {@link UserSectionController#refreshPosts()}.
+	 * 
 	 * @param event
 	 */
 	@FXML
@@ -233,8 +259,12 @@ public class MainController implements Initializable {
 	}
 
 	/**
-	 * Se ejecuta cada vez que se pulse el {@code MenuItem} "Cambiar Claro/Oscuro", el {@code ToggleSwitch} "darkModeSwitch" o la combinación de teclas CNTL + D.<br/>
-	 * Si la propiedad selected del {@code ToggleSwitch} "darkModeSwitch" es {@code true} se pone a {@code false} y viceversa.
+	 * Se ejecuta cada vez que se pulse el {@code MenuItem} "Cambiar Claro/Oscuro",
+	 * el {@code ToggleSwitch} "darkModeSwitch" o la combinación de teclas CNTL +
+	 * D.<br/>
+	 * Si la propiedad selected del {@code ToggleSwitch} "darkModeSwitch" es
+	 * {@code true} se pone a {@code false} y viceversa.
+	 * 
 	 * @param event
 	 */
 	@FXML
@@ -246,23 +276,27 @@ public class MainController implements Initializable {
 	}
 
 	/**
-	 * Se ejecuta cada vez que se le de al {@code MenuItem} "Salir" le de a la combinación de teclas SHIFT + CNTL + S.<br/>
+	 * Se ejecuta cada vez que se le de al {@code MenuItem} "Salir" le de a la
+	 * combinación de teclas SHIFT + CNTL + S.<br/>
 	 * Llama a la función {@link App#salir()}.
+	 * 
 	 * @param event
 	 */
 	@FXML
 	void onExitAction(ActionEvent event) {
 		App.salir();
 	}
-	
+
 	/**
 	 * Se ejecuta cada vez que se le de al {@code HyperLink} "Mostrar más...".
-	 * Coteja con la base de datos si todos los posts han sido cargados, si es el caso deja de mostrar el {@code HyperLink} "Mostrar más...", si no lo sigue mostrando,
-	 * luego ejecuta la función {@link #loadPosts(boolean)}.
+	 * Coteja con la base de datos si todos los posts han sido cargados, si es el
+	 * caso deja de mostrar el {@code HyperLink} "Mostrar más...", si no lo sigue
+	 * mostrando, luego ejecuta la función {@link #loadPosts(boolean)}.
+	 * 
 	 * @param event
 	 */
 	@FXML
-    void onShowMoreAction(ActionEvent event) {
+	void onShowMoreAction(ActionEvent event) {
 		try {
 			isShowMoreEnabled.set(App.conexionDB.isAllPostLoaded());
 			loadPosts(false);
@@ -275,12 +309,44 @@ public class MainController implements Initializable {
 			errorAlert.initModality(Modality.APPLICATION_MODAL);
 			errorAlert.show();
 		}
-    }
+	}
 
-	//TODO javadoc una vez esté hecho
+	// TODO javadoc una vez esté hecho
 	@FXML
 	void onGenerateInformeAction(ActionEvent event) {
+		List<User> users = new ArrayList<User>();
 
+		try {
+			for (Post p : App.conexionDB.getPosts(true)) {
+				if (!users.contains(App.conexionDB.getUserObject(p.getUserID())))
+					users.add(App.conexionDB.getUserObject(p.getUserID()));
+			}
+
+			// compila el informe
+			JasperReport report = JasperCompileManager.compileReport(getClass().getResourceAsStream(JRXML_FILE));
+
+			// crea el mapa de parámetros para el informe
+			Map<String, Object> parameters = new HashMap<String, Object>();
+			parameters.put("superUser", "@" + App.user.getUsername());
+			SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+			parameters.put("today", formatter.format(new Date()));
+
+			// generamos el informe (combinamos informe + datos)
+			JasperPrint jasperPrint = JasperFillManager.fillReport(report, parameters,
+					new JRBeanCollectionDataSource(users));
+
+			// visualiza el informe generado
+			JasperViewer.viewReport(jasperPrint, false);
+		} catch (Exception e) {
+//			Alert errorAlert = new Alert(AlertType.ERROR);
+//			errorAlert.setTitle("ERROR");
+//			errorAlert.setHeaderText("Hubo un error al generar el informe");
+//			errorAlert.setContentText(e.getMessage());
+//			errorAlert.initOwner(App.primaryStage);
+//			errorAlert.initModality(Modality.APPLICATION_MODAL);
+//			errorAlert.show();
+			e.printStackTrace();
+		}
 	}
 
 	/**
