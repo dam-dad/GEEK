@@ -11,12 +11,8 @@ import com.jfoenix.controls.JFXTextArea;
 
 import dad.geek.App;
 import dad.geek.db.DBManager;
-import dad.geek.model.Filter;
 import dad.geek.model.Post;
 import javafx.beans.binding.Bindings;
-import javafx.beans.property.ListProperty;
-import javafx.beans.property.SimpleListProperty;
-import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -51,7 +47,8 @@ public class NewPostController implements Initializable {
 	private Post post = new Post();
 	double prefWidth;
 	double prefHeight;
-	
+	private MainController parent;
+
 	// view
 
 	@FXML
@@ -84,9 +81,11 @@ public class NewPostController implements Initializable {
 	/**
 	 * Constructor de la clase NewPostController, carga el fxml.
 	 */
-	public NewPostController() {
+	public NewPostController(MainController parent) {
 
 		try {
+			this.parent = parent;
+			
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/NewPostView.fxml"));
 			loader.setController(this);
 			loader.load();
@@ -206,7 +205,7 @@ public class NewPostController implements Initializable {
 		window.initOwner(App.primaryStage);
 		window.initModality(Modality.APPLICATION_MODAL);
 
-		window.getScene().setOnKeyPressed(t -> {
+		window.getScene().setOnKeyPressed(t -> { // TODO no funciona
 			if (t.getCode() == KeyCode.ESCAPE)
 				window.getOnCloseRequest().handle(new WindowEvent(window, WindowEvent.WINDOW_CLOSE_REQUEST));
 		});
@@ -229,11 +228,9 @@ public class NewPostController implements Initializable {
 		App.primaryStage.getScene().setCursor(Cursor.WAIT);
 		try {
 			Label label = new Label();
-			filterFlow.getChildren().add(label);
 			label.setText(AddFilterController.getSelectedFilterName());
-			post.filtersProperty().add(AddFilterController.getSelectedFilter());
-			Filter filter = new Filter(AddFilterController.getSelectedFilterID(), AddFilterController.getSelectedFilterName(), 
-										AddFilterController.getSelectedFilterShortName(), AddFilterController.getSelectedFilterDescription());
+			
+			// listeners
 			
 			label.setOnMouseClicked(MouseEvent  -> {
 				Alert deleteAlert = new Alert(AlertType.CONFIRMATION);
@@ -242,10 +239,9 @@ public class NewPostController implements Initializable {
 				deleteAlert.initOwner(App.primaryStage);
 				deleteAlert.initModality(Modality.APPLICATION_MODAL);
 				Optional<ButtonType> result = deleteAlert.showAndWait();
-				if (result.get() == ButtonType.OK){
+				if (result.get() == ButtonType.OK) {
 					filterFlow.getChildren().remove(label);
-					post.filtersProperty().remove(filter);
-				}else {
+				} else {
 					deleteAlert.close();
 				}
 			});
@@ -260,7 +256,9 @@ public class NewPostController implements Initializable {
 				label.setUnderline(false);
 			});
 			
-		} catch (Exception e) {
+			filterFlow.getChildren().add(label);
+			
+		} catch (Exception e) { // TODO si no seleccionas nada salta error
 			Alert errorAlert = new Alert(AlertType.ERROR);
 			errorAlert.setTitle("ERROR");
 			errorAlert.setHeaderText("Hubo un error");
@@ -283,9 +281,7 @@ public class NewPostController implements Initializable {
 	void onSendAction(ActionEvent event) {
 		post.setPostDate(LocalDateTime.now());
 		try {
-			for (int i = 0; i <= post.filtersProperty().size(); i++) {
-				App.conexionDB.createPostFilter(post.getPostID(), post.filtersProperty().get(i).getFilterID());
-			}
+			parent.onReloadPostAction(event);
 			App.conexionDB.sendPost(post);
 		} catch (Exception e) {
 			Alert errorAlert = new Alert(AlertType.ERROR);

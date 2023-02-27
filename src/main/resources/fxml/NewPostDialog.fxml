@@ -9,9 +9,9 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<BorderPane fx:id="view" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane fx:id="view" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="300.0" styleClass="background" stylesheets="@../css/styles.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
    <top>
-      <Label text="Seleccione el tipo de post que quiere crear" BorderPane.alignment="CENTER" />
+      <Label styleClass="text" text="Seleccione el tipo de post que quiere crear" BorderPane.alignment="CENTER" />
    </top>
    <center>
       <GridPane hgap="5.0" vgap="5.0" BorderPane.alignment="CENTER">
@@ -26,26 +26,26 @@
             <RowConstraints valignment="TOP" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label text="Imagen a la izquierda" />
-            <Button fx:id="leftButton" mnemonicParsing="false" onAction="#onSelectImage" GridPane.rowIndex="1">
+            <Label styleClass="text" text="Imagen a la izquierda" />
+            <Button fx:id="leftButton" mnemonicParsing="false" onAction="#onSelectImage" styleClass="boton-menu" GridPane.rowIndex="1">
                <graphic>
                   <ImageView fx:id="leftImage" pickOnBounds="true" preserveRatio="true" />
                </graphic>
             </Button>
-            <Label text="Imagen a la derecha" GridPane.columnIndex="1" />
-            <Button fx:id="rightButton" mnemonicParsing="false" onAction="#onSelectImage" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <Label styleClass="text" text="Imagen a la derecha" GridPane.columnIndex="1" />
+            <Button fx:id="rightButton" mnemonicParsing="false" onAction="#onSelectImage" styleClass="boton-menu" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <graphic>
                   <ImageView fx:id="rightImage" pickOnBounds="true" preserveRatio="true" />
                </graphic>
             </Button>
-            <Label text="Imagen Abajo" GridPane.rowIndex="2" />
-            <Button fx:id="downButton" mnemonicParsing="false" onAction="#onSelectImage" GridPane.rowIndex="3">
+            <Label styleClass="text" text="Imagen Abajo" GridPane.rowIndex="2" />
+            <Button fx:id="downButton" mnemonicParsing="false" onAction="#onSelectImage" styleClass="boton-menu" GridPane.rowIndex="3">
                <graphic>
                   <ImageView fx:id="downImage" pickOnBounds="true" preserveRatio="true" />
                </graphic>
             </Button>
-            <Label text="Sin imagen" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <Button fx:id="emptyButton" mnemonicParsing="false" onAction="#onNoImageAction" GridPane.columnIndex="1" GridPane.rowIndex="3">
+            <Label styleClass="text" text="Sin imagen" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Button fx:id="emptyButton" mnemonicParsing="false" onAction="#onNoImageAction" styleClass="boton-menu" GridPane.columnIndex="1" GridPane.rowIndex="3">
                <graphic>
                   <ImageView fx:id="emptyImage" pickOnBounds="true" preserveRatio="true" />
                </graphic>

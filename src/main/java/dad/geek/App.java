@@ -38,6 +38,7 @@ public class App extends Application {
 
 		primaryStage.setTitle("GEEK");
 		primaryStage.setScene(new Scene(controller.getView()));
+		primaryStage.getScene().getStylesheets().add(getClass().getResource("/css/styles.css").toString());
 		primaryStage.show();
 		primaryStage.getIcons().add(new Image(getClass().getResource("/images/iconooficia.png").toString()));
 		primaryStage.setMinWidth(450);
