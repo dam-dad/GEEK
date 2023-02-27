@@ -104,7 +104,7 @@
             <HBox alignment="CENTER_LEFT" spacing="5.0" GridPane.columnIndex="2">
                <children>
                   <ToggleSwitch fx:id="darkModeSwitch" styleClass="slider" />
-                  <FontIcon fx:id="darkModeIcon" iconColor="#2f3e46" iconLiteral="mdi2w-white-balance-sunny" iconSize="24" text="󰖨" />
+                  <FontIcon fx:id="darkModeIcon" iconColor="#2f3e46" iconLiteral="mdi2w-white-balance-sunny" iconSize="24" styleClass="dark-mode" text="󰖨" />
                </children>
             </HBox>
          </children>

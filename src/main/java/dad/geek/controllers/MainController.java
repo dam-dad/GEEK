@@ -135,8 +135,16 @@ public class MainController implements Initializable {
 		darkModeSwitch.selectedProperty().addListener((observable, oldValue, newValue) -> {
 			if (newValue) {
 				darkModeIcon.setIconLiteral("mdi2m-moon-waning-crescent");
+				App.primaryStage.getScene().getStylesheets()
+					.remove(getClass().getResource("/css/styles.css").toString());
+				App.primaryStage.getScene().getStylesheets()
+					.add(getClass().getResource("/css/dark.css").toString());
 			} else {
 				darkModeIcon.setIconLiteral("mdi2w-white-balance-sunny");
+				App.primaryStage.getScene().getStylesheets()
+				.remove(getClass().getResource("/css/dark.css").toString());
+			App.primaryStage.getScene().getStylesheets()
+				.add(getClass().getResource("/css/styles.css").toString());
 			}
 		});
 
@@ -204,7 +212,7 @@ public class MainController implements Initializable {
 
 		Stage window = new Stage();
 		window.setTitle("Nuevo Post");
-		window.setScene(new Scene(new NewPostController().setStage(window).getView()));
+		window.setScene(new Scene(new NewPostController(this).setStage(window).getView()));
 		window.setMinWidth(450);
 		window.setMinHeight(330);
 		window.initOwner(App.primaryStage);
@@ -215,8 +223,6 @@ public class MainController implements Initializable {
 				window.getOnCloseRequest().handle(new WindowEvent(window, WindowEvent.WINDOW_CLOSE_REQUEST));
 		});
 		window.setOnCloseRequest(e -> {
-			reloadPosts(); // TODO no me gusta esto, sales sin crear un nuevo post y lo recarga todo por la
-							// cara
 			window.close();
 		});
 
@@ -240,7 +246,7 @@ public class MainController implements Initializable {
 	/**
 	 * Llama a la función {@link #loadPosts(boolean)}.
 	 */
-	private void reloadPosts() {
+	protected void reloadPosts() {
 		loadPosts(true);
 	}
 
@@ -338,14 +344,14 @@ public class MainController implements Initializable {
 			// visualiza el informe generado
 			JasperViewer.viewReport(jasperPrint, false);
 		} catch (Exception e) {
-//			Alert errorAlert = new Alert(AlertType.ERROR);
-//			errorAlert.setTitle("ERROR");
-//			errorAlert.setHeaderText("Hubo un error al generar el informe");
-//			errorAlert.setContentText(e.getMessage());
-//			errorAlert.initOwner(App.primaryStage);
-//			errorAlert.initModality(Modality.APPLICATION_MODAL);
-//			errorAlert.show();
-			e.printStackTrace();
+			Alert errorAlert = new Alert(AlertType.ERROR);
+			errorAlert.setTitle("ERROR");
+			errorAlert.setHeaderText("Hubo un error al generar el informe");
+			errorAlert.setContentText(e.getMessage());
+			errorAlert.initOwner(App.primaryStage);
+			errorAlert.initModality(Modality.APPLICATION_MODAL);
+			errorAlert.show();
+//			e.printStackTrace();
 		}
 	}
 
