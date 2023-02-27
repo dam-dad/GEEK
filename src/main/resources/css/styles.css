@@ -166,5 +166,6 @@
 }
 
 .dark-mode {
-    -fx-icon-color: #2F3E46;
+    -fx-icon-color:red;
 }
+

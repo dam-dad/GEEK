@@ -18,14 +18,14 @@
          <right>
             <JFXButton fx:id="editButton" alignment="CENTER_RIGHT" contentDisplay="RIGHT" onAction="#onEditAction" styleClass="link-see-more" text="Editar" BorderPane.alignment="CENTER">
                <graphic>
-                  <FontIcon iconColor="#2f3e46" iconLiteral="mdi2l-lead-pencil" iconSize="16" text="󰙏" />
+                  <FontIcon iconColor="#2f3e46" iconLiteral="mdi2l-lead-pencil" iconSize="16" styleClass="dark-mode" text="󰙏" />
                </graphic>
             </JFXButton>
          </right>
          <left>
             <JFXButton fx:id="backButton" contentDisplay="GRAPHIC_ONLY" onAction="#onBackAction" text="Button" BorderPane.alignment="CENTER">
                <graphic>
-                  <FontIcon iconColor="#2f3e46" iconLiteral="mdi2a-arrow-left" iconSize="24" />
+                  <FontIcon iconColor="#2f3e46" iconLiteral="mdi2a-arrow-left" iconSize="24" styleClass="dark-mode" />
                </graphic>
                <BorderPane.margin>
                   <Insets left="5.0" />
@@ -75,7 +75,7 @@
             <Insets bottom="10.0" top="5.0" />
          </padding>
       </HBox>
-      <ScrollPane fx:id="postContainerPane" fitToWidth="true" focusTraversable="false" hmin="180.0" maxHeight="1.7976931348623157E308" minWidth="200.0" stylesheets="@../css/styles.css">
+      <ScrollPane fx:id="postContainerPane" fitToWidth="true" focusTraversable="false" hmin="180.0" maxHeight="1.7976931348623157E308" minWidth="200.0">
          <content>
             <VBox fx:id="postsContainer" maxHeight="1.7976931348623157E308" />
          </content>

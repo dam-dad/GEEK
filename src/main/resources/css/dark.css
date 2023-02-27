@@ -1,0 +1,9 @@
+.dark-mode {
+    -fx-icon-color:red;
+}
+
+.elemento-menu {
+    -fx-background-color: #2F3E46;
+    background-color: #F6FFF8;
+    -fx-text-fill: #F6FFF8;
+ }
