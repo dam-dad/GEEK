@@ -1,8 +1,10 @@
 package dad.geek;
 
+import java.io.File;
 import java.util.Optional;
 
 import dad.geek.controllers.LoginController;
+import dad.geek.controllers.SigninController;
 import dad.geek.db.DBManager;
 import dad.geek.model.User;
 import javafx.application.Application;
@@ -20,6 +22,8 @@ import javafx.stage.Stage;
  * Clase que se encarga de ejecutar la aplicación.
  */
 public class App extends Application {
+	
+	public static final String TEMP_PATH = System.getProperty("user.dir").toString() + "\\src\\main\\resources\\temp\\";
 
 	public static Stage primaryStage;
 	public static DBManager conexionDB;
@@ -27,7 +31,13 @@ public class App extends Application {
 	public static User user = new User();
 
 	private LoginController controller = new LoginController();
-
+	
+	@Override
+	public void init() throws Exception {
+		super.init();
+		deleteFolder(new File(TEMP_PATH));
+	}
+	
 	/**
 	 * Se ejecuta al comienzo, crea la primera ventana {@link LoginController} y conecta con la base de datos
 	 */
@@ -98,6 +108,27 @@ public class App extends Application {
 				Platform.exit();
 			}
 		});
+		
+		deleteFolder(new File(TEMP_PATH));
+	}
+	
+	private static void deleteFolder(File folder) {
+
+		if(!folder.exists())
+			folder.mkdir();
+		
+	    File[] files = folder.listFiles();
+	    if(files!=null) { //some JVMs return null for empty dirs
+	        for(File f: files) {
+	            if(f.isDirectory()) {
+	                deleteFolder(f);
+	            } else {
+	                f.delete();
+	            }
+	        }
+	    }
+	    
+	    
 	}
 
 }
