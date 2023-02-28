@@ -59,7 +59,10 @@ public class NewPostController implements Initializable {
 	double prefWidth;
 	double prefHeight;
 	private MainController parent;
-	ArrayList<Filter> al = new ArrayList<Filter>();
+	private ListProperty<Filter> fal = new SimpleListProperty<>(FXCollections.observableArrayList());
+//	ArrayList<Label> lal = new ArrayList<Label>();
+	private ListProperty<Label> lal = new SimpleListProperty<>(FXCollections.observableArrayList());
+
 
 
 	// view
@@ -238,14 +241,23 @@ public class NewPostController implements Initializable {
 	 */
 	private FlowPane getFiltersFlowPane() {
 		
+		IntegerProperty ip = new SimpleIntegerProperty();
+		
 		App.primaryStage.getScene().setCursor(Cursor.WAIT);
 		try {
 			Label label = new Label();
 			label.setText(AddFilterController.getSelectedFilterName());
+			lal.add(label);
+			System.out.println("Labels: " + lal);
+
+			ip.bind(lal.sizeProperty());
+			label.idProperty().bind(ip.asString());
+			System.out.println("ID: " + label.getId());
 			
 			Filter filter = new Filter();
 			filter = AddFilterController.getSelectedFilter();
-			al.add(filter);
+			fal.add(filter);
+			System.out.println("Filtros: " + fal);
 			
 			// listeners
 			label.setOnMouseClicked(MouseEvent  -> {
@@ -255,10 +267,13 @@ public class NewPostController implements Initializable {
 				deleteAlert.initOwner(App.primaryStage);
 				deleteAlert.initModality(Modality.APPLICATION_MODAL);
 				Optional<ButtonType> result = deleteAlert.showAndWait();
+				
 				if (result.get() == ButtonType.OK) {
 					filterFlow.getChildren().remove(label);
-					al.remove(0);
-
+					lal.remove(label);
+					System.out.println("Labels: " + lal);
+					fal.remove(Integer.parseInt(label.getId())-1);
+					System.out.println("Filtros: " + fal);
 				} else {
 					deleteAlert.close();
 				}
