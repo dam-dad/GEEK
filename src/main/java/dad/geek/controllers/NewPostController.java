@@ -113,6 +113,10 @@ public class NewPostController implements Initializable {
 		usernameLabel.textProperty().bind(Bindings.concat("@").concat(App.user.usernameProperty()));
 		post.postContentProperty().bind(contentTextArea.textProperty());
 		profileImage.imageProperty().bind(App.user.profileImageProperty());
+		
+		//listeners
+		
+		sendButton.disableProperty().bind(contentTextArea.textProperty().isEmpty());
 
 	}
 
