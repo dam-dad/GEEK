@@ -3,16 +3,27 @@ package dad.geek.controllers;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Optional;
 import java.util.ResourceBundle;
+
+import org.apache.commons.collections.bag.SynchronizedSortedBag;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextArea;
 
 import dad.geek.App;
 import dad.geek.db.DBManager;
+import dad.geek.model.Filter;
 import dad.geek.model.Post;
 import javafx.beans.binding.Bindings;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.ListProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleListProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -48,6 +59,8 @@ public class NewPostController implements Initializable {
 	double prefWidth;
 	double prefHeight;
 	private MainController parent;
+	ArrayList<Filter> al = new ArrayList<Filter>();
+
 
 	// view
 
@@ -230,8 +243,11 @@ public class NewPostController implements Initializable {
 			Label label = new Label();
 			label.setText(AddFilterController.getSelectedFilterName());
 			
-			// listeners
+			Filter filter = new Filter();
+			filter = AddFilterController.getSelectedFilter();
+			al.add(filter);
 			
+			// listeners
 			label.setOnMouseClicked(MouseEvent  -> {
 				Alert deleteAlert = new Alert(AlertType.CONFIRMATION);
 				deleteAlert.setTitle("¿BORRAR?");
@@ -241,6 +257,8 @@ public class NewPostController implements Initializable {
 				Optional<ButtonType> result = deleteAlert.showAndWait();
 				if (result.get() == ButtonType.OK) {
 					filterFlow.getChildren().remove(label);
+					al.remove(0);
+
 				} else {
 					deleteAlert.close();
 				}
