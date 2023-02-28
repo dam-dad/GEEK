@@ -61,6 +61,7 @@ public class AddFilterController implements Initializable {
     	selectedFilter.bind(filterList.getSelectionModel().selectedIndexProperty());		
 		try {
 			filterList.getItems().addAll(App.conexionDB.getAllFilters());
+			filterList.getSelectionModel().select(0);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
