@@ -146,6 +146,7 @@ public class NewPostController implements Initializable {
 		Stage window = new Stage();
 		window.setTitle("Añadir filtro");
 		window.setScene(new Scene(new AddFilterController().setStage(window).getView()));
+		window.getIcons().add(new Image(getClass().getResource("/images/iconooficia.png").toString()));
 		window.setMinWidth(268);
 		window.setMinHeight(472);
 		window.initOwner(App.primaryStage);
