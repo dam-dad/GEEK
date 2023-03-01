@@ -48,9 +48,11 @@ public class User {
 	 */
 	public User(long userID, String nickname, String username, String password, byte[] image) throws Exception {
 
+		// por defecto usamos user.png
 		File f = new File(getClass().getResource("/images/user.png").toURI());
 		setProfileImageFile(f);
 		try {
+			// si el array de bytes no está vacío lo transformamos a fichero
 			if (image != null && image.length > 0) {
 				f = new File(App.TEMP_PATH + username + ".png");
 				try (FileOutputStream outputStream = new FileOutputStream(f)) {

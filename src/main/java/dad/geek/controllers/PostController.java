@@ -14,6 +14,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
@@ -108,6 +109,15 @@ public class PostController implements Initializable {
 		}
 
 		userButton.setMouseTransparent(true);
+		
+		if(post.getPostImage() != null) {
+			ImageView imageView = new ImageView(post.getPostImage());
+			imageView.setFitWidth(100);
+			imageView.setFitHeight(100);
+			imageView.setVisible(true);
+			view.setBottom(imageView);
+			BorderPane.setAlignment(imageView, Pos.CENTER);
+		}
 
 		// bindings
 
@@ -115,6 +125,7 @@ public class PostController implements Initializable {
 		contentLabel.textProperty().bind(post.postContentProperty());
 		nicknameLabel.textProperty().bind(user.nicknameProperty());
 		usernameLabel.textProperty().bind(Bindings.concat("@").concat(user.usernameProperty()));
+		
 		
 		// listeners 
 		

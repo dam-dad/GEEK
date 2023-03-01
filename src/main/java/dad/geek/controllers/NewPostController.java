@@ -1,5 +1,6 @@
 package dad.geek.controllers;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDateTime;
@@ -31,6 +32,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -48,6 +50,8 @@ public class NewPostController implements Initializable {
 	double prefWidth;
 	double prefHeight;
 	private MainController parent;
+	private Image newImage;
+	private File newImageFile;
 
 	// view
 
@@ -129,68 +133,6 @@ public class NewPostController implements Initializable {
 		this.stage = stage;
 		this.stage.setMinWidth(450);
 		return this;
-	}
-
-	/**
-	 * Recibe un {@code String} con la posición de la imagen y un {@code Image} que se desea poner en el post.
-	 * @param posicionImagen
-	 * @param image
-	 * @return A si mismo: {@link NewPostController}.
-	 */
-	public NewPostController setPosition(String posicionImagen, Image image) {
-
-		ImageView imageView = new ImageView(image);
-		imageView.setFitWidth(200);
-		imageView.setFitHeight(200);
-		imageView.setVisible(true);
-
-		switch (posicionImagen) {
-		case "leftButton":
-			contentContainer.setLeft(imageView);
-			view.setPrefWidth(
-					(view.getPrefWidth() <= prefWidth + 200) ? view.getPrefWidth() + 200 : view.getPrefWidth());
-			break;
-		case "rightButton":
-			contentContainer.setRight(imageView);
-			view.setPrefWidth(
-					(view.getPrefWidth() <= prefWidth + 200) ? view.getPrefWidth() + 200 : view.getPrefWidth());
-			break;
-		case "downButton":
-			contentContainer.setBottom(imageView);
-			view.setPrefHeight(
-					(view.getPrefHeight() == prefHeight) ? view.getPrefHeight() + 250 : view.getPrefHeight());
-			break;
-		}
-
-		post.getPostImage().add(image);
-
-		stage.setMinWidth(view.getPrefWidth());
-		stage.setMinHeight(view.getPrefHeight());
-		stage.centerOnScreen();
-		BorderPane.setAlignment(imageView, Pos.CENTER);
-
-		return this;
-
-	}
-
-	/**
-	 * Quita todas las imagenes que se han subido al post que se está creando.
-	 */
-	public void noImages() {
-
-		view.setPrefWidth(450);
-		view.setPrefHeight(330);
-
-		stage.setWidth(view.getPrefWidth());
-		stage.setHeight(view.getPrefHeight());
-		stage.setMinWidth(view.getPrefWidth());
-		stage.setMinHeight(view.getPrefHeight());
-		contentContainer.setLeft(null);
-		contentContainer.setRight(null);
-		contentContainer.setBottom(null);
-		post.getPostImage().clear();
-		stage.centerOnScreen();
-
 	}
 
 	/**
@@ -285,8 +227,9 @@ public class NewPostController implements Initializable {
 	void onSendAction(ActionEvent event) {
 		post.setPostDate(LocalDateTime.now());
 		try {
+			post.setPostImage(newImage);
+			App.conexionDB.sendPost(post, newImageFile);
 			parent.onReloadPostAction(event);
-			App.conexionDB.sendPost(post);
 		} catch (Exception e) {
 			Alert errorAlert = new Alert(AlertType.ERROR);
 			errorAlert.setTitle("ERROR");
@@ -295,6 +238,7 @@ public class NewPostController implements Initializable {
 			errorAlert.initOwner(App.primaryStage);
 			errorAlert.initModality(Modality.APPLICATION_MODAL);
 			errorAlert.show();
+			e.printStackTrace();
 		}
 		this.stage.getOnCloseRequest().handle(new WindowEvent(this.stage, WindowEvent.WINDOW_CLOSE_REQUEST));
 	}
@@ -306,25 +250,100 @@ public class NewPostController implements Initializable {
 	@FXML
 	void onAddImage(ActionEvent event) {
 
-		Stage window = new Stage();
-		window.setTitle("Nuevo Post");
-		window.setScene(new Scene(new NewPostDialog().setStage(window).setParent(this).getView()));
-		window.setMinHeight(300);
-		window.setMinWidth(300);
-		window.initOwner(App.primaryStage);
-		window.initModality(Modality.APPLICATION_MODAL);
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.setTitle("Abrir imagen");
+		fileChooser.setInitialDirectory(new File(System.getProperty("user.home") + "\\Pictures\\"));
+		fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("PNG Files", "*.png", "*.jpg"));
 
-		window.getScene().setOnKeyPressed(t -> {
-			if (t.getCode() == KeyCode.ESCAPE)
-				window.getOnCloseRequest().handle(new WindowEvent(window, WindowEvent.WINDOW_CLOSE_REQUEST));
-		});
-		window.setOnCloseRequest(e -> {
-			window.close();
-		});
-
-		window.show();
+		File selectedFile = fileChooser.showOpenDialog(App.primaryStage);
+		if (selectedFile != null) {
+			newImageFile = selectedFile;
+			newImage = new Image(selectedFile.toURI().toString());
+			
+			showImage();
+			
+		}
 
 	}
+	
+	private void showImage() {
+		
+		ImageView imageView = new ImageView(newImage);
+		imageView.setFitWidth(200);
+		imageView.setFitHeight(200);
+		imageView.setVisible(true);
+		
+		contentContainer.setBottom(imageView);
+		view.setPrefHeight((view.getPrefHeight() == prefHeight) ? view.getPrefHeight() + 250 : view.getPrefHeight());
+
+		stage.setMinWidth(view.getPrefWidth());
+		stage.setMinHeight(view.getPrefHeight());
+		stage.centerOnScreen();
+		BorderPane.setAlignment(imageView, Pos.CENTER);
+		
+	}
+
+	/**
+	 * Recibe un {@code String} con la posición de la imagen y un {@code Image} que se desea poner en el post.
+	 * @param posicionImagen
+	 * @param image
+	 * @return A si mismo: {@link NewPostController}.
+	 */
+//	public NewPostController setPosition(String posicionImagen, Image image) {
+//
+//		ImageView imageView = new ImageView(image);
+//		imageView.setFitWidth(200);
+//		imageView.setFitHeight(200);
+//		imageView.setVisible(true);
+//
+//		switch (posicionImagen) {
+//		case "leftButton":
+//			contentContainer.setLeft(imageView);
+//			view.setPrefWidth(
+//					(view.getPrefWidth() <= prefWidth + 200) ? view.getPrefWidth() + 200 : view.getPrefWidth());
+//			break;
+//		case "rightButton":
+//			contentContainer.setRight(imageView);
+//			view.setPrefWidth(
+//					(view.getPrefWidth() <= prefWidth + 200) ? view.getPrefWidth() + 200 : view.getPrefWidth());
+//			break;
+//		case "downButton":
+//			contentContainer.setBottom(imageView);
+//			view.setPrefHeight(
+//					(view.getPrefHeight() == prefHeight) ? view.getPrefHeight() + 250 : view.getPrefHeight());
+//			break;
+//		}
+//
+//		post.getPostImage().add(image);
+//
+//		stage.setMinWidth(view.getPrefWidth());
+//		stage.setMinHeight(view.getPrefHeight());
+//		stage.centerOnScreen();
+//		BorderPane.setAlignment(imageView, Pos.CENTER);
+//
+//		return this;
+//
+//	}
+	
+	/**
+	 * Quita todas las imagenes que se han subido al post que se está creando.
+	 */
+//	public void noImages() {
+//
+//		view.setPrefWidth(450);
+//		view.setPrefHeight(330);
+//
+//		stage.setWidth(view.getPrefWidth());
+//		stage.setHeight(view.getPrefHeight());
+//		stage.setMinWidth(view.getPrefWidth());
+//		stage.setMinHeight(view.getPrefHeight());
+//		contentContainer.setLeft(null);
+//		contentContainer.setRight(null);
+//		contentContainer.setBottom(null);
+//		post.getPostImage().clear();
+//		stage.centerOnScreen();
+//
+//	}
 
 	/**
 	 * @return

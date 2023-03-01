@@ -1,7 +1,10 @@
 package dad.geek.model;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.time.LocalDateTime;
 
+import dad.geek.App;
 import dad.geek.utils.DirImages;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.LongProperty;
@@ -25,10 +28,11 @@ public class Post {
 	private LongProperty userID = new SimpleLongProperty();
 	private StringProperty postTitle = new SimpleStringProperty();
 	private StringProperty postContent = new SimpleStringProperty();
-	private ListProperty<Image> postImage = new SimpleListProperty<>(FXCollections.observableArrayList());
+	private ObjectProperty<Image> postImage = new SimpleObjectProperty<>();
 	private ObjectProperty<LocalDateTime> postDate = new SimpleObjectProperty<>();
 	private ObjectProperty<DirImages> dirImage = new SimpleObjectProperty<>();
 	private ListProperty<Filter> filters = new SimpleListProperty<>(FXCollections.observableArrayList());
+	private ObjectProperty<File> postImageFile = new SimpleObjectProperty<>();
 
 	/**
 	 * Constructor genérico de la clase {@link Post}.
@@ -43,7 +47,24 @@ public class Post {
 	 * @param postTitle
 	 * @param postContent
 	 */
-	public Post(long postID, long userID, String postTitle, String postContent) {
+	public Post(long postID, long userID, String postTitle, String postContent, byte[] image) {
+		
+		try {
+			
+			if (image != null && image.length > 0) {
+				File f = new File(App.TEMP_PATH + postID + ".png");
+				try (FileOutputStream outputStream = new FileOutputStream(f)) {
+				    outputStream.write(image);
+				}
+				
+				setPostImageFile(f);
+				setPostImage(new Image(f.toURI().toString()));
+			}
+			
+		} catch (Exception e) {
+			// TODO error al convertir image en un File
+		}
+		
 		setPostID(postID);
 		setUserID(userID);
 		setPostTitle(postTitle);
@@ -134,15 +155,27 @@ public class Post {
 		this.dirImageProperty().set(dirImage);
 	}
 
-	public final ListProperty<Image> postImageProperty() {
+	public final ObjectProperty<File> postImageFileProperty() {
+		return this.postImageFile;
+	}
+
+	public final File getPostImageFile() {
+		return this.postImageFileProperty().get();
+	}
+
+	public final void setPostImageFile(final File postImageFile) {
+		this.postImageFileProperty().set(postImageFile);
+	}
+
+	public final ObjectProperty<Image> postImageProperty() {
 		return this.postImage;
 	}
 
-	public final ObservableList<Image> getPostImage() {
+	public final Image getPostImage() {
 		return this.postImageProperty().get();
 	}
 
-	public final void setPostImage(final ObservableList<Image> postImage) {
+	public final void setPostImage(final Image postImage) {
 		this.postImageProperty().set(postImage);
 	}
 
