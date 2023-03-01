@@ -10,9 +10,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-import org.controlsfx.control.ToggleSwitch;
-import org.kordamp.ikonli.javafx.FontIcon;
-
 import dad.geek.App;
 import dad.geek.db.DBManager;
 import dad.geek.model.Post;
@@ -242,7 +239,7 @@ public class MainController implements Initializable {
 	}
 
 	/**
-	 * Se ejecuta cada vez que se le de al {@code MenuItem} "Salir" le de a la
+	 * Se ejecuta cada vez que se le de al {@code MenuItem} "Salir" o se le de a la
 	 * combinación de teclas SHIFT + CNTL + S.<br/>
 	 * Llama a la función {@link App#salir()}.
 	 * 
@@ -277,7 +274,14 @@ public class MainController implements Initializable {
 		}
 	}
 
-	// TODO javadoc una vez esté hecho
+	// TODO Karim, revisa este JavaDoc
+	/**
+	 * Se ejecuta cada vez que se le de al {@code MenuItem} "Generar Informe" o se pulse la
+	 * combinación de teclas SHIFT + CNTL + P.<br/>
+	 * Llama a la función {@link App#salir()}.
+	 * 
+	 * @param event
+	 */
 	@FXML
 	void onGenerateInformeAction(ActionEvent event) {
 		List<User> users = new ArrayList<User>();
