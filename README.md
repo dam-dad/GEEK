@@ -2,23 +2,21 @@
 
 1. [¿Qué es GEEK?](#geek)
 
-2. [¿Qué lo hace especial?](#especialidad)
+2. [¿Cómo lo puedo usar?](#instalacion)
 
-3. [¿Cómo lo puedo usar?](#instalacion)
-
-4. [Saber más...](#mas)
+3. [Saber más...](#mas)
 
 ---
 
 ## ¿Qué es GEEK? <a name="geek">
 
----
-
-## ¿Qué lo hace especial? <a name="especialidad">
+El proyecto GEEK, consiste en el desarrollo completo de una red social completamente en Java. El proyecto surgió del debate entre los miembros del equipo, al surgir la idea de este proyecto a todos los integrantes les pareció la mejor idea posible.
 
 ---
 
 ## ¿Cómo lo puedo usar? <a name="instalacion">
+
+Para poder comenzar a utilizar GEEK, debes de seguir los pasos en nuestra [Guía de Instalación](#). Al terminar la, ya podrás comenzar a usar la aplicación, y si tienes alguna duda puedes consultar nuestra [Guía Rápida](#) o nuestra [WIKI](#).
 
 ---
 
