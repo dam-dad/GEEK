@@ -75,13 +75,6 @@ public class MainController implements Initializable {
 	private VBox searchContainer;
 
 	@FXML
-	private FontIcon darkModeIcon;
-	@FXML
-	private MenuItem darkModeItem;
-	@FXML
-	private ToggleSwitch darkModeSwitch;
-
-	@FXML
 	private MenuItem informeItem;
 	@FXML
 	private MenuItem editUserItem;
@@ -131,22 +124,6 @@ public class MainController implements Initializable {
 //		exec.scheduleAtFixedRate(thread, 3, 1000, TimeUnit.SECONDS);
 
 		// listeners
-
-		darkModeSwitch.selectedProperty().addListener((observable, oldValue, newValue) -> {
-			if (newValue) {
-				darkModeIcon.setIconLiteral("mdi2m-moon-waning-crescent");
-				App.primaryStage.getScene().getStylesheets()
-					.remove(getClass().getResource("/css/styles.css").toString());
-				App.primaryStage.getScene().getStylesheets()
-					.add(getClass().getResource("/css/dark.css").toString());
-			} else {
-				darkModeIcon.setIconLiteral("mdi2w-white-balance-sunny");
-				App.primaryStage.getScene().getStylesheets()
-				.remove(getClass().getResource("/css/dark.css").toString());
-			App.primaryStage.getScene().getStylesheets()
-				.add(getClass().getResource("/css/styles.css").toString());
-			}
-		});
 
 		App.primaryStage.maximizedProperty().addListener((o, ov, nv) -> {
 			if (App.primaryStage.isMaximized())
@@ -262,23 +239,6 @@ public class MainController implements Initializable {
 	void onReloadPostAction(ActionEvent event) {
 		reloadPosts();
 		userSectionController.refreshPosts();
-	}
-
-	/**
-	 * Se ejecuta cada vez que se pulse el {@code MenuItem} "Cambiar Claro/Oscuro",
-	 * el {@code ToggleSwitch} "darkModeSwitch" o la combinación de teclas CNTL +
-	 * D.<br/>
-	 * Si la propiedad selected del {@code ToggleSwitch} "darkModeSwitch" es
-	 * {@code true} se pone a {@code false} y viceversa.
-	 * 
-	 * @param event
-	 */
-	@FXML
-	void onDarkModeAction(ActionEvent event) {
-		if (darkModeSwitch.isSelected())
-			darkModeSwitch.setSelected(false);
-		else
-			darkModeSwitch.setSelected(true);
 	}
 
 	/**
