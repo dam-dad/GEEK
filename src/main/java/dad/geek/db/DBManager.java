@@ -47,7 +47,7 @@ public class DBManager {
 			userFromNamePass = connPostgre.prepareStatement("select * from usuarios where nombreUsuario = ? and password = ?");
 			userFromName = connPostgre.prepareStatement("select * from usuarios where nombreUsuario = ?");
 			createUser = connPostgre.prepareStatement("insert into usuarios (nombre, nombreUsuario, password) values (?, ?, ?)");
-			sendPost = connPostgre.prepareStatement("insert into posts (ID_Usuario, contenido) values (?, ?)");
+			sendPost = connPostgre.prepareStatement("insert into posts (ID_Usuario, contenido, imagen) values (?, ?, ?)");
 			setUserImage = connPostgre.prepareStatement("update usuarios set imagen = ? where id = ?");
 			setNickname = connPostgre.prepareStatement("update usuarios set nombre = ? where id = ?");
 			userPosts = connPostgre.prepareStatement("select * from posts where ID_Usuario = ? order by id desc");
@@ -181,11 +181,12 @@ public class DBManager {
 	 * @param post
 	 * @throws Exception
 	 */
-	public void sendPost(Post post) throws Exception {
+	public void sendPost(Post post, File imagen) throws Exception {
 
 		try {
 			sendPost.setLong(1, post.getUserID());
 			sendPost.setString(2, post.getPostContent());
+			sendPost.setBytes(3, transformarImagen(imagen));
 			sendPost.executeUpdate();
 		} catch (SQLException e) {
 			throw new Exception("Hubo un error al intentar enviar un post (SQLException).");
@@ -286,7 +287,8 @@ public class DBManager {
 					posts.getLong("ID"), 
 					posts.getLong("ID_Usuario"), 
 					posts.getString("titulo"),
-					posts.getString("contenido")
+					posts.getString("contenido"),
+					posts.getBytes("imagen")
 				));
 			}
 		} catch (SQLException e) {
@@ -326,8 +328,9 @@ public class DBManager {
 					posts.getLong("ID"),
 					posts.getLong("ID_Usuario"),
 					posts.getString("titulo"),
-					posts.getString("contenido"))
-				);
+					posts.getString("contenido"),
+					posts.getBytes("imagen")
+				));
 			}
 		} catch (SQLException e) {
 			throw new Exception("Hubo un error al intentar cargar los posts del usuario " + user.getUsername()

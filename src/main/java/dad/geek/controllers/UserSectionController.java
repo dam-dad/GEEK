@@ -66,10 +66,7 @@ public class UserSectionController implements Initializable {
 
 	@FXML
 	private ImageView profileImage;
-
-	@FXML
-	private JFXButton showMoreButton;
-
+	
 	@FXML
 	private Label usernameLabel;
 
@@ -179,12 +176,6 @@ public class UserSectionController implements Initializable {
 		});
 
 		window.show();
-
-	}
-
-	//TODO quitar
-	@FXML
-	void onShowMoreAction(ActionEvent event) {
 
 	}
 

@@ -14,13 +14,12 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
+import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
@@ -28,9 +27,6 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
-import javafx.stage.WindowEvent;
 
 /**
  * Controlador de los posts.
@@ -113,6 +109,15 @@ public class PostController implements Initializable {
 		}
 
 		userButton.setMouseTransparent(true);
+		
+		if(post.getPostImage() != null) {
+			ImageView imageView = new ImageView(post.getPostImage());
+			imageView.setFitWidth(100);
+			imageView.setFitHeight(100);
+			imageView.setVisible(true);
+			view.setBottom(imageView);
+			BorderPane.setAlignment(imageView, Pos.CENTER);
+		}
 
 		// bindings
 
@@ -120,6 +125,7 @@ public class PostController implements Initializable {
 		contentLabel.textProperty().bind(post.postContentProperty());
 		nicknameLabel.textProperty().bind(user.nicknameProperty());
 		usernameLabel.textProperty().bind(Bindings.concat("@").concat(user.usernameProperty()));
+		
 		
 		// listeners 
 		

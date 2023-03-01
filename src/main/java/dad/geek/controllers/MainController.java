@@ -10,9 +10,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-import org.controlsfx.control.ToggleSwitch;
-import org.kordamp.ikonli.javafx.FontIcon;
-
 import dad.geek.App;
 import dad.geek.db.DBManager;
 import dad.geek.model.Post;
@@ -75,13 +72,6 @@ public class MainController implements Initializable {
 	private VBox searchContainer;
 
 	@FXML
-	private FontIcon darkModeIcon;
-	@FXML
-	private MenuItem darkModeItem;
-	@FXML
-	private ToggleSwitch darkModeSwitch;
-
-	@FXML
 	private MenuItem informeItem;
 	@FXML
 	private MenuItem editUserItem;
@@ -131,22 +121,6 @@ public class MainController implements Initializable {
 //		exec.scheduleAtFixedRate(thread, 3, 1000, TimeUnit.SECONDS);
 
 		// listeners
-
-		darkModeSwitch.selectedProperty().addListener((observable, oldValue, newValue) -> {
-			if (newValue) {
-				darkModeIcon.setIconLiteral("mdi2m-moon-waning-crescent");
-				App.primaryStage.getScene().getStylesheets()
-					.remove(getClass().getResource("/css/styles.css").toString());
-				App.primaryStage.getScene().getStylesheets()
-					.add(getClass().getResource("/css/dark.css").toString());
-			} else {
-				darkModeIcon.setIconLiteral("mdi2w-white-balance-sunny");
-				App.primaryStage.getScene().getStylesheets()
-				.remove(getClass().getResource("/css/dark.css").toString());
-			App.primaryStage.getScene().getStylesheets()
-				.add(getClass().getResource("/css/styles.css").toString());
-			}
-		});
 
 		App.primaryStage.maximizedProperty().addListener((o, ov, nv) -> {
 			if (App.primaryStage.isMaximized())
@@ -265,24 +239,7 @@ public class MainController implements Initializable {
 	}
 
 	/**
-	 * Se ejecuta cada vez que se pulse el {@code MenuItem} "Cambiar Claro/Oscuro",
-	 * el {@code ToggleSwitch} "darkModeSwitch" o la combinación de teclas CNTL +
-	 * D.<br/>
-	 * Si la propiedad selected del {@code ToggleSwitch} "darkModeSwitch" es
-	 * {@code true} se pone a {@code false} y viceversa.
-	 * 
-	 * @param event
-	 */
-	@FXML
-	void onDarkModeAction(ActionEvent event) {
-		if (darkModeSwitch.isSelected())
-			darkModeSwitch.setSelected(false);
-		else
-			darkModeSwitch.setSelected(true);
-	}
-
-	/**
-	 * Se ejecuta cada vez que se le de al {@code MenuItem} "Salir" le de a la
+	 * Se ejecuta cada vez que se le de al {@code MenuItem} "Salir" o se le de a la
 	 * combinación de teclas SHIFT + CNTL + S.<br/>
 	 * Llama a la función {@link App#salir()}.
 	 * 
@@ -317,7 +274,14 @@ public class MainController implements Initializable {
 		}
 	}
 
-	// TODO javadoc una vez esté hecho
+	// TODO Karim, revisa este JavaDoc
+	/**
+	 * Se ejecuta cada vez que se le de al {@code MenuItem} "Generar Informe" o se pulse la
+	 * combinación de teclas SHIFT + CNTL + P.<br/>
+	 * Llama a la función {@link App#salir()}.
+	 * 
+	 * @param event
+	 */
 	@FXML
 	void onGenerateInformeAction(ActionEvent event) {
 		List<User> users = new ArrayList<User>();
@@ -351,7 +315,7 @@ public class MainController implements Initializable {
 			errorAlert.initOwner(App.primaryStage);
 			errorAlert.initModality(Modality.APPLICATION_MODAL);
 			errorAlert.show();
-//			e.printStackTrace();
+			//e.printStackTrace();
 		}
 	}
 

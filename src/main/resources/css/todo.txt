@@ -1,1 +1,0 @@
-TODO cuando hover del vbox donde estan el nickname y el username subrayar los dos labels
