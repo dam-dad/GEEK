@@ -15,11 +15,13 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
@@ -27,6 +29,9 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import javafx.stage.WindowEvent;
 
 /**
  * Controlador de los posts.
@@ -39,6 +44,7 @@ public class PostController implements Initializable {
 	private Post post;
 	private User user;
 	private MainController main;
+	private ImageView postImageView;
 
 	// view
 
@@ -111,12 +117,15 @@ public class PostController implements Initializable {
 		userButton.setMouseTransparent(true);
 		
 		if(post.getPostImage() != null) {
-			ImageView imageView = new ImageView(post.getPostImage());
-			imageView.setFitWidth(100);
-			imageView.setFitHeight(100);
-			imageView.setVisible(true);
-			view.setBottom(imageView);
-			BorderPane.setAlignment(imageView, Pos.CENTER);
+			postImageView = new ImageView(post.getPostImage());
+			postImageView.setFitWidth(150);
+			postImageView.setFitHeight(150);
+			postImageView.setVisible(true);
+			
+			postImageView.setOnMouseClicked(this::onImageClicked);
+			
+			view.setBottom(postImageView);
+			BorderPane.setAlignment(postImageView, Pos.CENTER);
 		}
 
 		// bindings
@@ -132,6 +141,28 @@ public class PostController implements Initializable {
 		contentLabel.setOnMouseClicked(this::onMouseClicked);
 		nameContainer.setOnMouseClicked(null);
 
+	}
+
+	private void onImageClicked(MouseEvent event) {
+		
+		Stage window = new Stage();
+		window.initStyle(StageStyle.UNDECORATED);
+		window.setTitle("Imagen del post");
+		window.setScene(new Scene(new ShowImageController().setImageView(post.getPostImage()).setStage(window).getView()));
+
+		window.initOwner(App.primaryStage);
+		window.initModality(Modality.APPLICATION_MODAL);
+		
+		window.getScene().setOnKeyPressed(t -> {
+			if (t.getCode() == KeyCode.ESCAPE)
+				window.getOnCloseRequest().handle(new WindowEvent(window, WindowEvent.WINDOW_CLOSE_REQUEST));
+		});
+		window.setOnCloseRequest(e -> {
+			window.close();
+		});
+
+		window.show();
+		
 	}
 
 	/**

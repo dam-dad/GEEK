@@ -110,6 +110,8 @@ public class ShowImageController implements Initializable {
 	 */
 	public ShowImageController setImageView(Image image) {
 		this.imageView.setImage(image);
+		imageView.setFitHeight(500);
+		imageView.setFitWidth(500);
 		return this;
 	}
 
