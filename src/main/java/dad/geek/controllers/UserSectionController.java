@@ -29,6 +29,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitPane;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
@@ -137,7 +138,7 @@ public class UserSectionController implements Initializable {
 		window.initStyle(StageStyle.UNDECORATED);
 		window.setTitle("Imagen de perfil");
 		window.setScene(new Scene(new ShowImageController().setImageView(profileImage.getImage()).setStage(window).getView()));
-
+		window.getIcons().add(new Image(getClass().getResource("/images/iconooficia.png").toString()));
 		window.initOwner(App.primaryStage);
 		window.initModality(Modality.APPLICATION_MODAL);
 		

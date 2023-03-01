@@ -24,6 +24,7 @@ import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.image.Image;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
@@ -187,6 +188,7 @@ public class MainController implements Initializable {
 		Stage window = new Stage();
 		window.setTitle("Nuevo Post");
 		window.setScene(new Scene(new NewPostController(this).setStage(window).getView()));
+		window.getIcons().add(new Image(getClass().getResource("/images/iconooficia.png").toString()));
 		window.setMinWidth(450);
 		window.setMinHeight(330);
 		window.initOwner(App.primaryStage);
