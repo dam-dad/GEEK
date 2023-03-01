@@ -11,7 +11,7 @@
 <?import javafx.scene.text.Font?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<BorderPane fx:id="view" minHeight="350.0" minWidth="350.0" styleClass="background" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane fx:id="view" minHeight="350.0" minWidth="350.0" styleClass="background" stylesheets="@../css/styles.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
    <center>
       <HBox alignment="TOP_CENTER" spacing="5.0" BorderPane.alignment="CENTER">
          <children>

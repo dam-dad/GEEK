@@ -315,7 +315,7 @@ public class MainController implements Initializable {
 			errorAlert.initOwner(App.primaryStage);
 			errorAlert.initModality(Modality.APPLICATION_MODAL);
 			errorAlert.show();
-//			e.printStackTrace();
+			//e.printStackTrace();
 		}
 	}
 
