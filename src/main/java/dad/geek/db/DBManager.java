@@ -496,14 +496,4 @@ public class DBManager {
 		return bytea;
 	}
 	
-//	private byte[] imageToBytea(Image image) {
-//		
-//		int w = (int)image.getWidth();
-//		int h = (int)image.getHeight();
-//		byte[] buf = new byte[w * h * 4];
-//		image.getPixelReader().getPixels(0, 0, w, h, PixelFormat.getByteBgraInstance(), buf, 0, w * 4);
-//		
-//		return buf;
-//	}
-
 }

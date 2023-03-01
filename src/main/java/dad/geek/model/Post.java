@@ -5,7 +5,6 @@ import java.io.FileOutputStream;
 import java.time.LocalDateTime;
 
 import dad.geek.App;
-import dad.geek.utils.DirImages;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.LongProperty;
 import javafx.beans.property.ObjectProperty;
@@ -30,7 +29,6 @@ public class Post {
 	private StringProperty postContent = new SimpleStringProperty();
 	private ObjectProperty<Image> postImage = new SimpleObjectProperty<>();
 	private ObjectProperty<LocalDateTime> postDate = new SimpleObjectProperty<>();
-	private ObjectProperty<DirImages> dirImage = new SimpleObjectProperty<>();
 	private ListProperty<Filter> filters = new SimpleListProperty<>(FXCollections.observableArrayList());
 	private ObjectProperty<File> postImageFile = new SimpleObjectProperty<>();
 
@@ -141,18 +139,6 @@ public class Post {
 
 	public final void setFilters(final ObservableList<Filter> filters) {
 		this.filtersProperty().set(filters);
-	}
-
-	public final ObjectProperty<DirImages> dirImageProperty() {
-		return this.dirImage;
-	}
-
-	public final DirImages getDirImage() {
-		return this.dirImageProperty().get();
-	}
-
-	public final void setDirImage(final DirImages dirImage) {
-		this.dirImageProperty().set(dirImage);
 	}
 
 	public final ObjectProperty<File> postImageFileProperty() {

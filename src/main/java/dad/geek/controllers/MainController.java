@@ -116,10 +116,6 @@ public class MainController implements Initializable {
 
 		loadPosts(false);
 
-//		AutoUpdateThread thread = new AutoUpdateThread(this);
-//		ScheduledExecutorService exec = Executors.newSingleThreadScheduledExecutor();
-//		exec.scheduleAtFixedRate(thread, 3, 1000, TimeUnit.SECONDS);
-
 		// listeners
 
 		App.primaryStage.maximizedProperty().addListener((o, ov, nv) -> {

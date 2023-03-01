@@ -32,6 +32,9 @@ public class App extends Application {
 
 	private LoginController controller = new LoginController();
 	
+	/**
+	 * Es lo primero que se ejecuta, revisa que exista la carpeta temp y que esté vacía
+	 */
 	@Override
 	public void init() throws Exception {
 		super.init();
@@ -39,7 +42,7 @@ public class App extends Application {
 	}
 	
 	/**
-	 * Se ejecuta al comienzo, crea la primera ventana {@link LoginController} y conecta con la base de datos
+	 * Es lo segundo que se ejecuta, crea la primera ventana {@link LoginController} y conecta con la base de datos
 	 */
 	@Override
 	public void start(Stage primaryStage) throws Exception {
@@ -112,13 +115,17 @@ public class App extends Application {
 		deleteFolder(new File(TEMP_PATH));
 	}
 	
+	/**
+	 * Elimina el contenido de la carpeta pasada por parámetro
+	 * @param folder
+	 */
 	private static void deleteFolder(File folder) {
 
 		if(!folder.exists())
 			folder.mkdir();
 		
 	    File[] files = folder.listFiles();
-	    if(files!=null) { //some JVMs return null for empty dirs
+	    if(files!=null) {
 	        for(File f: files) {
 	            if(f.isDirectory()) {
 	                deleteFolder(f);

@@ -58,11 +58,6 @@ public class SigninController implements Initializable {
 	@FXML
 	private JFXTextField usernameText;
 
-//	@FXML
-//	private FontIcon mailIcon;
-//	@FXML
-//	private JFXTextField mailText;
-
 	@FXML
 	private FontIcon passwordImage;
 	@FXML

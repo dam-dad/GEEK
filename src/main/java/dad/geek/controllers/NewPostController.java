@@ -266,6 +266,9 @@ public class NewPostController implements Initializable {
 
 	}
 	
+	/**
+	 * Muestra la imagen de forma provisional
+	 */
 	private void showImage() {
 		
 		ImageView imageView = new ImageView(newImage);
@@ -282,68 +285,6 @@ public class NewPostController implements Initializable {
 		BorderPane.setAlignment(imageView, Pos.CENTER);
 		
 	}
-
-	/**
-	 * Recibe un {@code String} con la posición de la imagen y un {@code Image} que se desea poner en el post.
-	 * @param posicionImagen
-	 * @param image
-	 * @return A si mismo: {@link NewPostController}.
-	 */
-//	public NewPostController setPosition(String posicionImagen, Image image) {
-//
-//		ImageView imageView = new ImageView(image);
-//		imageView.setFitWidth(200);
-//		imageView.setFitHeight(200);
-//		imageView.setVisible(true);
-//
-//		switch (posicionImagen) {
-//		case "leftButton":
-//			contentContainer.setLeft(imageView);
-//			view.setPrefWidth(
-//					(view.getPrefWidth() <= prefWidth + 200) ? view.getPrefWidth() + 200 : view.getPrefWidth());
-//			break;
-//		case "rightButton":
-//			contentContainer.setRight(imageView);
-//			view.setPrefWidth(
-//					(view.getPrefWidth() <= prefWidth + 200) ? view.getPrefWidth() + 200 : view.getPrefWidth());
-//			break;
-//		case "downButton":
-//			contentContainer.setBottom(imageView);
-//			view.setPrefHeight(
-//					(view.getPrefHeight() == prefHeight) ? view.getPrefHeight() + 250 : view.getPrefHeight());
-//			break;
-//		}
-//
-//		post.getPostImage().add(image);
-//
-//		stage.setMinWidth(view.getPrefWidth());
-//		stage.setMinHeight(view.getPrefHeight());
-//		stage.centerOnScreen();
-//		BorderPane.setAlignment(imageView, Pos.CENTER);
-//
-//		return this;
-//
-//	}
-	
-	/**
-	 * Quita todas las imagenes que se han subido al post que se está creando.
-	 */
-//	public void noImages() {
-//
-//		view.setPrefWidth(450);
-//		view.setPrefHeight(330);
-//
-//		stage.setWidth(view.getPrefWidth());
-//		stage.setHeight(view.getPrefHeight());
-//		stage.setMinWidth(view.getPrefWidth());
-//		stage.setMinHeight(view.getPrefHeight());
-//		contentContainer.setLeft(null);
-//		contentContainer.setRight(null);
-//		contentContainer.setBottom(null);
-//		post.getPostImage().clear();
-//		stage.centerOnScreen();
-//
-//	}
 
 	/**
 	 * @return
