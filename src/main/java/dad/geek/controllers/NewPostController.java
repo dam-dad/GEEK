@@ -262,7 +262,7 @@ public class NewPostController implements Initializable {
 			
 			filterFlow.getChildren().add(label);
 			
-		} catch (Exception e) { // TODO si no seleccionas nada salta error
+		} catch (Exception e) {
 			Alert errorAlert = new Alert(AlertType.ERROR);
 			errorAlert.setTitle("ERROR");
 			errorAlert.setHeaderText("Hubo un error");

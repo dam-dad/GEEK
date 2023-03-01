@@ -48,7 +48,7 @@
                   </ImageView>
                </graphic>
             </JFXButton>
-            <VBox fx:id="nameContainer" minHeight="-Infinity" minWidth="-Infinity">
+            <VBox fx:id="nameContainer" minHeight="-Infinity" minWidth="-Infinity" styleClass="textInfo">
                <children>
                   <Label fx:id="nicknameLabel" styleClass="text" text="Nombre de Usuario" />
                   <Label fx:id="usernameLabel" styleClass="text" text="\@Arroba usuario" />
