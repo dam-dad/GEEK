@@ -263,7 +263,7 @@ public class DBManager {
 	public List<Post> getPosts(boolean reload) throws Exception {
 
 		List<Post> result = new ArrayList<>();
-		ResultSet posts = allPostsFromDB(reload);
+		ResultSet posts = getPostsFromDB(reload);
 		try {
 			while (posts.next()) {
 				result.add(new Post(
@@ -287,7 +287,7 @@ public class DBManager {
 	 * @return {@code ResultSet} con posts (si reload es true 10, si reload es false "numberOfPosts + 10").
 	 * @throws Exception
 	 */
-	private ResultSet allPostsFromDB(boolean reload) throws Exception {
+	private ResultSet getPostsFromDB(boolean reload) throws Exception {
 		try {
 			numberOfPosts = reload ? 10 : numberOfPosts + 10;
 			allPosts.setInt(1, numberOfPosts);
