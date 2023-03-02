@@ -68,7 +68,6 @@ public class Post {
 		}
 		
 		// carga los filtros si hay filtros
-		
 		if(filters != null && !filters.isBlank()) {
 			ArrayList<String> filterString = new ArrayList<>(Arrays.asList(filters.split(";")));
 			for(Filter f : MainController.filters) {

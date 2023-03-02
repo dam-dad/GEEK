@@ -2,7 +2,6 @@ package dad.geek.controllers;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
@@ -14,15 +13,14 @@ import dad.geek.model.Filter;
 import dad.geek.model.Post;
 import dad.geek.model.User;
 import javafx.beans.binding.Bindings;
-import javafx.beans.property.ObjectProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitPane;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 
@@ -217,62 +215,6 @@ public class SearchSectionController implements Initializable {
      */
 	public VBox getView() {
 		return view;
-	}
-
-	/**
-	 * @return
-	 */
-	public ScrollPane getsearchResultContainerPane() {
-		return searchResultContainerPane;
-	}
-
-	/**
-	 * @param searchResultContainerPane
-	 */
-	public void setsearchResultContainerPane(ScrollPane searchResultContainerPane) {
-		this.searchResultContainerPane = searchResultContainerPane;
-	}
-
-	/**
-	 * @return
-	 */
-	public JFXButton getSearchButton() {
-		return searchButton;
-	}
-
-	/**
-	 * @param searchButton
-	 */
-	public void setSearchButton(JFXButton searchButton) {
-		this.searchButton = searchButton;
-	}
-
-	/**
-	 * @return
-	 */
-	public JFXComboBox<Filter> getSearchFiltersComboBox() {
-		return searchFiltersComboBox;
-	}
-
-	/**
-	 * @param searchFiltersComboBox
-	 */
-	public void setSearchFiltersComboBox(JFXComboBox<Filter> searchFiltersComboBox) {
-		this.searchFiltersComboBox = searchFiltersComboBox;
-	}
-
-	/**
-	 * @return
-	 */
-	public JFXTextField getSearchUserText() {
-		return searchUserText;
-	}
-
-	/**
-	 * @param searchUserText
-	 */
-	public void setSearchUserText(JFXTextField searchUserText) {
-		this.searchUserText = searchUserText;
 	}
 	
 }

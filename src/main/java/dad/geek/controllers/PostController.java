@@ -151,6 +151,11 @@ public class PostController implements Initializable {
 
 	}
 
+	/**
+	 * Se ejecuta cada vez que se presione la imagen del post si tiene.
+	 * Abre una nueva ventana {@code UNDECORATED} y le damos su controlador ({@link ShowImageController}).
+	 * @param event
+	 */
 	private void onImageClicked(MouseEvent event) {
 		
 		Stage window = new Stage();

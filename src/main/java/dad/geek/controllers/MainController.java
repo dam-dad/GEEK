@@ -40,7 +40,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Modality;
@@ -290,7 +289,6 @@ public class MainController implements Initializable {
 		}
 	}
 
-	// TODO Karim, revisa este JavaDoc
 	/**
 	 * Se ejecuta cada vez que se le de al {@code MenuItem} "Generar Informe" o se pulse la
 	 * combinación de teclas SHIFT + CNTL + P.<br/>

@@ -26,7 +26,7 @@ public class DBManager {
 	private int numberOfPosts = 0;
 	private Connection connPostgre;
 	private PreparedStatement getPosts, allPosts, userFromId, userFromNamePass, userFromName, createUser, sendPost, setUserImage, setNickname,
-			userPosts, allFilters, userFilters, postFilters, createFilter, totalNumberOfPosts, createPostFilter, createUserFilter;
+			userPosts, allFilters, createFilter, totalNumberOfPosts;
 
 	/**
 	 * Constructor de la clase LoginController, carga el fxml.
@@ -54,10 +54,6 @@ public class DBManager {
 			setNickname = connPostgre.prepareStatement("update usuarios set nombre = ? where id = ?");
 			userPosts = connPostgre.prepareStatement("select * from posts where ID_Usuario = ? order by id desc");
 			allFilters = connPostgre.prepareStatement("SELECT * FROM filtros ORDER BY id DESC");
-			userFilters = connPostgre.prepareStatement("SELECT * FROM filtrosusuario WHERE id_usuario = ?");
-			postFilters = connPostgre.prepareStatement("SELECT * FROM filtrospost WHERE id_post = ?");
-			createPostFilter = connPostgre.prepareStatement("insert into filtrospost (id_post, id_filtro) values (?, ?)");
-			createUserFilter = connPostgre.prepareStatement("insert into filtrosusuario (id_usuario, id_filtro) values (?, ?)");
 			createFilter = connPostgre.prepareStatement("insert into filtros (nombre, shortname, descripcion) values (?, ?, ?)");
 			totalNumberOfPosts = connPostgre.prepareStatement("select count(*) from posts");
 			
@@ -169,13 +165,6 @@ public class DBManager {
 			throw new Exception("Hubo un error al intentar enviar un post (SQLException).");
 		}
 
-	}
-
-	private String filtersToString(ObservableList<Filter> filters) {
-		String result = "";
-		for(Filter f : filters)
-			result += f.getFilterShortName() + ";";
-		return result;
 	}
 
 	/**
@@ -298,6 +287,11 @@ public class DBManager {
 		}
 	}
 	
+	/**
+	 * Devuelve una lista de posts.
+	 * @return
+	 * @throws Exception
+	 */
 	public List<Post> getAllPostsFromDB() throws Exception {
 		List<Post> result = new ArrayList<>();
 		ResultSet posts = getPosts.executeQuery();
@@ -450,19 +444,6 @@ public class DBManager {
 	}
 
 	/**
-	 * Cierra las conexiones de la base de datos.
-	 * @throws Exception
-	 */
-	public void close() throws Exception {
-		try {
-			if (connPostgre != null)
-				connPostgre.close();
-		} catch (SQLException e1) {
-			throw new Exception("Hubo un error al intentar cerrar la conexión con la base de datos (SQLException).");
-		}
-	}
-
-	/**
 	 * Transforma una imagen a un array de bytes.
 	 * @param file
 	 * @return El array de bytes de la imagen facilitada.
@@ -488,6 +469,31 @@ public class DBManager {
 		}
 
 		return bytea;
+	}
+	
+	/**
+	 * Devuelve un string con el nombre corto de los filtros divididos por el caracter ';'
+	 * @param filters
+	 * @return
+	 */
+	private String filtersToString(ObservableList<Filter> filters) {
+		String result = "";
+		for(Filter f : filters)
+			result += f.getFilterShortName() + ";";
+		return result;
+	}
+	
+	/**
+	 * Cierra las conexiones de la base de datos.
+	 * @throws Exception
+	 */
+	public void close() throws Exception {
+		try {
+			if (connPostgre != null)
+				connPostgre.close();
+		} catch (SQLException e1) {
+			throw new Exception("Hubo un error al intentar cerrar la conexión con la base de datos (SQLException).");
+		}
 	}
 	
 }
