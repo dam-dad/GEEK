@@ -63,8 +63,38 @@
 			<artifactId>postgresql</artifactId>
 			<version>42.5.2</version>
 		</dependency>
-
-
 	</dependencies>
-
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>io.github.fvarrui</groupId>
+				<artifactId>javapackager</artifactId>
+				<version>1.7.0</version>
+				<executions>
+					<execution>
+						<id>windows</id>
+						<phase>package</phase>
+						<goals>
+							<goal>package</goal>
+						</goals>
+						<configuration>
+							<mainClass>dad.geek.Main</mainClass>
+							<bundleJre>true</bundleJre>
+							<additionalResources>
+								<additionalResource>README.md</additionalResource>
+								<additionalResource>README.pdf</additionalResource>
+							</additionalResources>
+							<winConfig>
+								<icoFile>geek.ico</icoFile>
+								<generateMsi>false</generateMsi>
+							</winConfig>
+							
+							<createZipball>true</createZipball>
+							<customizedJre>false</customizedJre>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
 </project>
