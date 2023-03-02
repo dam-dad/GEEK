@@ -63,9 +63,6 @@ public class UserSectionController implements Initializable {
 	private JFXButton editButton;
 
 	@FXML
-	private Label filterNumberLabel;
-
-	@FXML
 	private ImageView profileImage;
 	
 	@FXML
