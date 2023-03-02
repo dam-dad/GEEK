@@ -138,7 +138,6 @@ public class UserSectionController implements Initializable {
 		window.initStyle(StageStyle.UNDECORATED);
 		window.setTitle("Imagen de perfil");
 		window.setScene(new Scene(new ShowImageController().setImageView(profileImage.getImage()).setStage(window).getView()));
-		window.getIcons().add(new Image(getClass().getResource("/images/iconooficia.png").toString()));
 		window.initOwner(App.primaryStage);
 		window.initModality(Modality.APPLICATION_MODAL);
 		
@@ -163,6 +162,7 @@ public class UserSectionController implements Initializable {
 		Stage window = new Stage();
 		window.setTitle("Editar usuario");
 		window.setScene(new Scene(new EditProfileController().setStage(window).getView()));
+		window.getIcons().add(new Image(getClass().getResource("/images/iconooficia.png").toString()));
 		window.setMinWidth(350);
 		window.setMinHeight(370);
 		window.initOwner(App.primaryStage);
