@@ -15,6 +15,7 @@ import java.util.Properties;
 import dad.geek.model.Filter;
 import dad.geek.model.Post;
 import dad.geek.model.User;
+import javafx.collections.ObservableList;
 
 /**
  * Clase que se encarga de gestionar la conexión con la base de datos. 
@@ -47,7 +48,7 @@ public class DBManager {
 			userFromNamePass = connPostgre.prepareStatement("select * from usuarios where nombreUsuario = ? and password = ?");
 			userFromName = connPostgre.prepareStatement("select * from usuarios where nombreUsuario = ?");
 			createUser = connPostgre.prepareStatement("insert into usuarios (nombre, nombreUsuario, password) values (?, ?, ?)");
-			sendPost = connPostgre.prepareStatement("insert into posts (ID_Usuario, contenido, imagen) values (?, ?, ?)");
+			sendPost = connPostgre.prepareStatement("insert into posts (ID_Usuario, contenido, imagen, filtros) values (?, ?, ?, ?)");
 			setUserImage = connPostgre.prepareStatement("update usuarios set imagen = ? where id = ?");
 			setNickname = connPostgre.prepareStatement("update usuarios set nombre = ? where id = ?");
 			userPosts = connPostgre.prepareStatement("select * from posts where ID_Usuario = ? order by id desc");
@@ -96,32 +97,6 @@ public class DBManager {
 			createFilter.setString(2, filter.getFilterShortName());
 			createFilter.setString(3, filter.getFilterDescription());
 			createFilter.execute();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-	}
-	
-	// TODO comentar cuando este acabado
-	public void createPostFilter(long id_post, long id_filtro) {
-
-		try {
-			createPostFilter.setLong(1, id_post);
-			createPostFilter.setLong(2, id_filtro);
-			createPostFilter.execute();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-	}
-	
-	// TODO comentar cuando este acabado
-	public void createUserFilter(long id_usuario, long id_filtro) {
-
-		try {
-			createUserFilter.setLong(1, id_usuario);
-			createUserFilter.setLong(2, id_filtro);
-			createUserFilter.execute();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -186,12 +161,20 @@ public class DBManager {
 		try {
 			sendPost.setLong(1, post.getUserID());
 			sendPost.setString(2, post.getPostContent());
-			sendPost.setBytes(3, transformarImagen(imagen));
+			sendPost.setBytes(3, (imagen != null) ? transformarImagen(imagen) : null);
+			sendPost.setString(4, filtersToString(post.getFilters()));
 			sendPost.executeUpdate();
 		} catch (SQLException e) {
 			throw new Exception("Hubo un error al intentar enviar un post (SQLException).");
 		}
 
+	}
+
+	private String filtersToString(ObservableList<Filter> filters) {
+		String result = "";
+		for(Filter f : filters)
+			result += f.getFilterShortName() + ";";
+		return result;
 	}
 
 	/**
@@ -288,7 +271,8 @@ public class DBManager {
 					posts.getLong("ID_Usuario"), 
 					posts.getString("titulo"),
 					posts.getString("contenido"),
-					posts.getBytes("imagen")
+					posts.getBytes("imagen"),
+					posts.getString("filtros")
 				));
 			}
 		} catch (SQLException e) {
@@ -329,7 +313,8 @@ public class DBManager {
 					posts.getLong("ID_Usuario"),
 					posts.getString("titulo"),
 					posts.getString("contenido"),
-					posts.getBytes("imagen")
+					posts.getBytes("imagen"),
+					posts.getString("filtros")
 				));
 			}
 		} catch (SQLException e) {
@@ -441,18 +426,6 @@ public class DBManager {
 		}
 
 		return result;
-	}
-
-	// TODO comentar cuando esté implementado
-	public void getFiltrosPost() {
-		// TODO Implementar
-
-	}
-
-	// TODO comentar cuando esté implementado
-	public void getFiltrosUsuario() {
-		// TODO Implementar
-
 	}
 
 	/**

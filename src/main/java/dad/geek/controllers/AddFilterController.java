@@ -7,7 +7,6 @@ import java.util.ResourceBundle;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
 
-import dad.geek.App;
 import dad.geek.model.Filter;
 import dad.geek.model.Post;
 import javafx.beans.property.IntegerProperty;
@@ -66,7 +65,7 @@ public class AddFilterController implements Initializable {
 		//listeners
     	selectedFilter.bind(filterList.getSelectionModel().selectedIndexProperty());		
 		try {
-			filterList.getItems().addAll(App.conexionDB.getAllFilters());
+			filterList.getItems().addAll(MainController.filters);
 			filterList.getSelectionModel().select(0);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -92,7 +91,7 @@ public class AddFilterController implements Initializable {
     @FXML
     void onAceptarButtonAction(ActionEvent event) throws Exception {
     	Filter filter = new Filter();
-		filter = App.conexionDB.getAllFilters().get(selectedFilter.get());
+    	filter = MainController.filters.get(selectedFilter.get());
 		
 		if(!post.filtersProperty().contains(filter))
 			post.filtersProperty().add(filter);

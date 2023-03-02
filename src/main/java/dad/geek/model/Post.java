@@ -3,8 +3,11 @@ package dad.geek.model;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import dad.geek.App;
+import dad.geek.controllers.MainController;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.LongProperty;
 import javafx.beans.property.ObjectProperty;
@@ -45,8 +48,9 @@ public class Post {
 	 * @param postTitle
 	 * @param postContent
 	 */
-	public Post(long postID, long userID, String postTitle, String postContent, byte[] image) {
+	public Post(long postID, long userID, String postTitle, String postContent, byte[] image, String filters) {
 		
+		// carga la imagen si hay imagen
 		try {
 			
 			if (image != null && image.length > 0) {
@@ -61,6 +65,17 @@ public class Post {
 			
 		} catch (Exception e) {
 			// TODO error al convertir image en un File
+		}
+		
+		// carga los filtros si hay filtros
+		
+		if(filters != null && !filters.isBlank()) {
+			ArrayList<String> filterString = new ArrayList<>(Arrays.asList(filters.split(";")));
+			for(Filter f : MainController.filters) {
+				if(filterString.contains(f.getFilterShortName()))
+					filtersProperty().add(f);
+			}
+				
 		}
 		
 		setPostID(postID);

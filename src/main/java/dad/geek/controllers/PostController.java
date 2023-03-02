@@ -7,6 +7,7 @@ import java.util.ResourceBundle;
 import com.jfoenix.controls.JFXButton;
 
 import dad.geek.App;
+import dad.geek.model.Filter;
 import dad.geek.model.Post;
 import dad.geek.model.User;
 import javafx.beans.binding.Bindings;
@@ -128,6 +129,13 @@ public class PostController implements Initializable {
 			BorderPane.setAlignment(postImageView, Pos.CENTER);
 		}
 
+		if(post.getFilters().size() > 0) {
+			
+			for(Filter f : post.getFilters())
+				filterFlow.getChildren().add(new Label("#" + f.getFilterShortName()));
+			
+		}
+		
 		// bindings
 
 		profileImage.imageProperty().bind(user.profileImageProperty());
