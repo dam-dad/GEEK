@@ -2,6 +2,7 @@ package dad.geek.controllers;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
@@ -13,6 +14,7 @@ import dad.geek.model.Filter;
 import dad.geek.model.Post;
 import dad.geek.model.User;
 import javafx.beans.binding.Bindings;
+import javafx.beans.property.ObjectProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -31,7 +33,8 @@ import javafx.stage.Modality;
 public class SearchSectionController implements Initializable {
 	
 	//model
-	User user = new User();
+	private User user = new User();
+	private Filter filter = new Filter();
 	
 	//view
 	
@@ -92,16 +95,22 @@ public class SearchSectionController implements Initializable {
     	}
     	//si no hay texto pero sí hay un filtro seleccionado
     	if (searchUserText.getText().isEmpty() && searchFiltersComboBox.getSelectionModel().getSelectedItem() != null) {
-    		
+    		filter = searchFiltersComboBox.getSelectionModel().getSelectedItem();
+    		searchResultContainerPane.setContent(loadPostFilterNoUser());
+    		filter = new Filter();
     	}
     	//si hay texto y también algún filtro seleccionado
     	if (!searchUserText.getText().isEmpty() && searchFiltersComboBox.getSelectionModel().getSelectedItem() != null) {
-
+    		user.usernameProperty().bind(searchUserText.textProperty());
+    		filter = searchFiltersComboBox.getSelectionModel().getSelectedItem();
+    		searchResultContainerPane.setContent(loadPostFilterUser());
+    		user.usernameProperty().unbind();
+    		filter = new Filter();
     	}
     }
     
     /**
-     * Carga los posts si no tienen ningún filtro seleccionado.
+     * Carga los posts si no tienen ningún filtro seleccionado, pero sí un usuario.
      * @return El {@code VBox} con todos los posts cargados.
      * @throws Exception
      */
@@ -113,6 +122,72 @@ public class SearchSectionController implements Initializable {
 				for(Post p : App.conexionDB.getUserPosts(user)) {
 					searchResultContainer.getChildren().add(new PostController(p).getView());
 					searchResultContainer.getChildren().add(new SplitPane());
+				}
+			}
+			else {
+				Alert sinUsuarioAlert = new Alert(AlertType.ERROR);
+				sinUsuarioAlert.setTitle("NO USERS");
+				sinUsuarioAlert.setHeaderText("No hay usuarios");
+				sinUsuarioAlert.setContentText("No se ha encontrado el usuario con el nombre: " + searchUserText.getText());
+				sinUsuarioAlert.initOwner(App.primaryStage);
+				sinUsuarioAlert.initModality(Modality.APPLICATION_MODAL);
+				sinUsuarioAlert.show();
+			}
+			return searchResultContainer;
+		} catch (Exception e) {
+			Alert errorAlert = new Alert(AlertType.ERROR);
+			errorAlert.setTitle("ERROR");
+			errorAlert.setHeaderText("Hubo un error");
+			errorAlert.setContentText(e.getMessage());
+			errorAlert.initOwner(App.primaryStage);
+			errorAlert.initModality(Modality.APPLICATION_MODAL);
+			errorAlert.show();
+			return null;
+		}
+    }
+
+    /**
+     * Carga los posts si hay un filtro seleccionado, pero no un usuario.
+     * @return El {@code VBox} con todos los posts cargados.
+     * @throws Exception
+     */
+    private VBox loadPostFilterNoUser() throws Exception {
+		try {
+			searchResultContainer.getChildren().clear();
+			for(Post p : App.conexionDB.getAllPostsFromDB()) {
+				if(p.getFilters().contains(filter)) {
+					searchResultContainer.getChildren().add(new PostController(p).getView());
+					searchResultContainer.getChildren().add(new SplitPane());
+				}
+			}
+			return searchResultContainer;
+		} catch (Exception e) {
+			Alert errorAlert = new Alert(AlertType.ERROR);
+			errorAlert.setTitle("ERROR");
+			errorAlert.setHeaderText("Hubo un error");
+			errorAlert.setContentText(e.getMessage());
+			errorAlert.initOwner(App.primaryStage);
+			errorAlert.initModality(Modality.APPLICATION_MODAL);
+			errorAlert.show();
+			return null;
+		}
+    }
+    
+    /**
+     * Carga los posts si hay tanto un filtro como un usuario seleccionados.
+     * @return El {@code VBox} con todos los posts cargados.
+     * @throws Exception
+     */
+    private VBox loadPostFilterUser() throws Exception {
+		try {
+			searchResultContainer.getChildren().clear();
+			if(user.userInDatabase2()) {
+				user = App.conexionDB.getUserObject(user.getUsername());
+				for(Post p : App.conexionDB.getUserPosts(user)) {
+					if(p.getFilters().contains(filter)) {
+						searchResultContainer.getChildren().add(new PostController(p).getView());
+						searchResultContainer.getChildren().add(new SplitPane());
+					}
 				}
 			}
 			else {

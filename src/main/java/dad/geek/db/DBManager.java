@@ -25,7 +25,7 @@ public class DBManager {
 
 	private int numberOfPosts = 0;
 	private Connection connPostgre;
-	private PreparedStatement allPosts, userFromId, userFromNamePass, userFromName, createUser, sendPost, setUserImage, setNickname,
+	private PreparedStatement getPosts, allPosts, userFromId, userFromNamePass, userFromName, createUser, sendPost, setUserImage, setNickname,
 			userPosts, allFilters, userFilters, postFilters, createFilter, totalNumberOfPosts, createPostFilter, createUserFilter;
 
 	/**
@@ -43,7 +43,8 @@ public class DBManager {
 
 			connPostgre = DriverManager.getConnection(urlHost, userHost, passwordHost);
 
-			allPosts = connPostgre.prepareStatement("select * from posts order by id desc limit ?");
+			getPosts = connPostgre.prepareStatement("select * from posts order by id desc limit ?");
+			allPosts = connPostgre.prepareStatement("select * from posts order by id desc");
 			userFromId = connPostgre.prepareStatement("select * from usuarios where id = ?");
 			userFromNamePass = connPostgre.prepareStatement("select * from usuarios where nombreUsuario = ? and password = ?");
 			userFromName = connPostgre.prepareStatement("select * from usuarios where nombreUsuario = ?");
@@ -290,11 +291,31 @@ public class DBManager {
 	private ResultSet getPostsFromDB(boolean reload) throws Exception {
 		try {
 			numberOfPosts = reload ? 10 : numberOfPosts + 10;
-			allPosts.setInt(1, numberOfPosts);
-			return allPosts.executeQuery();
+			getPosts.setInt(1, numberOfPosts);
+			return getPosts.executeQuery();
 		} catch (SQLException e) {
 			throw new Exception("Hubo un error al cargar los posts desde la base de datos (SQLException).");
 		}
+	}
+	
+	public List<Post> getAllPostsFromDB() throws Exception {
+		List<Post> result = new ArrayList<>();
+		ResultSet posts = getPosts.executeQuery();
+		try {
+			while (posts.next()) {
+				result.add(new Post(
+					posts.getLong("ID"), 
+					posts.getLong("ID_Usuario"), 
+					posts.getString("titulo"),
+					posts.getString("contenido"),
+					posts.getBytes("imagen"),
+					posts.getString("filtros")
+				));
+			}
+		} catch (SQLException e) {
+			throw new Exception("Hubo un error al cargar los posts desde la base de datos (SQLException).");
+		}
+		return result;
 	}
 
 	/**
