@@ -7,8 +7,8 @@ import java.util.ResourceBundle;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
 
-import dad.geek.App;
 import dad.geek.model.Filter;
+import dad.geek.model.Post;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.event.ActionEvent;
@@ -26,6 +26,8 @@ import javafx.stage.WindowEvent;
 public class AddFilterController implements Initializable {
 
 	//model
+	
+	private Post post;
 	private Stage stage;
 	private static IntegerProperty selectedFilter = new SimpleIntegerProperty();
 
@@ -42,7 +44,10 @@ public class AddFilterController implements Initializable {
     /**
 	 * Constructor de la clase AddFilterController, carga el fxml.
 	 */
-    public AddFilterController() {
+    public AddFilterController(Post post) {
+    	
+    	this.post = post;
+    	
     	try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/AddFilterView.fxml"));
 			loader.setController(this);
@@ -60,61 +65,11 @@ public class AddFilterController implements Initializable {
 		//listeners
     	selectedFilter.bind(filterList.getSelectionModel().selectedIndexProperty());		
 		try {
-			filterList.getItems().addAll(App.conexionDB.getAllFilters());
+			filterList.getItems().addAll(MainController.filters);
 			filterList.getSelectionModel().select(0);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
-	
-	/**
-	 * @return El filtro seleccionado.
-	 * @throws Exception
-	 */
-	public static Filter getSelectedFilter() throws Exception {
-		Filter filter = new Filter();
-		filter = App.conexionDB.getAllFilters().get(selectedFilter.get());
-		return filter;
-	}
-	
-	/**
-	 * @return El ID del filtro seleccionado.
-	 * @throws Exception
-	 */
-	public static long getSelectedFilterID() throws Exception {
-		Filter filter = new Filter();
-		filter = App.conexionDB.getAllFilters().get(selectedFilter.get());
-		return filter.getFilterID();	
-	}
-	
-	/**
-	 * @return El nombre del filtro seleccionado.
-	 * @throws Exception
-	 */
-	public static String getSelectedFilterName() throws Exception {
-		Filter filter = new Filter();
-		filter = App.conexionDB.getAllFilters().get(selectedFilter.get());
-		return filter.getFilterName();	
-	}
-	
-	/**
-	 * @return El nombre corto del filtro seleccionado.
-	 * @throws Exception
-	 */
-	public static String getSelectedFilterShortName() throws Exception {
-		Filter filter = new Filter();
-		filter = App.conexionDB.getAllFilters().get(selectedFilter.get());
-		return filter.getFilterShortName();	
-	}
-	
-	/**
-	 * @return La descripción del filtro seleccionado.
-	 * @throws Exception
-	 */
-	public static String getSelectedFilterDescription() throws Exception {
-		Filter filter = new Filter();
-		filter = App.conexionDB.getAllFilters().get(selectedFilter.get());
-		return filter.getFilterDescription();	
 	}
 	
 	/**
@@ -131,9 +86,16 @@ public class AddFilterController implements Initializable {
 	 * Se ejecuta cada vez que se le de al botón "Aceptar".<br/>
 	 * Se encarga de pedir el cierre de la ventana.
 	 * @param event
+	 * @throws Exception 
 	 */
     @FXML
-    void onCloseButtonAction(ActionEvent event) {
+    void onAceptarButtonAction(ActionEvent event) throws Exception {
+    	Filter filter = new Filter();
+    	filter = MainController.filters.get(selectedFilter.get());
+		
+		if(!post.filtersProperty().contains(filter))
+			post.filtersProperty().add(filter);
+		
 		this.stage.getOnCloseRequest().handle(new WindowEvent(this.stage, WindowEvent.WINDOW_CLOSE_REQUEST));
     }
     

@@ -12,10 +12,14 @@ import java.util.ResourceBundle;
 
 import dad.geek.App;
 import dad.geek.db.DBManager;
+import dad.geek.model.Filter;
 import dad.geek.model.Post;
 import dad.geek.model.User;
 import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.ListProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleListProperty;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -24,11 +28,11 @@ import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.image.Image;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitPane;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Priority;
@@ -51,6 +55,7 @@ public class MainController implements Initializable {
 
 	// model
 	public static final String JRXML_FILE = "/reports/informe.jrxml";
+	public static ListProperty<Filter> filters = new SimpleListProperty<>(FXCollections.observableArrayList());
 
 	// controllers
 
@@ -110,6 +115,12 @@ public class MainController implements Initializable {
 
 		// load data
 
+		try {
+			filters.addAll(App.conexionDB.getAllFilters());
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
+		
 		userContainer.getChildren().add(userSectionController.getView());
 		searchContainer.getChildren().add(searchSectionController.getView());
 		userContainer.setVgrow(userContainer.getChildren().get(0), Priority.ALWAYS);
@@ -165,6 +176,7 @@ public class MainController implements Initializable {
 			errorAlert.initOwner(App.primaryStage);
 			errorAlert.initModality(Modality.APPLICATION_MODAL);
 			errorAlert.show();
+			e.printStackTrace();
 			return null;
 		}
 		App.primaryStage.getScene().setCursor(Cursor.DEFAULT);
