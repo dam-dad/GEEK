@@ -1,6 +1,9 @@
 package dad.geek.controllers;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -37,15 +40,17 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.stage.DirectoryChooser;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
-import net.sf.jasperreports.view.JasperViewer;
 
 /**
  * Controlador de la ventana principal.
@@ -314,9 +319,18 @@ public class MainController implements Initializable {
 			// generamos el informe (combinamos informe + datos)
 			JasperPrint jasperPrint = JasperFillManager.fillReport(report, parameters,
 					new JRBeanCollectionDataSource(users));
+			
+			DirectoryChooser  chooser = new DirectoryChooser();
+			chooser.setTitle("Guardar PDF");
+			chooser.setInitialDirectory(new File(System.getProperty("user.home") + "\\Documents\\"));
 
-			// visualiza el informe generado
-			JasperViewer.viewReport(jasperPrint, false);
+			File selectedFile = chooser.showDialog(App.primaryStage);
+			if (selectedFile != null) {
+				String path = selectedFile.getAbsolutePath();			
+				OutputStream output = new FileOutputStream(new File(path+"/JasperReport.pdf"));
+				JasperExportManager.exportReportToPdfStream(jasperPrint, output);
+			}
+
 		} catch (Exception e) {
 			Alert errorAlert = new Alert(AlertType.ERROR);
 			errorAlert.setTitle("ERROR");
