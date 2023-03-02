@@ -156,6 +156,7 @@ public class MainController implements Initializable {
 				postsContainer.getChildren().add(new PostController(p).setMainController(this).getView());
 				postsContainer.getChildren().add(new SplitPane());
 			}
+			isShowMoreEnabled.set(!App.conexionDB.isAllPostLoaded());
 		} catch (Exception e) {
 			Alert errorAlert = new Alert(AlertType.ERROR);
 			errorAlert.setTitle("ERROR");
@@ -259,7 +260,6 @@ public class MainController implements Initializable {
 	@FXML
 	void onShowMoreAction(ActionEvent event) {
 		try {
-			isShowMoreEnabled.set(App.conexionDB.isAllPostLoaded());
 			loadPosts(false);
 		} catch (Exception e) {
 			Alert errorAlert = new Alert(AlertType.ERROR);
