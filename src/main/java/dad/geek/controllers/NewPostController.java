@@ -145,7 +145,7 @@ public class NewPostController implements Initializable {
 
 		Stage window = new Stage();
 		window.setTitle("Añadir filtro");
-		window.setScene(new Scene(new AddFilterController().setStage(window).getView()));
+		window.setScene(new Scene(new AddFilterController(post).setStage(window).getView()));
 		window.getIcons().add(new Image(getClass().getResource("/images/iconooficia.png").toString()));
 		window.setMinWidth(268);
 		window.setMinHeight(472);
@@ -174,36 +174,40 @@ public class NewPostController implements Initializable {
 		
 		App.primaryStage.getScene().setCursor(Cursor.WAIT);
 		try {
-			Label label = new Label();
-			label.setText(AddFilterController.getSelectedFilterName());
+			if(filterFlow.getChildren().size() != post.getFilters().size()) {
+				Label label = new Label();
+				label.setText(post.filtersProperty().get(post.filtersProperty().getSize()-1).getFilterName());
 			
-			// listeners
 			
-			label.setOnMouseClicked(MouseEvent  -> {
-				Alert deleteAlert = new Alert(AlertType.CONFIRMATION);
-				deleteAlert.setTitle("¿BORRAR?");
-				deleteAlert.setHeaderText("¿Desea borrar el filtro " + label.getText() + "?");
-				deleteAlert.initOwner(App.primaryStage);
-				deleteAlert.initModality(Modality.APPLICATION_MODAL);
-				Optional<ButtonType> result = deleteAlert.showAndWait();
-				if (result.get() == ButtonType.OK) {
-					filterFlow.getChildren().remove(label);
-				} else {
-					deleteAlert.close();
-				}
-			});
-			
-			label.setOnMouseEntered(MouseEvent -> {
-				label.setFont(Font.font("System", FontWeight.BOLD, 12));
-				label.setUnderline(true);
-			});
-			
-			label.setOnMouseExited(MouseEvent -> {
-				label.setFont(Font.font("System", FontWeight.NORMAL, 12));
-				label.setUnderline(false);
-			});
-			
-			filterFlow.getChildren().add(label);
+				// listeners
+				
+				label.setOnMouseClicked(MouseEvent  -> {
+					Alert deleteAlert = new Alert(AlertType.CONFIRMATION);
+					deleteAlert.setTitle("¿BORRAR?");
+					deleteAlert.setHeaderText("¿Desea borrar el filtro " + label.getText() + "?");
+					deleteAlert.initOwner(App.primaryStage);
+					deleteAlert.initModality(Modality.APPLICATION_MODAL);
+					Optional<ButtonType> result = deleteAlert.showAndWait();
+					if (result.get() == ButtonType.OK) {
+						post.deleteFilter(label.getText());
+						filterFlow.getChildren().remove(label);
+					} else {
+						deleteAlert.close();
+					}
+				});
+				
+				label.setOnMouseEntered(MouseEvent -> {
+					label.setFont(Font.font("System", FontWeight.BOLD, 12));
+					label.setUnderline(true);
+				});
+				
+				label.setOnMouseExited(MouseEvent -> {
+					label.setFont(Font.font("System", FontWeight.NORMAL, 12));
+					label.setUnderline(false);
+				});
+				
+				filterFlow.getChildren().add(label);
+			}
 			
 		} catch (Exception e) {
 			Alert errorAlert = new Alert(AlertType.ERROR);

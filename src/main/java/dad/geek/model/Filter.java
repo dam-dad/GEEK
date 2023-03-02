@@ -98,5 +98,19 @@ public class Filter {
 	public String toString() {
 		return getFilterName();
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Filter other = (Filter) obj;
+		if (getFilterID() != other.getFilterID())
+			return false;
+		return true;
+	}
 
 }

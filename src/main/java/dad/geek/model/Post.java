@@ -68,6 +68,19 @@ public class Post {
 		setPostTitle(postTitle);
 		setPostContent(postContent);
 	}
+	
+	public void deleteFilter(String filterName) {
+		Filter filterToDelete = null;
+		
+		for(Filter f: filters) {
+			if(f.getFilterName().equals(filterName))
+				filterToDelete = f;
+		}
+		
+		filters.remove(filterToDelete);
+		
+		
+	}
 
 	public final LongProperty postIDProperty() {
 		return this.postID;
