@@ -68,6 +68,26 @@ public class AddFilterController implements Initializable {
 	}
 	
 	/**
+	 * @return El filtro seleccionado.
+	 * @throws Exception
+	 */
+	public static Filter getSelectedFilter() throws Exception {
+		Filter filter = new Filter();
+		filter = App.conexionDB.getAllFilters().get(selectedFilter.get());
+		return filter;
+	}
+	
+	/**
+	 * @return El ID del filtro seleccionado.
+	 * @throws Exception
+	 */
+	public static long getSelectedFilterID() throws Exception {
+		Filter filter = new Filter();
+		filter = App.conexionDB.getAllFilters().get(selectedFilter.get());
+		return filter.getFilterID();	
+	}
+	
+	/**
 	 * @return El nombre del filtro seleccionado.
 	 * @throws Exception
 	 */
@@ -75,6 +95,26 @@ public class AddFilterController implements Initializable {
 		Filter filter = new Filter();
 		filter = App.conexionDB.getAllFilters().get(selectedFilter.get());
 		return filter.getFilterName();	
+	}
+	
+	/**
+	 * @return El nombre corto del filtro seleccionado.
+	 * @throws Exception
+	 */
+	public static String getSelectedFilterShortName() throws Exception {
+		Filter filter = new Filter();
+		filter = App.conexionDB.getAllFilters().get(selectedFilter.get());
+		return filter.getFilterShortName();	
+	}
+	
+	/**
+	 * @return La descripción del filtro seleccionado.
+	 * @throws Exception
+	 */
+	public static String getSelectedFilterDescription() throws Exception {
+		Filter filter = new Filter();
+		filter = App.conexionDB.getAllFilters().get(selectedFilter.get());
+		return filter.getFilterDescription();	
 	}
 	
 	/**
