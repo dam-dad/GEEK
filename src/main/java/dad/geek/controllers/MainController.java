@@ -42,6 +42,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -302,6 +303,14 @@ public class MainController implements Initializable {
 		List<User> users = new ArrayList<User>();
 
 		try {
+			
+			FileChooser chooser = new FileChooser();
+			chooser.setTitle("Save");
+			chooser.setInitialDirectory(new File(System.getProperty("user.home") + "\\Documents\\"));
+			chooser.getExtensionFilters().addAll(new ExtensionFilter("PDF Files", "*.pdf"));
+
+			File selectedFile = chooser.showSaveDialog(App.primaryStage);
+			
 			for (Post p : App.conexionDB.getPosts(true)) {
 				if (!users.contains(App.conexionDB.getUserObject(p.getUserID())))
 					users.add(App.conexionDB.getUserObject(p.getUserID()));
@@ -320,14 +329,10 @@ public class MainController implements Initializable {
 			JasperPrint jasperPrint = JasperFillManager.fillReport(report, parameters,
 					new JRBeanCollectionDataSource(users));
 			
-			DirectoryChooser  chooser = new DirectoryChooser();
-			chooser.setTitle("Guardar PDF");
-			chooser.setInitialDirectory(new File(System.getProperty("user.home") + "\\Documents\\"));
-
-			File selectedFile = chooser.showDialog(App.primaryStage);
 			if (selectedFile != null) {
 				String path = selectedFile.getAbsolutePath();			
-				OutputStream output = new FileOutputStream(new File(path+"/JasperReport.pdf"));
+//				OutputStream output = new FileOutputStream(new File(path+"/JasperReport.pdf"));
+				OutputStream output = new FileOutputStream(new File(path));
 				JasperExportManager.exportReportToPdfStream(jasperPrint, output);
 			}
 
