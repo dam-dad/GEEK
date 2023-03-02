@@ -185,7 +185,7 @@ public class LoginController implements Initializable {
 			Alert errorAlert = new Alert(AlertType.ERROR);
 			errorAlert.setTitle("ERROR");
 			errorAlert.setHeaderText("Hubo un error");
-			errorAlert.setContentText("Hubo un error al intentar iniciar sesión.");
+			errorAlert.setContentText(e.getLocalizedMessage());
 			errorAlert.show();
 			loginButton.setDisable(true);
 		}

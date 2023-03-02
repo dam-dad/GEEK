@@ -49,7 +49,7 @@ public class User {
 	public User(long userID, String nickname, String username, String password, byte[] image) throws Exception {
 
 		// por defecto usamos user.png
-		File f = new File(getClass().getResource("/images/user.png").toURI());
+		File f = new File(getClass().getResource("/images/user.png").toExternalForm());
 		setProfileImageFile(f);
 		try {
 			// si el array de bytes no está vacío lo transformamos a fichero
