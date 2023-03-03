@@ -127,7 +127,6 @@ public class UserSectionController implements Initializable {
 	 * Abre una nueva ventana {@code UNDECORATED} y le damos su controlador ({@link ShowImageController}).
 	 * @param event
 	 */
-	//TODO Añadir tamaño máximo a la imagen
 	@FXML
 	void onProfileImageClicked(MouseEvent event) {
 
