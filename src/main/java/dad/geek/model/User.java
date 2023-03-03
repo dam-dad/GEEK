@@ -67,10 +67,7 @@ public class User {
 		} catch (Exception e) {
 			try {
 				setProfileImage(new Image(getClass().getResource("/images/user.png").getPath()));
-				e.printStackTrace();
-			} catch (Exception e1) {
-				e1.printStackTrace();
-			}
+			} catch (Exception e1) {}
 		}
 
 		setUserID(userID);
