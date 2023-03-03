@@ -1,7 +1,6 @@
 package dad.geek;
 
 import java.io.File;
-import java.nio.file.Files;
 import java.util.Optional;
 
 import dad.geek.controllers.LoginController;
@@ -24,7 +23,7 @@ import javafx.stage.Stage;
  */
 public class App extends Application {
 	
-	public static final String TEMP_PATH = System.getProperty("user.dir").toString() + "\\src\\main\\resources\\temp\\";
+	public static final String TEMP_PATH = System.getProperty("java.io.tmpdir").toString() + "geek\\";
 
 	public static Stage primaryStage;
 	public static DBManager conexionDB;

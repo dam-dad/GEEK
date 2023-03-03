@@ -450,6 +450,7 @@ public class DBManager {
 	 */
 	private byte[] transformarImagen(File file) {
 		byte[] bytea = null;
+		
 		try (FileInputStream fis = new FileInputStream(file)) {
 			ArrayList<Byte> byteArrayList = new ArrayList<>();
 

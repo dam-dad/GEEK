@@ -1,6 +1,7 @@
 package dad.geek.model;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 
 import dad.geek.App;
@@ -47,9 +48,9 @@ public class User {
 	 * @throws Exception
 	 */
 	public User(long userID, String nickname, String username, String password, byte[] image) throws Exception {
-
 		// por defecto usamos user.png
-		File f = new File(getClass().getResource("/images/user.png").toExternalForm());
+		
+		File f = new File(getClass().getResource("/images/user.png").getPath());
 		setProfileImageFile(f);
 		try {
 			// si el array de bytes no está vacío lo transformamos a fichero
@@ -59,15 +60,13 @@ public class User {
 				    outputStream.write(image);
 				}
 				setProfileImageFile(f);
-				setProfileImage(new Image(f.toURI().toString()));
-				
+				setProfileImage(new Image(new FileInputStream(f)));
 			} else {
-				setProfileImage(new Image(f.toURI().toString()));
+				setProfileImage(new Image(new FileInputStream(f)));
 			}
 		} catch (Exception e) {
 			try {
-				
-				setProfileImage(new Image(getClass().getResource("/images/user.png").toURI().toString()));
+				setProfileImage(new Image(getClass().getResource("/images/user.png").getPath()));
 				e.printStackTrace();
 			} catch (Exception e1) {
 				e1.printStackTrace();
