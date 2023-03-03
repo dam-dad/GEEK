@@ -118,7 +118,6 @@ public class EditProfileController implements Initializable {
 	 * Se ejecuta cada vez que le das al botón "aceptar", guarda cualquier cambio que se haya realizado.
 	 * @param event
 	 */
-	//TODO Problemas al seleccionar la imagen del usuario (No se guarda en la base de datos)
 	@FXML
 	void onAcceptAction(ActionEvent event) {
 		try {

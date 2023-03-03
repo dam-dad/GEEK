@@ -119,8 +119,8 @@ public class PostController implements Initializable {
 		
 		if(post.getPostImage() != null) {
 			postImageView = new ImageView(post.getPostImage());
-			postImageView.setFitWidth(150);
 			postImageView.setFitHeight(150);
+			postImageView.setPreserveRatio(true);
 			postImageView.setVisible(true);
 			
 			postImageView.setOnMouseClicked(this::onImageClicked);
