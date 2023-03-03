@@ -22,7 +22,7 @@ Para poder comenzar a utilizar GEEK, debes de seguir los pasos en nuestra [Guía
 
 ## Saber más... <a name="mas">
 
-Si quieres saber más sobre esta aplicación puedes visitar la [WIKI oficial](#) y consultar todas las características de la red social.
+Si quieres saber más sobre esta aplicación puedes visitar la [WIKI oficial](https://github.com/dam-dad/GEEK/wiki) y consultar todas las características de la red social.
 
 ##### Autores
 
