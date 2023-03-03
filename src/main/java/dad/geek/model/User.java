@@ -50,7 +50,7 @@ public class User {
 	public User(long userID, String nickname, String username, String password, byte[] image) throws Exception {
 		// por defecto usamos user.png
 		
-		File f = new File(getClass().getResource("/images/user.png").getPath());
+		File f = new File(getClass().getResource("/images/user.png").toString());
 		setProfileImageFile(f);
 		try {
 			// si el array de bytes no está vacío lo transformamos a fichero
@@ -67,7 +67,7 @@ public class User {
 			
 		} catch (Exception e) {
 			try {
-				setProfileImage(new Image(getClass().getResource("/images/user.png").getPath()));
+				setProfileImage(new Image(getClass().getResource("/images/user.png").toString()));
 				e.printStackTrace();
 			} catch (Exception e1) {
 				e1.printStackTrace();
