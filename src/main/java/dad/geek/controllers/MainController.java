@@ -320,6 +320,7 @@ public class MainController implements Initializable {
 			// crea el mapa de parámetros para el informe
 			Map<String, Object> parameters = new HashMap<String, Object>();
 			parameters.put("superUser", "@" + App.user.getUsername());
+			parameters.put("logo", getClass().getResource("/images/iconooficia.png").toString());
 			SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 			parameters.put("today", formatter.format(new Date()));
 

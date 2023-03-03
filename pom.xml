@@ -88,7 +88,6 @@
 								<icoFile>geek.ico</icoFile>
 								<generateMsi>false</generateMsi>
 							</winConfig>
-							
 							<createZipball>true</createZipball>
 							<customizedJre>false</customizedJre>
 						</configuration>

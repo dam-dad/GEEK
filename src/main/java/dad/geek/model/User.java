@@ -64,6 +64,7 @@ public class User {
 			} else {
 				setProfileImage(new Image(new FileInputStream(f)));
 			}
+			
 		} catch (Exception e) {
 			try {
 				setProfileImage(new Image(getClass().getResource("/images/user.png").getPath()));
@@ -213,6 +214,10 @@ public class User {
 		if (getUserID() != other.getUserID())
 			return false;
 		return true;
+	}
+	
+	public String getUrl() {
+		return profileImageFile.get().getAbsolutePath();
 	}
 
 }
