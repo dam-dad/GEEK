@@ -3,12 +3,14 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Coffee_Landscape_Table_Based" pageWidth="792" pageHeight="612" orientation="Landscape" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b082819b-71fb-4b11-9614-9468f84ecd49">
 	<parameter name="superUser" class="java.lang.String"/>
 	<parameter name="today" class="java.lang.String"/>
+	<parameter name="logo" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
 	<field name="username" class="java.lang.String"/>
 	<field name="nickname" class="java.lang.String"/>
-	<field name="profileImage" class="javafx.scene.image.Image"/>
+	<field name="profileImage" class="java.lang.String"/>
+	<field name="url" class="java.lang.String"/>
 	<variable name="Variable_1" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
@@ -43,7 +45,7 @@
 			</staticText>
 			<image>
 				<reportElement x="10" y="0" width="80" height="79" uuid="6a550417-3b0b-498a-948d-8a5d9d8658c0"/>
-				<imageExpression><![CDATA["src/main/resources/images/iconooficia.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{logo}]]></imageExpression>
 			</image>
 			<textField pattern="d/M/yyyy h:mm:ss a">
 				<reportElement x="620" y="60" width="120" height="20" uuid="93e6099e-0ee3-4830-ba31-face4eec1c4f"/>
@@ -171,7 +173,7 @@
 				<reportElement x="588" y="4" width="85" height="81" uuid="fe1c95b8-8c83-4b7c-ad6a-24b8aee09075">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
-				<imageExpression><![CDATA[$F{profileImage}.getUrl()]]></imageExpression>
+				<imageExpression><![CDATA[$F{url}]]></imageExpression>
 			</image>
 			<textField>
 				<reportElement x="0" y="-1" width="30" height="90" uuid="f13c6a5e-0839-4968-9081-58ae82406b42">

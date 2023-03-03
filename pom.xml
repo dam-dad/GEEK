@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>dad</groupId>
 	<artifactId>GEEK</artifactId>
-	<version>0.0.1</version>
+	<version>0.1.0</version>
 
 	<properties>
 		<maven.compiler.target>11</maven.compiler.target>
@@ -88,7 +88,6 @@
 								<icoFile>geek.ico</icoFile>
 								<generateMsi>false</generateMsi>
 							</winConfig>
-							
 							<createZipball>true</createZipball>
 							<customizedJre>false</customizedJre>
 						</configuration>
